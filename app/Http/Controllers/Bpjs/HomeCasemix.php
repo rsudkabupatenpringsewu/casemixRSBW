@@ -76,7 +76,7 @@ class HomeCasemix extends Controller
                     ->first();
                 $cekBerkasHasil[$item->no_rawat] = $berkas;
             }
-        $dwonloadFile = DB::connection('db_con2')->table('file_casemix')
+        $downloadFile = DB::connection('db_con2')->table('file_casemix')
             ->select('file')
             ->where('no_rawat', $norawat)
             ->where('jenis_berkas', 'HASIL')
@@ -87,7 +87,7 @@ class HomeCasemix extends Controller
             'cekBerkas' => $cekBerkas,
             'cekBerkasKhanza' => $cekBerkasKhanza,
             'cekBerkasHasil' => $cekBerkasHasil,
-            'dwonloadFile'=>$dwonloadFile,
+            'downloadFile'=>$downloadFile,
         ]);
     }
 }

@@ -60,11 +60,9 @@
                                         <td>{{ $item->tgl_registrasi }}</td>
                                         <td>
                                             <div class="btn-group">
-                                                @if (isset($cekBerkas[$item->no_rawat]))
-                                                    @php $color = 'bg-success'; @endphp
-                                                @else
-                                                    @php $color = 'bg-primary'; @endphp
-                                                @endif
+                                                @php
+                                                    $color = isset($cekBerkas[$item->no_rawat]) ? 'bg-success' : 'bg-primary';
+                                                @endphp
                                                 <form action="{{ url('cariNorawat-ClaimBpjs') }}" method="">
                                                     @csrf
                                                     <input name="cariNorawat" value="{{ $item->no_rawat }}" hidden>
@@ -72,11 +70,10 @@
                                                         <i class="fas fa-upload"> File Scan</i>
                                                     </button>
                                                 </form>
-                                                @if (isset($cekBerkasKhanza[$item->no_rawat]))
-                                                    @php $color2 = 'bg-success'; @endphp
-                                                @else
-                                                    @php $color2 = 'bg-primary'; @endphp
-                                                @endif
+
+                                                @php
+                                                    $color2 = isset($cekBerkasKhanza[$item->no_rawat]) ? 'bg-success' : 'bg-primary';
+                                                @endphp
                                                 <form action="{{ url('carinorawat-casemix') }}" method=""
                                                     class="">
                                                     @csrf
@@ -86,11 +83,10 @@
                                                         <i class="fas fa-save"> Khanza</i>
                                                     </button>
                                                 </form>
-                                                @if (isset($cekBerkasHasil[$item->no_rawat]))
-                                                    @php $color3 = 'bg-success'; @endphp
-                                                @else
-                                                    @php $color3 = 'bg-primary'; @endphp
-                                                @endif
+
+                                                @php
+                                                    $color3 = isset($cekBerkasHasil[$item->no_rawat]) ? 'bg-success' : 'bg-primary';
+                                                @endphp
                                                 <form action="{{ url('gabung-berkas-casemix') }}" method="">
                                                     @csrf
                                                     <input name="cariNorawat" value="{{ $item->no_rawat }}" hidden>
@@ -98,13 +94,12 @@
                                                         <i class="fas fa-save"> Gabung</i>
                                                     </button>
                                                 </form>
-                                                @if ($dwonloadFile)
-                                                <a href="{{ url('hasil_pdf/'.$dwonloadFile->file) }}" download
-                                                    class="ml-2 text-success">
-                                                    <i class="fas fa-download"></i>
-                                                </a>
+                                                @if ($downloadFile)
+                                                    <a href="{{ url('hasil_pdf/' . $downloadFile->file) }}" download
+                                                        class="ml-2 text-success">
+                                                        <i class="fas fa-download"></i>
+                                                    </a>
                                                 @endif
-
                                             </div>
                                         </td>
                                     </tr>

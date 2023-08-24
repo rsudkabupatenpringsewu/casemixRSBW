@@ -12,12 +12,13 @@ use Illuminate\Support\Facades\Redirect;
 class BpjsController extends Controller
 {
     function claimBpjs(Request $request) {
-        $noRawat = $request->cariNorawat;
+        $cariNoSep = $request->cariNoSep;
         $pasien = DB::table('reg_periksa')
         ->join('pasien', 'pasien.no_rkm_medis', '=', 'reg_periksa.no_rkm_medis')
         ->join('penjab', 'penjab.kd_pj', '=', 'reg_periksa.kd_pj')
-        ->where('reg_periksa.no_rawat', $noRawat)
-        ->select('pasien.no_rkm_medis', 'pasien.nm_pasien', 'reg_periksa.no_rawat', 'penjab.png_jawab');
+        ->join('bridging_sep','bridging_sep.no_rawat','=','reg_periksa.no_rawat')
+        ->where('bridging_sep.no_sep', '=', $cariNoSep)
+        ->select('pasien.no_rkm_medis', 'pasien.nm_pasien', 'bridging_sep.no_sep', 'reg_periksa.no_rawat', 'penjab.png_jawab');
         $getPasien = $pasien->first();
 
         return view('bpjs.ulploadFileClaim', [
@@ -69,8 +70,8 @@ class BpjsController extends Controller
 
         $redirectUrl = url('/casemix-home-cari');
         $csrfToken = Session::token();
-        $noRawat = $request->no_rawat;
-        $redirectUrlWithToken = $redirectUrl . '?' . http_build_query(['_token' => $csrfToken, 'cariNorawat' => $noRawat]);
+        $cariNoSep = $request->no_sep;
+        $redirectUrlWithToken = $redirectUrl . '?' . http_build_query(['_token' => $csrfToken, 'cariNorawat' => $cariNoSep]);
         return redirect($redirectUrlWithToken);
     }
 }

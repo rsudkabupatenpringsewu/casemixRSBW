@@ -8,18 +8,18 @@
             @if (session('success'))
                 @php
                     $cardColor = 'card-success';
-                    $textCard =  session('success')
+                    $textCard = session('success');
                 @endphp
             @else
                 @php
                     $cardColor = 'card-primary';
-                    $textCard =  'Casemix Bpjs'
+                    $textCard = 'Casemix Bpjs';
                 @endphp
             @endif
 
             <div class="card  {{ $cardColor }}">
                 <div class="card-header">
-                    <h5 class="card-title">{{$textCard}}</h5>
+                    <h5 class="card-title">{{ $textCard }}</h5>
 
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -28,37 +28,37 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form action="#" action="POST" class="px-3">
-                        @csrf
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    {{-- <div class="input-group input-group-lg">
-                                        <input type="search" name="cariNorawat" class="form-control form-control-lg"
-                                            placeholder="Cari berdasarkan nomor rawat">
-                                        <div class="input-group-append">
-                                            <button type="submit" class="btn btn-lg btn-default">
-                                                <i class="fa fa-search"></i>
-                                            </button>
-                                        </div>
-                                    </div> --}}
-                                </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+
                             </div>
-                            @if (isset($_GET['cariNorawat']))
-                                <div class="col-md-8">
+                        </div>
+                        @if (isset($_GET['cariNorawat']))
+                            <div class="col-md-8">
+                                <div class="form-group">
                                     @php
                                         $printNoRawat = isset($_GET['cariNorawat']) ? $_GET['cariNorawat'] : '';
+                                        $cariNoSep = isset($_GET['cariNoSep']) ? $_GET['cariNoSep'] : '';
                                     @endphp
-                                    <a href="{{ url('print-casemix', urlencode($printNoRawat)) }}" rel="noopener"
-                                    class="btn btn-success float-right"><i class="fas fa-print"></i>
-                                        Simpan PDF</a>
+                                    {{-- <a href="{{ url('print-casemix', urlencode($printNoRawat)) }}" rel="noopener"
+                                        class="btn btn-success float-right"><i class="fas fa-print"></i>
+                                        Simpan PDF</a> --}}
+                                    <form action="{{ url('/print-casemix') }}" method="">
+                                        @csrf
+                                        <input name="cariNorawat" value="{{ $printNoRawat }}" hidden>
+                                        <input name="cariNoSep" value="{{ $cariNoSep }}" hidden>
+                                        <button type="submit" class="btn btn-success float-right">
+                                            <i class="fas fa-save">Simpan PDF</i>
+                                        </button>
+                                    </form>
                                 </div>
-                            @else
-                                <div class="col-md-8">
-                                </div>
-                            @endif
-                        </div>
-                    </form>
+                            </div>
+                        @else
+                            <div class="col-md-8">
+                            </div>
+                        @endif
+                    </div>
                     @if ($jumlahData > 0)
                         {{-- BERKAS SEP ============================================================= --}}
                         @if ($getSEP)

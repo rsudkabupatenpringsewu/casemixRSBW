@@ -18,8 +18,8 @@
     <link rel="stylesheet" href="/plugins/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="/plugins/summernote/summernote-bs4.min.css" />
     <script src="/js/plotly-latest.min.js"></script> {{-- CHART  --}}
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    {{-- <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script> --}}
     {{-- TEST --}}
 </head>
 
@@ -164,24 +164,31 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ url('/casemix-home') }}" class="nav-link">
+                        <li class="nav-item">{{-- menu-open --}}
+                            <a href="#" class="nav-link">{{-- active --}}
                                 <i class="nav-icon fas fa-hospital"></i>
                                 <p>
-                                    Casesmix
-                                    <span class="right badge badge-danger">New</span>
+                                    Case-mix
+                                    <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('/list-pasein-ralan') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>List Pasien Ralan</p>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('/casemix-home') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Gabung Berkas</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
-                        {{-- <li class="nav-item">
-                            <a href="{{ url('/test') }}" class="nav-link">
-                                <i class="nav-icon fas fa-hospital"></i>
-                                <p>
-                                    TEST
-                                    <span class="right badge badge-danger">New</span>
-                                </p>
-                            </a>
-                        </li> --}}
                     </ul>
                 </nav>
             </div>
@@ -254,7 +261,8 @@
     <script src="/dist/js/adminlte.js"></script>
     <script src="/dist/js/pages/dashboard.js"></script>
     <script src="/js/sidebarmenu.js"></script>
-    {{-- EXPORT PDF --}}
+    {{-- TEST --}}
+
 
     <script>
         $(document).ready(function() {

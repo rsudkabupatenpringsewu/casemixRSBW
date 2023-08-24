@@ -50,13 +50,19 @@
                                             placeholder="No Rawat">
                                     </div>
                                     <div class="form-group">
+                                        <label for="no_sep">No SEP</label>
+                                        <input type="text" class="form-control" name="no_sep"
+                                            value="@isset($getPasien){{ $getPasien->no_sep }} @endisset"
+                                            placeholder="No Rawat">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
                                         <label for="nm_pasien">Nama Pasien</label>
                                         <input type="text" class="form-control" name="nama_pasein"
                                             value="@isset($getPasien) {{ $getPasien->nm_pasien }} @endisset"
                                             placeholder="Nama Pasien">
                                     </div>
-                                </div>
-                                <div class="col-4">
                                     <div class="form-group">
                                         <label for="berkas_claim">Berkas INACBG</label>
                                         <div class="custom-file">

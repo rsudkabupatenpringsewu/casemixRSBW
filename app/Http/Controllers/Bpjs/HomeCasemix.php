@@ -76,11 +76,14 @@ class HomeCasemix extends Controller
                     ->first();
                 $cekBerkasHasil[$item->no_rawat] = $berkas;
             }
-        $downloadFile = DB::connection('db_con2')->table('file_casemix')
-            ->select('file')
-            ->where('no_rawat', $norawat)
-            ->where('jenis_berkas', 'HASIL')
-            ->first();
+            foreach ($getPasien as $item) {
+                $noRawatPasien = $item->no_rawat;
+                $downloadFile = DB::connection('db_con2')->table('file_casemix')
+                ->select('file')
+                ->where('no_rawat', $noRawatPasien)
+                ->where('jenis_berkas', 'HASIL')
+                ->first();
+            }
 
         return view('bpjs.homecasemix', [
             'getPasien'=>$getPasien,

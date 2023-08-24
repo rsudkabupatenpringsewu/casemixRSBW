@@ -65,7 +65,7 @@
                                                 @endphp
                                                 <form action="{{ url('cariNorawat-ClaimBpjs') }}" method="">
                                                     @csrf
-                                                    <input name="cariNorawat" value="{{ $item->no_rawat }}" hidden>
+                                                    <input name="cariNoSep" value="{{ $item->no_sep }}" hidden>
                                                     <button class="badge {{ $color }}">
                                                         <i class="fas fa-upload"> File Scan</i>
                                                     </button>
@@ -90,6 +90,8 @@
                                                 <form action="{{ url('gabung-berkas-casemix') }}" method="">
                                                     @csrf
                                                     <input name="cariNorawat" value="{{ $item->no_rawat }}" hidden>
+                                                    <input name="tgl1" value="{{ session('tgl1') }}" hidden>
+                                                    <input name="tgl2" value="{{ session('tgl2') }}" hidden>
                                                     <button class="badge {{ $color3 }}">
                                                         <i class="fas fa-save"> Gabung</i>
                                                     </button>
@@ -97,7 +99,7 @@
                                                 @if ($downloadFile)
                                                     <a href="{{ url('hasil_pdf/' . $downloadFile->file) }}" download
                                                         class="ml-2 text-success">
-                                                        <i class="fas fa-download"></i>
+                                                            <i class="fas fa-download"></i>
                                                     </a>
                                                 @endif
                                             </div>

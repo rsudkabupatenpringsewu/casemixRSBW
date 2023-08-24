@@ -6,6 +6,7 @@ use setasign\Fpdi\Fpdi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 
 class GabungBerkas extends Controller
 {
@@ -97,6 +98,8 @@ class GabungBerkas extends Controller
                 'file' => $path_file,
             ]);
         }
-        return back()->with('success', 'Simpan success!');
+        Session::forget('tgl1');
+        Session::forget('tgl2');
+        return redirect('/cari-list-pasein-ralan?tgl1=' . $request->tgl1 . '&tgl2=' . $request->tgl2);
     }
 }

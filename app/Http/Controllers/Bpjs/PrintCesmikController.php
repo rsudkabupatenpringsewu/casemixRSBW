@@ -11,8 +11,9 @@ use Illuminate\Support\Facades\Storage;
 
 class PrintCesmikController extends Controller
 {
-    function printCasemix(Request $request, $id){
-        $noRawat = urldecode($id);
+    function printCasemix(Request $request){
+        $noRawat = $request->cariNorawat;
+        $cariNoSep = $request->cariNoSep;
         $cekNorawat = DB::table('reg_periksa')
         ->select('reg_periksa.status_lanjut', 'pasien.nm_pasien', 'reg_periksa.no_rkm_medis')
         ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
@@ -20,7 +21,6 @@ class PrintCesmikController extends Controller
         $jumlahData = $cekNorawat->count();
         $statusLanjut = $cekNorawat->first();
         $getpasien = $cekNorawat->first();
-
 
 
         if ($jumlahData > 0) {
@@ -349,7 +349,7 @@ class PrintCesmikController extends Controller
 
         $redirectUrl = url('/casemix-home-cari');
         $csrfToken = Session::token();
-        $noRawat = $noRawat;
+        $noRawat = $cariNoSep;
         $redirectUrlWithToken = $redirectUrl . '?' . http_build_query(['_token' => $csrfToken, 'cariNorawat' => $noRawat]);
         return redirect($redirectUrlWithToken);
     }

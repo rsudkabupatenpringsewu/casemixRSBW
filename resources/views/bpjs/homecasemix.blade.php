@@ -92,6 +92,7 @@
                                                     <input name="cariNorawat" value="{{ $item->no_rawat }}" hidden>
                                                     <input name="tgl1" value="{{ session('tgl1') }}" hidden>
                                                     <input name="tgl2" value="{{ session('tgl2') }}" hidden>
+                                                    <input name="statusLanjut" value="{{ session('statusLanjut') }}" hidden>
                                                     <button class="badge {{ $color3 }}">
                                                         <i class="fas fa-save"> Gabung</i>
                                                     </button>

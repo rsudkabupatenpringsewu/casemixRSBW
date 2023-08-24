@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
-class ListPasienRalan extends Controller
+class ListPasienRanap extends Controller
 {
-    function lisPaseinRalan(Request $request){
-        $tanggl1 = date('Y-m-d', strtotime('-1 day'));
-        $tanggl2 = date('Y-m-d', strtotime('-1 day'));
+    function lisPaseinRanap(Request $request){
+        $tanggl1 = date('Y-m-d');
+        $tanggl2 = date('Y-m-d');
         $penjamnin = 'BPJ';
 
         $daftarPasien = DB::table('reg_periksa')
@@ -18,7 +18,7 @@ class ListPasienRalan extends Controller
             ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
             ->join('bridging_sep','bridging_sep.no_rawat','=','reg_periksa.no_rawat')
             ->whereBetween('reg_periksa.tgl_registrasi',[$tanggl1, $tanggl2])
-            ->where('reg_periksa.status_lanjut','=','Ralan')
+            ->where('reg_periksa.status_lanjut','=','Ranap')
             ->where('reg_periksa.kd_pj','=', $penjamnin)
             ->get();
             $downloadBerkas = DB::connection('db_con2')
@@ -30,9 +30,9 @@ class ListPasienRalan extends Controller
 
         session(['tgl1' => $tanggl1]);
         session(['tgl2' => $tanggl2]);
-        session(['statusLanjut' => 'Ralan']);
+        session(['statusLanjut' => 'Ranap']);
 
-        return view('bpjs.listpasien-ralan', [
+        return view('bpjs.listpasien-ranap', [
             'daftarPasien'=>$daftarPasien,
             'downloadBerkas'=>$downloadBerkas,
             'penjamnin'=>$penjamnin,
@@ -41,7 +41,7 @@ class ListPasienRalan extends Controller
         ]);
     }
 
-    function cariListPaseinRalan(Request $request){
+    function cariListPaseinRanap(Request $request){
         $tanggl1 = $request->tgl1;
         $tanggl2 = $request->tgl2;
         $penjamnin = 'BPJ';
@@ -51,7 +51,7 @@ class ListPasienRalan extends Controller
             ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
             ->join('bridging_sep','bridging_sep.no_rawat','=','reg_periksa.no_rawat')
             ->whereBetween('reg_periksa.tgl_registrasi',[$tanggl1, $tanggl2])
-            ->where('reg_periksa.status_lanjut','=','Ralan')
+            ->where('reg_periksa.status_lanjut','=','Ranap')
             ->where('reg_periksa.kd_pj','=', $penjamnin)
             ->get();
             $downloadBerkas = DB::connection('db_con2')
@@ -63,9 +63,9 @@ class ListPasienRalan extends Controller
 
         session(['tgl1' => $request->tgl1]);
         session(['tgl2' => $request->tgl2]);
-        session(['statusLanjut' => 'Ralan']);
+        session(['statusLanjut' => 'Ranap']);
 
-        return view('bpjs.listpasien-ralan', [
+        return view('bpjs.listpasien-ranap', [
             'daftarPasien'=>$daftarPasien,
             'downloadBerkas'=>$downloadBerkas,
             'penjamnin'=>$penjamnin,

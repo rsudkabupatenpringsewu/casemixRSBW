@@ -1,10 +1,10 @@
 @extends('..layout.layoutDashboard')
-@section('title', 'Pasein Rawat Jalan')
+@section('title', 'Pasein Rawat Inap')
 
 @section('konten')
     <div class="row">
         <div class="col-md-12">
-            <form action="{{ url('/cari-list-pasein-ralan') }}" action="POST">
+            <form action="{{ url('/cari-list-pasein-ranap') }}" action="POST">
                 @csrf
                 <div class="row">
                     <div class="col-md-2">
@@ -46,7 +46,7 @@
                         $penjab = $penjamnin === 'BPJ' ? 'BPJS' : '';
                     @endphp
                     <h3 class="card-title">List Pasien <b>{{ $penjab }}</b>, Dari Tanggal: <b>{{ $tanggl1 }}</b>
-                        sampai <b>{{ $tanggl2 }} Rawat Jalan</b></h3>
+                        sampai <b>{{ $tanggl2 }} Rawat Inap</b></h3>
                 </div>
                 <table class="card-body table table-bordered">
                     <thead>

@@ -100,6 +100,11 @@ class GabungBerkas extends Controller
         }
         Session::forget('tgl1');
         Session::forget('tgl2');
-        return redirect('/cari-list-pasein-ralan?tgl1=' . $request->tgl1 . '&tgl2=' . $request->tgl2);
+        Session::forget('statusLanjut');
+        if ($request->statusLanjut === 'Ranap') {
+            return redirect('/cari-list-pasein-ranap?tgl1=' . $request->tgl1 . '&tgl2=' . $request->tgl2);
+        }else{
+            return redirect('/cari-list-pasein-ralan?tgl1=' . $request->tgl1 . '&tgl2=' . $request->tgl2);
+        }
     }
 }

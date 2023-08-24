@@ -12,7 +12,7 @@
                             <div class="form-group">
                                 <div class="input-group input-group-xs">
                                     <input type="search" name="cariNorawat" class="form-control form-control-xs"
-                                        placeholder="Cari berdasarkan nomor rawat">
+                                        placeholder="Cari RM, No.Rawat, No.SEP">
                                     <div class="input-group-append">
                                     </div>
                                 </div>

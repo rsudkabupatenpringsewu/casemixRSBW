@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Bpjs\DataInacbg;
 use App\Http\Controllers\Bpjs\HomeCasemix;
 use App\Http\Controllers\Bpjs\GabungBerkas;
 use App\Http\Controllers\Bpjs\BpjsController;
@@ -39,17 +40,14 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     // CASEMIX
     Route::get('/list-pasein-ralan', [ListPasienRalan::class, 'lisPaseinRalan']);
     Route::get('/cari-list-pasein-ralan', [ListPasienRalan::class, 'cariListPaseinRalan']);
-
     Route::get('/casemix-home', [HomeCasemix::class, 'casemixHome']);
     Route::get('/casemix-home-cari', [HomeCasemix::class, 'casemixHomeCari']);
-
     Route::get('/cariNorawat-ClaimBpjs', [BpjsController::class, 'claimBpjs']);
     Route::post('/upload-berkas', [BpjsController::class, 'inputClaimBpjs']);
-
     Route::get('/carinorawat-casemix', [CesmikController::class, 'Casemix']);
     Route::get('/print-casemix', [PrintCesmikController::class, 'printCasemix']);
-
     Route::get('/gabung-berkas-casemix', [GabungBerkas::class, 'gabungBerkas']);
+    Route::get('/data-inacbg', [DataInacbg::class, 'Inacbg']);
 });
 
 

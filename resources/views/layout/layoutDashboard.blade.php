@@ -54,7 +54,7 @@
                         <a class="dropdown-item" tabindex="-1" href="#">Another action</a>
                         <a class="dropdown-item" tabindex="-1" href="#">Something else here</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" tabindex="-1" href="{{route('logoutp')}}">
+                        <a class="dropdown-item" tabindex="-1" href="{{route('logout')}}">
                             <ion-icon name="logo-laravel"></ion-icon> Logout
                         </a>
                     </div>

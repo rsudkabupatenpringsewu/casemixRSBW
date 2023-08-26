@@ -22,6 +22,13 @@
                           <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+                @elseif (session('sucsessLogout'))
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Berhasil! </strong> {{ session('sucsessLogout') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
                 @else
                     <p class="login-box-msg">Sign in to start your session</p>
                 @endif

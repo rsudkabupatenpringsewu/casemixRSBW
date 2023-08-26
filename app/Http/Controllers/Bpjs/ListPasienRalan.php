@@ -27,6 +27,10 @@ class ListPasienRalan extends Controller
                 ->whereIn('no_rawat', $daftarPasien->pluck('no_rawat')->toArray())
                 ->where('jenis_berkas', 'HASIL')
                 ->get();
+            $cekTerkirimInacbg = DB::table('inacbg_klaim_baru2')
+                ->select('no_sep')
+                ->whereIn('no_sep', $daftarPasien->pluck('no_sep')->toArray())
+                ->get();
 
         session(['tgl1' => $tanggl1]);
         session(['tgl2' => $tanggl2]);
@@ -35,6 +39,7 @@ class ListPasienRalan extends Controller
         return view('bpjs.listpasien-ralan', [
             'daftarPasien'=>$daftarPasien,
             'downloadBerkas'=>$downloadBerkas,
+            'cekTerkirimInacbg'=>$cekTerkirimInacbg,
             'penjamnin'=>$penjamnin,
             'tanggl1'=>$tanggl1,
             'tanggl2'=>$tanggl2,
@@ -60,6 +65,10 @@ class ListPasienRalan extends Controller
                 ->whereIn('no_rawat', $daftarPasien->pluck('no_rawat')->toArray())
                 ->where('jenis_berkas', 'HASIL')
                 ->get();
+            $cekTerkirimInacbg = DB::table('inacbg_klaim_baru2')
+            ->select('no_sep')
+            ->whereIn('no_sep', $daftarPasien->pluck('no_sep')->toArray())
+            ->get();
 
         session(['tgl1' => $request->tgl1]);
         session(['tgl2' => $request->tgl2]);
@@ -68,6 +77,7 @@ class ListPasienRalan extends Controller
         return view('bpjs.listpasien-ralan', [
             'daftarPasien'=>$daftarPasien,
             'downloadBerkas'=>$downloadBerkas,
+            'cekTerkirimInacbg'=>$cekTerkirimInacbg,
             'penjamnin'=>$penjamnin,
             'tanggl1'=>$tanggl1,
             'tanggl2'=>$tanggl2,

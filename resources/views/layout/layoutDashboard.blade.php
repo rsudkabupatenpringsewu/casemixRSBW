@@ -45,8 +45,8 @@
                 <!-- Navbar Search -->
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="far fa-bell"></i>
+                    <a class="nav-link text-lg" data-toggle="dropdown" href="#">
+                        <i class="far fa-user"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                         <div class="dropdown-divider"></div>
@@ -54,7 +54,7 @@
                         <a class="dropdown-item" tabindex="-1" href="#">Another action</a>
                         <a class="dropdown-item" tabindex="-1" href="#">Something else here</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" tabindex="-1" href="#">
+                        <a class="dropdown-item" tabindex="-1" href="{{route('logoutp')}}">
                             <ion-icon name="logo-laravel"></ion-icon> Logout
                         </a>
                     </div>
@@ -80,7 +80,14 @@
                         <img src="/img/rs.jpg" class="img-circle elevation-2" alt="User Image" />
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Admin</a>
+                        <a href="#" class="d-block">
+                            @if (session()->has('user'))
+                                @php
+                                    $auth = session('user');
+                                @endphp
+                               {{ $auth->nama }}
+                            @endif
+                        </a>
                     </div>
                 </div>
                 <nav class="mt-2 sidebar-nav">

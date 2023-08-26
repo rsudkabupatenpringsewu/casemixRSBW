@@ -26,9 +26,18 @@ class AuthController extends Controller
             Session::flash('errorLogin', 'Cek kembali akun anda');
             return redirect('/login');
         }else{
+            $userLogin = DB::table('pegawai')
+                ->select('pegawai.nama')
+                ->where('pegawai.nik', '=', $request->id_user)
+                ->first();
+            session(['user' => $userLogin]);
             session(['auth' => $data]);
             return redirect()->intended('/')->with('sucsessLogin', 'Berhasil Login');
         }
-
+    }
+    function Logout(Request $request){
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/login')->with('sucsessLogout', 'Berhasil Logout');
     }
 }

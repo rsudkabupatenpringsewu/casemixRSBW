@@ -32,6 +32,8 @@ Route::get('/login', [AuthController::class, 'Login'])->name('login');
 Route::post('/mesinlogin', [AuthController::class, 'mesinLogin']);
 
 Route::group(['middleware' => 'auth-rsbw'], function () {
+    Route::get('/logout', [AuthController::class, 'Logout'])->name('logout');
+
     Route::get('/', [PasienController::class, 'Pasien']);
 
     Route::get('/returObat', [ReturObatController::class, 'Obat']);

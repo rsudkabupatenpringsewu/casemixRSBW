@@ -55,7 +55,7 @@
                             <th>RM</th>
                             <th>No.Rawat</th>
                             <th>No.Sep</th>
-                            <th>Pasein</th>
+                            <th>Pasein | Terkirim E-Klaim</th>
                             <th>Bayar</th>
                             <th>Tgl.Sep</th>
                         </tr>
@@ -64,12 +64,13 @@
                         @foreach ($daftarPasien as $item)
                             <tr>
                                 @php
-                                    $matchingBerks = $downloadBerkas->where('no_rawat', $item->no_rawat);
+                                    $matchingBerksDownload = $downloadBerkas->where('no_rawat', $item->no_rawat);
+                                    $matchingBerksInacbg = $cekTerkirimInacbg->where('no_sep', $item->no_sep);
                                 @endphp
                                 <td class="text-center">
-                                    @if ($matchingBerks->isNotEmpty())
-                                        @foreach ($matchingBerks as $berks)
-                                            <a href="{{ url('hasil_pdf/' . $berks->file) }}" download class="text-success">
+                                    @if ($matchingBerksDownload->isNotEmpty())
+                                        @foreach ($matchingBerksDownload as $berkas)
+                                            <a href="{{ url('hasil_pdf/' . $berkas->file) }}" download class="text-success">
                                                 <i class="fas fa-download"></i>
                                             </a>
                                         @endforeach
@@ -86,7 +87,14 @@
                                 <td>{{ $item->no_rkm_medis }}</td>
                                 <td>{{ $item->no_rawat }}</td>
                                 <td>{{ $item->no_sep }}</td>
-                                <td>{{ $item->nm_pasien }}</td>
+                                <td>
+                                    {{ $item->nm_pasien }} &nbsp;
+                                    @if ($matchingBerksInacbg->isNotEmpty())
+                                        <span class="text-success"><i class="fas fa-check"></i></span>
+                                    @else
+                                        <span class="text-danger"><i class="fas fa-pen-nib"></i></span>
+                                    @endif
+                                </td>
                                 <td>{{ $item->status_bayar }}</td>
                                 <td>{{ $item->tglsep }}</td>
                             </tr>

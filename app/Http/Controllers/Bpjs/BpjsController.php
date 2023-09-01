@@ -16,8 +16,9 @@ class BpjsController extends Controller
         $pasien = DB::table('reg_periksa')
         ->join('pasien', 'pasien.no_rkm_medis', '=', 'reg_periksa.no_rkm_medis')
         ->join('penjab', 'penjab.kd_pj', '=', 'reg_periksa.kd_pj')
-        ->join('bridging_sep','bridging_sep.no_rawat','=','reg_periksa.no_rawat')
+        ->leftJoin('bridging_sep','bridging_sep.no_rawat','=','reg_periksa.no_rawat')
         ->where('bridging_sep.no_sep', '=', $cariNoSep)
+        ->orWhere('reg_periksa.no_rawat', '=', $cariNoSep)
         ->select('pasien.no_rkm_medis', 'pasien.nm_pasien', 'bridging_sep.no_sep', 'reg_periksa.no_rawat', 'penjab.png_jawab');
         $getPasien = $pasien->first();
 
@@ -71,7 +72,8 @@ class BpjsController extends Controller
         $redirectUrl = url('/casemix-home-cari');
         $csrfToken = Session::token();
         $cariNoSep = $request->no_sep;
-        $redirectUrlWithToken = $redirectUrl . '?' . http_build_query(['_token' => $csrfToken, 'cariNorawat' => $cariNoSep]);
+        $cariNoRawat = $request->no_rawat;
+        $redirectUrlWithToken = $redirectUrl . '?' . http_build_query(['_token' => $csrfToken, 'cariNorawat' => $cariNoSep, 'cariNorawat' => $cariNoRawat,]);
         return redirect($redirectUrlWithToken);
     }
 }

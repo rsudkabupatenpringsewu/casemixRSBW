@@ -77,6 +77,7 @@
                                         <form action="{{ url('casemix-home-cari') }}" method="">
                                             @csrf
                                             <input name="cariNorawat" value="{{ $item->no_sep }}" hidden>
+                                            <input name="cariNorawat" value="{{ $item->no_rawat }}" hidden>
                                             <button class="" style="background: none; border: none;">
                                                 <i class="nav-icon fas fa-receipt"></i>
                                             </button>

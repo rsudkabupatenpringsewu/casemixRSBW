@@ -40,7 +40,7 @@ class HomeCasemix extends Controller
             ->select('reg_periksa.no_rawat', 'reg_periksa.no_rkm_medis', 'reg_periksa.tgl_registrasi', 'pasien.nm_pasien',
                     'pasien.jk', 'bridging_sep.no_sep')
             ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
-            ->join('bridging_sep','bridging_sep.no_rawat','=','reg_periksa.no_rawat')
+            ->leftJoin('bridging_sep','bridging_sep.no_rawat','=','reg_periksa.no_rawat')
             ->where('reg_periksa.no_rawat', '=', $norawat)
             ->orWhere('reg_periksa.no_rkm_medis', '=', $norawat)
             ->orWhere('bridging_sep.no_sep', '=', $norawat)

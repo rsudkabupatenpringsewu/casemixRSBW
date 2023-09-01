@@ -66,6 +66,7 @@
                                                 <form action="{{ url('cariNorawat-ClaimBpjs') }}" method="">
                                                     @csrf
                                                     <input name="cariNoSep" value="{{ $item->no_sep }}" hidden>
+                                                    <input name="cariNoSep" value="{{ $item->no_rawat }}" hidden>
                                                     <button class="badge {{ $color }}">
                                                         <i class="fas fa-upload"> File Scan</i>
                                                     </button>

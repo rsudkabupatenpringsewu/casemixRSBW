@@ -49,7 +49,7 @@
                                         <input name="cariNorawat" value="{{ $printNoRawat }}" hidden>
                                         <input name="cariNoSep" value="{{ $cariNoSep }}" hidden>
                                         <button type="submit" class="btn btn-success float-right">
-                                            <i class="fas fa-save">Simpan PDF</i>
+                                            <i class="fas fa-save"> Simpan PDF</i>
                                         </button>
                                     </form>
                                 </div>
@@ -927,9 +927,13 @@
                                                 <tr style="vertical-align: top;">
                                                     <td width="130px">Alamat </td>
                                                     <td width="300px">: {{ $periksa->alamat }}</td>
-
-                                                    <td width="130px">Kamar </td>
-                                                    <td width="200px">: {{ $periksa->nm_bangsal }}</td>
+                                                    @if ($statusLanjut->status_lanjut == 'Ranap')
+                                                        <td width="130px">Kamar </td>
+                                                        <td width="200px">: {{ $periksa->nm_bangsal }}</td>
+                                                    @else
+                                                        <td width="130px">Poli </td>
+                                                        <td width="200px">: {{ $periksa->nm_poli }}</td>
+                                                    @endif
                                                 </tr>
                                                 <tr style="vertical-align: top;">
                                                     <td width="130px"> Dokter Pengirim </td>
@@ -1065,10 +1069,16 @@
                                             <tr style="vertical-align: top;">
                                                 <td width="130px">No.Periksa </td>
                                                 <td width="300px">: {{ $item->no_rawat }}</td>
-                                                <td width="130px">Kamar </td>
-                                                <td width="200px">: {{ $item->kd_kamar }} |
-                                                    {{ $item->nm_bangsal }}
-                                                </td>
+                                                @if ($statusLanjut->status_lanjut == 'Ranap')
+                                                    <td width="130px">Kamar </td>
+                                                    <td width="200px">: {{ $item->kd_kamar }} |
+                                                        {{ $item->nm_bangsal }}
+                                                    </td>
+                                                @else
+                                                    <td width="130px">Poli </td>
+                                                    <td width="200px">: {{ $item->nm_poli }}
+                                                    </td>
+                                                @endif
                                             </tr>
                                             <tr style="vertical-align: top;">
                                                 <td width="130px">Pemeriksaan </td>

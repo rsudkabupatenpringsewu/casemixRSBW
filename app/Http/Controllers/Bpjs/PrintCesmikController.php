@@ -225,16 +225,17 @@ class PrintCesmikController extends Controller
             ->select('periksa_lab.no_rawat', 'reg_periksa.no_rkm_medis', 'pasien.nm_pasien', 'pasien.jk', 'pasien.alamat',
                     'pasien.umur', 'petugas.nama as nama_petugas','petugas.nip', 'periksa_lab.tgl_periksa', 'periksa_lab.jam',
                     'periksa_lab.dokter_perujuk', 'periksa_lab.kd_dokter', 'dokter.nm_dokter', 'dokter_pj.nm_dokter as nm_dokter_pj', 'penjab.png_jawab', 'kamar_inap.kd_kamar',
-                    'kamar.kd_bangsal', 'bangsal.nm_bangsal')
+                    'kamar.kd_bangsal', 'poliklinik.nm_poli', 'bangsal.nm_bangsal')
             ->join('reg_periksa','periksa_lab.no_rawat','=','reg_periksa.no_rawat')
             ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
             ->join('petugas','periksa_lab.nip','=','petugas.nip')
             ->join('penjab','reg_periksa.kd_pj','=','penjab.kd_pj')
             ->join('dokter','periksa_lab.kd_dokter','=','dokter.kd_dokter')
             ->join('dokter as dokter_pj','periksa_lab.dokter_perujuk','=','dokter_pj.kd_dokter')
-            ->join('kamar_inap','kamar_inap.no_rawat','=','reg_periksa.no_rawat')
-            ->join('kamar','kamar_inap.kd_kamar','=','kamar.kd_kamar')
-            ->join('bangsal','kamar.kd_bangsal','=','bangsal.kd_bangsal')
+            ->leftJoin('kamar_inap','kamar_inap.no_rawat','=','reg_periksa.no_rawat')
+            ->leftJoin('kamar','kamar_inap.kd_kamar','=','kamar.kd_kamar')
+            ->leftJoin('bangsal','kamar.kd_bangsal','=','bangsal.kd_bangsal')
+            ->leftJoin('poliklinik','reg_periksa.kd_poli','=','poliklinik.kd_poli')
             ->where('periksa_lab.kategori','=','PK')
             ->where('periksa_lab.no_rawat','=', $noRawat)
             ->groupBy('periksa_lab.no_rawat','periksa_lab.tgl_periksa','periksa_lab.jam')
@@ -285,6 +286,7 @@ class PrintCesmikController extends Controller
                     'pasien.alamat',
                     'dokter.nm_dokter',
                     'kamar_inap.kd_kamar',
+                    'poliklinik.nm_poli',
                     'bangsal.nm_bangsal',
                     'periksa_radiologi.nip',
                     'periksa_radiologi.kd_dokter as kd_dokter_pj',
@@ -294,9 +296,10 @@ class PrintCesmikController extends Controller
             ->join('reg_periksa','hasil_radiologi.no_rawat','=','reg_periksa.no_rawat')
             ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
             ->join('dokter','reg_periksa.kd_dokter','=','dokter.kd_dokter')
-            ->join('kamar_inap','kamar_inap.no_rawat','=','reg_periksa.no_rawat')
-            ->join('kamar','kamar_inap.kd_kamar','=','kamar.kd_kamar')
-            ->join('bangsal','kamar.kd_bangsal','=','bangsal.kd_bangsal')
+            ->leftJoin('kamar_inap','kamar_inap.no_rawat','=','reg_periksa.no_rawat')
+            ->leftJoin('kamar','kamar_inap.kd_kamar','=','kamar.kd_kamar')
+            ->leftJoin('bangsal','kamar.kd_bangsal','=','bangsal.kd_bangsal')
+            ->leftJoin('poliklinik','reg_periksa.kd_poli','=','poliklinik.kd_poli')
             ->join('periksa_radiologi',function($join) {
                 $join->on('periksa_radiologi.no_rawat','=','hasil_radiologi.no_rawat')
                 ->on('hasil_radiologi.jam','=','periksa_radiologi.jam');

@@ -38,6 +38,7 @@
         .card-body {
             page-break-after: always;
         }
+
         .card-body:last-child {
             page-break-after: auto;
         }
@@ -912,9 +913,13 @@
                             <tr style="vertical-align: top;">
                                 <td>Alamat </td>
                                 <td>: {{ $periksa->alamat }}</td>
-
-                                <td>Kamar </td>
-                                <td>: {{ $periksa->nm_bangsal }}</td>
+                                @if ($statusLanjut->status_lanjut == 'Ranap')
+                                    <td width="130px">Kamar </td>
+                                    <td width="200px">: {{ $periksa->nm_bangsal }}</td>
+                                @else
+                                    <td width="130px">Poli </td>
+                                    <td width="200px">: {{ $periksa->nm_poli }}</td>
+                                @endif
                             </tr>
                             <tr style="vertical-align: top;">
                                 <td> Dokter Pengirim </td>
@@ -1049,10 +1054,16 @@
                         <tr style="vertical-align: top;">
                             <td>No.Periksa </td>
                             <td>: {{ $item->no_rawat }}</td>
-                            <td>Kamar </td>
-                            <td>: {{ $item->kd_kamar }} |
-                                {{ $item->nm_bangsal }}
-                            </td>
+                            @if ($statusLanjut->status_lanjut == 'Ranap')
+                                <td width="130px">Kamar </td>
+                                <td width="200px">: {{ $item->kd_kamar }} |
+                                    {{ $item->nm_bangsal }}
+                                </td>
+                            @else
+                                <td width="130px">Poli </td>
+                                <td width="200px">: {{ $item->nm_poli }}
+                                </td>
+                            @endif
                         </tr>
                         <tr style="vertical-align: top;">
                             <td>Pemeriksaan </td>
@@ -1069,7 +1080,7 @@
                             <td></td>
                         </tr>
                     </table>
-                    <table  width="700px" class="mt-1">
+                    <table width="700px" class="mt-1">
                         <tr>
                             <td width="250px" class="text-center">
                                 Penanggung Jawab

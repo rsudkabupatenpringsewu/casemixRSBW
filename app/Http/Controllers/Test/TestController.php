@@ -69,7 +69,7 @@ class TestController extends Controller
     // ]);
     // }
 
-    // TEST GAMBAR ======================================
+    // TEST BUNDLING ======================================
     // public function Test(Request $request) {
     //     // GET PASIEN
     //     $noRawat = $request->cariNorawat;
@@ -144,5 +144,58 @@ class TestController extends Controller
 
     // }
 
+    // TESSSSST AWAL MEDISSSSSSSSSSSSSSSS
+    // function Test(Request $request) {
+    //     $awalMedis = DB::table('penilaian_medis_igd')
+    //     ->select('penilaian_medis_igd.no_rawat',
+    //         'pasien.nm_pasien',
+    //         'pasien.tgl_lahir',
+    //         'reg_periksa.no_rkm_medis',
+    //         'dokter.nm_dokter',
+    //         'pasien.jk',
+    //         'penilaian_medis_igd.tanggal',
+    //         'penilaian_medis_igd.kd_dokter',
+    //         'penilaian_medis_igd.anamnesis',
+    //         'penilaian_medis_igd.hubungan',
+    //         'penilaian_medis_igd.keluhan_utama',
+    //         'penilaian_medis_igd.rps',
+    //         'penilaian_medis_igd.rpd',
+    //         'penilaian_medis_igd.rpk',
+    //         'penilaian_medis_igd.rpo',
+    //         'penilaian_medis_igd.alergi',
+    //         'penilaian_medis_igd.keadaan',
+    //         'penilaian_medis_igd.gcs',
+    //         'penilaian_medis_igd.kesadaran',
+    //         'penilaian_medis_igd.td',
+    //         'penilaian_medis_igd.nadi',
+    //         'penilaian_medis_igd.rr',
+    //         'penilaian_medis_igd.suhu',
+    //         'penilaian_medis_igd.spo',
+    //         'penilaian_medis_igd.bb',
+    //         'penilaian_medis_igd.tb',
+    //         'penilaian_medis_igd.kepala',
+    //         'penilaian_medis_igd.mata',
+    //         'penilaian_medis_igd.gigi',
+    //         'penilaian_medis_igd.leher',
+    //         'penilaian_medis_igd.thoraks',
+    //         'penilaian_medis_igd.abdomen',
+    //         'penilaian_medis_igd.genital',
+    //         'penilaian_medis_igd.ekstremitas',
+    //         'penilaian_medis_igd.ket_fisik',
+    //         'penilaian_medis_igd.ket_lokalis',
+    //         'penilaian_medis_igd.ekg',
+    //         'penilaian_medis_igd.rad',
+    //         'penilaian_medis_igd.lab',
+    //         'penilaian_medis_igd.diagnosis',
+    //         'penilaian_medis_igd.tata')
+    //     ->join('reg_periksa','penilaian_medis_igd.no_rawat','=','reg_periksa.no_rawat')
+    //     ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
+    //     ->join('dokter','penilaian_medis_igd.kd_dokter','=','dokter.kd_dokter')
+    //     ->where('penilaian_medis_igd.no_rawat','=','2023/09/02/000014')
+    //     ->first();
 
+    //     return view('test.test',[
+    //         'awalMedis'=>$awalMedis,
+    //     ]);
+    // }
 }

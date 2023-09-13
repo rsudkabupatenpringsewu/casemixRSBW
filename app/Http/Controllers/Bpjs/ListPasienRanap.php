@@ -14,9 +14,16 @@ class ListPasienRanap extends Controller
         $penjamnin = 'BPJ';
 
         $daftarPasien = DB::table('reg_periksa')
-            ->select('reg_periksa.no_rkm_medis', 'reg_periksa.no_rawat', 'reg_periksa.status_bayar', 'bridging_sep.no_sep', 'pasien.nm_pasien', 'bridging_sep.tglsep')
+            ->select('reg_periksa.no_rkm_medis',
+                'reg_periksa.no_rawat',
+                'reg_periksa.status_bayar',
+                'bridging_sep.no_sep',
+                'pasien.nm_pasien',
+                'bridging_sep.tglpulang',
+                'poliklinik.nm_poli')
             ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
             ->leftJoin('bridging_sep','bridging_sep.no_rawat','=','reg_periksa.no_rawat')
+            ->join('poliklinik','reg_periksa.kd_poli','=','poliklinik.kd_poli')
             ->whereBetween('reg_periksa.tgl_registrasi',[$tanggl1, $tanggl2])
             ->where('reg_periksa.status_lanjut','=','Ranap')
             ->where('reg_periksa.kd_pj','=', $penjamnin)
@@ -27,6 +34,10 @@ class ListPasienRanap extends Controller
                 ->whereIn('no_rawat', $daftarPasien->pluck('no_rawat')->toArray())
                 ->where('jenis_berkas', 'HASIL')
                 ->get();
+            $cekTerkirimInacbg = DB::table('inacbg_klaim_baru2')
+            ->select('no_sep')
+            ->whereIn('no_sep', $daftarPasien->pluck('no_sep')->toArray())
+            ->get();
 
         session(['tgl1' => $tanggl1]);
         session(['tgl2' => $tanggl2]);
@@ -35,6 +46,7 @@ class ListPasienRanap extends Controller
         return view('bpjs.listpasien-ranap', [
             'daftarPasien'=>$daftarPasien,
             'downloadBerkas'=>$downloadBerkas,
+            'cekTerkirimInacbg'=>$cekTerkirimInacbg,
             'penjamnin'=>$penjamnin,
             'tanggl1'=>$tanggl1,
             'tanggl2'=>$tanggl2,
@@ -47,9 +59,16 @@ class ListPasienRanap extends Controller
         $penjamnin = 'BPJ';
 
         $daftarPasien = DB::table('reg_periksa')
-            ->select('reg_periksa.no_rkm_medis', 'reg_periksa.no_rawat', 'reg_periksa.status_bayar', 'bridging_sep.no_sep', 'pasien.nm_pasien', 'bridging_sep.tglsep')
+            ->select('reg_periksa.no_rkm_medis',
+                    'reg_periksa.no_rawat',
+                    'reg_periksa.status_bayar',
+                    'bridging_sep.no_sep',
+                    'pasien.nm_pasien',
+                    'bridging_sep.tglpulang',
+                    'poliklinik.nm_poli')
             ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
             ->leftJoin('bridging_sep','bridging_sep.no_rawat','=','reg_periksa.no_rawat')
+            ->join('poliklinik','reg_periksa.kd_poli','=','poliklinik.kd_poli')
             ->whereBetween('reg_periksa.tgl_registrasi',[$tanggl1, $tanggl2])
             ->where('reg_periksa.status_lanjut','=','Ranap')
             ->where('reg_periksa.kd_pj','=', $penjamnin)
@@ -60,6 +79,10 @@ class ListPasienRanap extends Controller
                 ->whereIn('no_rawat', $daftarPasien->pluck('no_rawat')->toArray())
                 ->where('jenis_berkas', 'HASIL')
                 ->get();
+            $cekTerkirimInacbg = DB::table('inacbg_klaim_baru2')
+            ->select('no_sep')
+            ->whereIn('no_sep', $daftarPasien->pluck('no_sep')->toArray())
+            ->get();
 
         session(['tgl1' => $request->tgl1]);
         session(['tgl2' => $request->tgl2]);
@@ -68,6 +91,7 @@ class ListPasienRanap extends Controller
         return view('bpjs.listpasien-ranap', [
             'daftarPasien'=>$daftarPasien,
             'downloadBerkas'=>$downloadBerkas,
+            'cekTerkirimInacbg'=>$cekTerkirimInacbg,
             'penjamnin'=>$penjamnin,
             'tanggl1'=>$tanggl1,
             'tanggl2'=>$tanggl2,

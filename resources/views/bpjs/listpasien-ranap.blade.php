@@ -57,7 +57,8 @@
                             <th>No.Sep</th>
                             <th>Pasein</th>
                             <th>Bayar</th>
-                            <th>Tgl.Sep</th>
+                            <th>Asal</th>
+                            <th>Tgl Pulang</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -65,6 +66,7 @@
                             <tr>
                                 @php
                                     $matchingBerks = $downloadBerkas->where('no_rawat', $item->no_rawat);
+                                    $matchingBerksInacbg = $cekTerkirimInacbg->where('no_sep', $item->no_sep);
                                 @endphp
                                 <td class="text-center">
                                     @if ($matchingBerks->isNotEmpty())
@@ -87,9 +89,17 @@
                                 <td>{{ $item->no_rkm_medis }}</td>
                                 <td>{{ $item->no_rawat }}</td>
                                 <td>{{ $item->no_sep }}</td>
-                                <td>{{ $item->nm_pasien }}</td>
+                                <td>
+                                    {{ $item->nm_pasien }} &nbsp;
+                                    @if ($matchingBerksInacbg->isNotEmpty())
+                                        <span class="text-success"><i class="fas fa-check"></i></span>
+                                    @else
+                                        <span class="text-danger"><i class="fas fa-pen-nib"></i></span>
+                                    @endif
+                                </td>
                                 <td>{{ $item->status_bayar }}</td>
-                                <td>{{ $item->tglsep }}</td>
+                                <td>{{ $item->nm_poli }}</td>
+                                <td>{{ date('d/m/Y', strtotime($item->tglpulang)) }}</td>
                             </tr>
                         @endforeach
                     </tbody>

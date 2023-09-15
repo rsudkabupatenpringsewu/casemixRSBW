@@ -17,14 +17,15 @@ class ListPasienRanap extends Controller
             ->select('reg_periksa.no_rkm_medis',
                 'reg_periksa.no_rawat',
                 'reg_periksa.status_bayar',
+                'kamar_inap.tgl_masuk',
                 'bridging_sep.no_sep',
                 'pasien.nm_pasien',
-                'bridging_sep.tglpulang',
                 'poliklinik.nm_poli')
             ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
             ->leftJoin('bridging_sep','bridging_sep.no_rawat','=','reg_periksa.no_rawat')
             ->join('poliklinik','reg_periksa.kd_poli','=','poliklinik.kd_poli')
-            ->whereBetween('reg_periksa.tgl_registrasi',[$tanggl1, $tanggl2])
+            ->leftJoin('kamar_inap','kamar_inap.no_rawat','=','reg_periksa.no_rawat')
+            ->whereBetween('kamar_inap.tgl_keluar',[$tanggl1, $tanggl2])
             ->where('reg_periksa.status_lanjut','=','Ranap')
             ->where('reg_periksa.kd_pj','=', $penjamnin)
             ->get();
@@ -62,14 +63,15 @@ class ListPasienRanap extends Controller
             ->select('reg_periksa.no_rkm_medis',
                     'reg_periksa.no_rawat',
                     'reg_periksa.status_bayar',
+                    'kamar_inap.tgl_masuk',
                     'bridging_sep.no_sep',
                     'pasien.nm_pasien',
-                    'bridging_sep.tglpulang',
                     'poliklinik.nm_poli')
             ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
             ->leftJoin('bridging_sep','bridging_sep.no_rawat','=','reg_periksa.no_rawat')
             ->join('poliklinik','reg_periksa.kd_poli','=','poliklinik.kd_poli')
-            ->whereBetween('reg_periksa.tgl_registrasi',[$tanggl1, $tanggl2])
+            ->leftJoin('kamar_inap','kamar_inap.no_rawat','=','reg_periksa.no_rawat')
+            ->whereBetween('kamar_inap.tgl_keluar',[$tanggl1, $tanggl2])
             ->where('reg_periksa.status_lanjut','=','Ranap')
             ->where('reg_periksa.kd_pj','=', $penjamnin)
             ->get();

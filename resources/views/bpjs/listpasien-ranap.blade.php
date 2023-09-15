@@ -3,7 +3,8 @@
 
 @section('konten')
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 card">
+            <label for="" class="label mt-3">Cari berdasarkan tanggal pulang</label>
             <form action="{{ url('/cari-list-pasein-ranap') }}" action="POST">
                 @csrf
                 <div class="row">
@@ -45,8 +46,8 @@
                     @php
                         $penjab = $penjamnin === 'BPJ' ? 'BPJS' : '';
                     @endphp
-                    <h3 class="card-title">List Pasien <b>{{ $penjab }}</b>, Dari Tanggal: <b>{{ $tanggl1 }}</b>
-                        sampai <b>{{ $tanggl2 }} Rawat Inap</b></h3>
+                    <h3 class="card-title">List Pasien <b>{{ $penjab }}</b> Berdasarkan Tanggal Pulang, Dari Tanggal: <b>{{ date('d/m/Y', strtotime( $tanggl1)) }}</b>
+                        sampai <b>{{ date('d/m/Y', strtotime( $tanggl2)) }} Rawat Inap</b></h3>
                 </div>
                 <table class="card-body table table-bordered">
                     <thead>
@@ -58,7 +59,7 @@
                             <th>Pasein</th>
                             <th>Bayar</th>
                             <th>Asal</th>
-                            <th>Tgl Pulang</th>
+                            <th>Tgl Masuk</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -99,7 +100,7 @@
                                 </td>
                                 <td>{{ $item->status_bayar }}</td>
                                 <td>{{ $item->nm_poli }}</td>
-                                <td>{{ date('d/m/Y', strtotime($item->tglpulang)) }}</td>
+                                <td>{{ date('d/m/Y', strtotime($item->tgl_masuk)) }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -107,4 +108,5 @@
             </div>
         </div>
     </div>
+</body>
 @endsection

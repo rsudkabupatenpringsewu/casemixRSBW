@@ -35,6 +35,7 @@ class AuthController extends Controller
             return redirect()->intended('/')->with('sucsessLogin', 'Berhasil Login');
         }
     }
+
     function Logout(Request $request){
         $request->session()->invalidate();
         $request->session()->regenerateToken();

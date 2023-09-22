@@ -859,7 +859,14 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
-                                            <td><b>{{ number_format($totalBiaya, 0, ',', '.') }}</b></td>
+                                            <td>
+                                                <b>{{ number_format($totalBiaya, 0, ',', '.') }}</b>
+                                                <button class="btn-sm" onclick="copyToClipboard('{{$totalBiaya}}')"
+                                                style="border: none; background: none; cursor: pointer;" >
+                                                    <i class="fas fa-copy"></i>
+                                                </button>
+                                                <span id="copyText" style="display: none;"><b><i class="fas fa-check text-success"></i></b></span>
+                                            </td>
                                         </tr>
 
                                     </table>
@@ -1355,4 +1362,20 @@
             </div>
         </div>
     </div>
+    <script>
+        function copyToClipboard(text) {
+            const textarea = document.createElement("textarea");
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textarea);
+            const copyText = document.getElementById("copyText");
+            copyText.style.display = "inline"; // Menampilkan teks
+            setTimeout(function() {
+                copyText.style.display = "none"; // Menghilangkan teks setelah beberapa detik
+            }, 4000);
+            }
+    </script>
+
 @endsection

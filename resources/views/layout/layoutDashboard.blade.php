@@ -55,7 +55,7 @@
                         <a class="dropdown-item" tabindex="-1" href="#">Something else here</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" tabindex="-1" href="{{route('logout')}}">
-                            <ion-icon name="logo-laravel"></ion-icon> Logout
+                            <i class='fas fa-sign-out-alt'></i> Logout
                         </a>
                     </div>
                 </li>
@@ -66,10 +66,10 @@
         <!-- INI MENUUU SAMPING -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="index3.html" class="brand-link">
+            <a href="{{url('/')}}" class="brand-link">
                 <img src="/img/logo.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
                     style="opacity: 0.8" />
-                <span class="brand-text font-weight-light">RSBW 1.6</span>
+                <span class="brand-text font-weight-light">RSBW 1.7</span>
             </a>
 
             <!-- INI MENUUU SAMPING -->
@@ -93,6 +93,7 @@
                 <nav class="mt-2 sidebar-nav">
                     <ul id="sidebarnav" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview"
                         role="menu" data-accordion="false">
+                        {{-- MENU HOME --}}
                         <li class="nav-item">
                             <a href="{{ url('/') }}" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
@@ -102,11 +103,12 @@
                                 </p>
                             </a>
                         </li>
+                        {{-- MENU KEUANGAN --}}
                         <li class="nav-item">{{-- menu-open --}}
                             <a href="#" class="nav-link">{{-- active --}}
-                                <i class="nav-icon fas fa-syringe"></i>
+                                <i class="nav-icon fas fa-credit-card"></i>
                                 <p>
-                                    Obat
+                                    Keuangan
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
@@ -118,7 +120,8 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
+                            </li>
+                        {{-- MENU CASEMIX --}}
                         <li class="nav-item">{{-- menu-open --}}
                             <a href="#" class="nav-link">{{-- active --}}
                                 <i class="nav-icon fas fa-hospital"></i>
@@ -160,6 +163,27 @@
                                 </li>
                             </ul>
                         </li>
+                        {{-- MENU FARMASI --}}
+                        @if(session('obat') === 'true')
+                            <li class="nav-item">{{-- menu-open --}}
+                                <a href="#" class="nav-link">{{-- active --}}
+                                    <i class="nav-icon fas fa-mortar-pestle"></i>
+                                    <p>
+                                        Farmasi
+                                        <i class="right fas fa-angle-left"></i>
+                                        <span class="right badge badge-danger">New</span>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{url('list-pasien-farmasi')}}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Berkas SEP & Resep</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endif
                     </ul>
                 </nav>
             </div>
@@ -178,7 +202,6 @@
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
                                 <li class="breadcrumb-item"><a href="#">@yield('title')</a></li>
-                                <li class="breadcrumb-item active">Dashboard v1</li>
                             </ol>
                         </div>
                         <!-- /.col -->

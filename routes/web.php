@@ -12,7 +12,9 @@ use App\Http\Controllers\Bpjs\ListPasienRanap;
 use App\Http\Controllers\Bpjs\CesmikController;
 use App\Http\Controllers\Laporan\PasienController;
 use App\Http\Controllers\Bpjs\PrintCesmikController;
+use App\Http\Controllers\Farmasi\SepResepController;
 use App\Http\Controllers\Returobat\ReturObatController;
+use App\Http\Controllers\Farmasi\ViewSepResepController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +38,8 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
 
     Route::get('/', [PasienController::class, 'Pasien']);
 
-    Route::get('/returObat', [ReturObatController::class, 'Obat']);
+    // OBAT
+    Route::get('/returObat', [ReturObatController::class, 'Obat'])->middleware('permision-rsbw:penyakit');
     Route::get('/cariNorm', [ReturObatController::class, 'Obat']);
     Route::get('/print/{id}', [ReturObatController::class, 'Print']);
 
@@ -59,5 +62,11 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     Route::get('/gabung-berkas-casemix', [GabungBerkas::class, 'gabungBerkas']);
 
     Route::get('/data-inacbg', [DataInacbg::class, 'Inacbg']);
+
+    // FARMASI
+    Route::get('/list-pasien-farmasi', [SepResepController::class, 'ListPasienFarmasi']);
+    Route::get('/cari-list-pasien-farmasi', [SepResepController::class, 'CariListPasienFarmasi']);
+
+    Route::get('/view-sep-resep', [ViewSepResepController::class, 'ViewBerkasSepResep']);
 });
 

@@ -46,8 +46,9 @@
                     @php
                         $penjab = $penjamnin === 'BPJ' ? 'BPJS' : '';
                     @endphp
-                    <h3 class="card-title">List Pasien <b>{{ $penjab }}</b> Berdasarkan Tanggal Pulang, Dari Tanggal: <b>{{ date('d/m/Y', strtotime( $tanggl1)) }}</b>
-                        sampai <b>{{ date('d/m/Y', strtotime( $tanggl2)) }} Rawat Inap</b></h3>
+                    <h3 class="card-title">List Pasien <b>{{ $penjab }}</b> Berdasarkan Tanggal Pulang, Dari Tanggal:
+                        <b>{{ date('d/m/Y', strtotime($tanggl1)) }}</b>
+                        sampai <b>{{ date('d/m/Y', strtotime($tanggl2)) }} Rawat Inap</b></h3>
                 </div>
                 <table class="card-body table table-bordered">
                     <thead>
@@ -108,5 +109,4 @@
             </div>
         </div>
     </div>
-</body>
 @endsection

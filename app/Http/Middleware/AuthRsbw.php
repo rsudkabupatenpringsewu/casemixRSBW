@@ -26,16 +26,29 @@ class AuthRsbw
             Session::flash('reqLogin', 'Anda harus login');
             return redirect('/login');
         }
-        $result = DB::table('user')
-            ->select('id_user', 'password')
-            ->whereRaw("aes_decrypt(user.id_user, 'nur') = ? AND aes_decrypt(user.password, 'windi') = ?", [$idUser, $paswdUser])
+
+        // UNTUK AUTHORIZE USER
+        $permissionValue  = DB::table('user')
+            ->select('penyakit', 'obat', 'pasien', 'inacbg_klaim_baru_otomatis')
+            ->whereRaw("aes_decrypt(user.id_user, 'nur') = ? ", [$idUser])
             ->first();
+            session([
+                'penyakit' => $permissionValue->penyakit,
+                'obat' => $permissionValue->obat,
+                'pasien' => $permissionValue->pasien,
+                'inacbg_klaim_baru_otomatis' => $permissionValue->inacbg_klaim_baru_otomatis,
+            ]);
+
+        $result = DB::table('user')
+        ->select('id_user', 'password')
+        ->whereRaw("aes_decrypt(user.id_user, 'nur') = ? AND aes_decrypt(user.password, 'windi') = ?", [$idUser, $paswdUser])
+        ->first();
+
         if(!$result){
             return redirect('/login');
         }else{
             return $next($request);
         }
-        // return $next($request);
-        // dd(session('id_user')['id_user'], session('id_user')['password']);
+
     }
 }

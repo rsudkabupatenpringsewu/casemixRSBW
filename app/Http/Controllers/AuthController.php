@@ -41,4 +41,8 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
         return redirect('/login')->with('sucsessLogout', 'Berhasil Logout');
     }
+
+    function Maintance() {
+        return view('layout.maintance');
+    }
 }

@@ -69,7 +69,7 @@
             <a href="{{url('/')}}" class="brand-link">
                 <img src="/img/logo.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
                     style="opacity: 0.8" />
-                <span class="brand-text font-weight-light">RSBW 1.7</span>
+                <span class="brand-text font-weight-light">RSBW 1.8</span>
             </a>
 
             <!-- INI MENUUU SAMPING -->

@@ -26,7 +26,8 @@ use App\Http\Controllers\Farmasi\ViewSepResepController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/miantance-laravel-update', [AuthController::class, 'Maintance']);
+Route::group(['middleware' => 'default'], function () {
 Route::get('/test', [TestController::class, 'Test']);
 Route::get('/test-cari', [TestController::class, 'Test']);
 
@@ -35,7 +36,6 @@ Route::post('/mesinlogin', [AuthController::class, 'mesinLogin']);
 
 Route::group(['middleware' => 'auth-rsbw'], function () {
     Route::get('/logout', [AuthController::class, 'Logout'])->name('logout');
-
     Route::get('/', [PasienController::class, 'Pasien']);
 
     // OBAT
@@ -68,5 +68,6 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     Route::get('/cari-list-pasien-farmasi', [SepResepController::class, 'CariListPasienFarmasi']);
 
     Route::get('/view-sep-resep', [ViewSepResepController::class, 'ViewBerkasSepResep']);
+});
 });
 

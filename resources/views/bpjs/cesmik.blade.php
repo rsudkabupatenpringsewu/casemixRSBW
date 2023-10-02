@@ -173,7 +173,7 @@
                                                 diperlukan.
                                                 <br>
                                                 *SEP bukan sebagai bukti penjamin peserta <br>
-                                                Catatan Ke 1 {{ date('Y-m-d H:i:s') }}
+                                                Catatan Ke 1 {{ date('d/m/Y', strtotime($getSEP->tglsep)) }}
 
                                             </td>
                                             <td class="text-center" width="350px">

@@ -111,7 +111,7 @@
                                             <td>: {{ $getSEP->nama_pasien }}</td>
                                             <td>Jns Rawat</td>
                                             @php
-                                                $jnsRawat = $getSEP->status_lanjut == 'Ranap' ? 'Rawat Inap' : 'Rawat Jalan';
+                                                $jnsRawat = $getSEP->jnspelayanan == '1' ? 'Rawat Inap' : 'Rawat Jalan';
                                             @endphp
                                             <td>: {{ $jnsRawat }}
                                             </td>

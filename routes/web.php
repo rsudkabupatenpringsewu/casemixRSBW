@@ -68,6 +68,7 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     Route::get('/cari-list-pasien-farmasi', [SepResepController::class, 'CariListPasienFarmasi']);
 
     Route::get('/view-sep-resep', [ViewSepResepController::class, 'ViewBerkasSepResep']);
+    Route::get('/print-sep-resep', [ViewSepResepController::class, 'PrintBerkasSepResep']);
 });
 });
 

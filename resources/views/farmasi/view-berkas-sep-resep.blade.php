@@ -1,5 +1,5 @@
 @extends('..layout.layoutDashboard')
-@section('title', 'Casemix Bpjs')
+@section('title', 'Farmasi')
 
 @section('konten')
     <div class="row">
@@ -7,7 +7,6 @@
             <div class="card card-primary">
                 <div class="card-header">
                     <h5 class="card-title"></h5>
-
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                             <i class="fas fa-minus"></i>
@@ -16,6 +15,16 @@
                 </div>
                 <div class="card-body">
                     @if ($jumlahData > 0)
+                        <div class="card-body">
+                            <form action="{{ url('/print-sep-resep') }}" method="">
+                                @csrf
+                                <input name="cariNoRawat" value="{{$noRawat}}" hidden>
+                                <input name="cariNoSep" value="{{$noSep}}" hidden>
+                                <button type="submit" class="btn btn-success float-right">
+                                    <i class="fas fa-save"> Simpan PDF</i>
+                                </button>
+                            </form>
+                        </div>
                         {{-- BERKAS SEP ============================================================= --}}
                         @if ($getSEP)
                             <div class="card-body">
@@ -129,7 +138,7 @@
                                                 diperlukan.
                                                 <br>
                                                 *SEP bukan sebagai bukti penjamin peserta <br>
-                                                Catatan Ke 1 {{ date('Y-m-d H:i:s') }}
+                                                Catatan Ke 1 {{ date('d/m/Y', strtotime($getSEP->tglsep)) }}
 
                                             </td>
                                             <td class="text-center" width="350px">
@@ -172,7 +181,8 @@
                                                 <td> E-mail : www.rsbumiwaras.co.id</td>
                                             </tr>
                                         </table>
-                                        <hr width="1000px" style=" height:2px; border-top:1px solid black; border-bottom:2px solid black;">
+                                        <hr width="1000px"
+                                            style=" height:2px; border-top:1px solid black; border-bottom:2px solid black;">
                                         <table border="0px" width="1000px">
                                             <tr style="vertical-align: top;">
                                                 <td width="130px">Nama Pasien</td>
@@ -206,7 +216,7 @@
                                             @endphp
                                             @foreach ($itemresep->detailberkasResep as $itemresep)
                                                 <tr>
-                                                    <td width="30px" class="text-center">{{$no++}}</td>
+                                                    <td width="30px" class="text-center">{{ $no++ }}</td>
                                                     <td width="500px">{{ $itemresep->nama_brng }}</td>
                                                     <td width="100px" class="text-center">{{ $itemresep->jml }}</td>
                                                     <td width="150px">{{ $itemresep->kode_sat }}</td>
@@ -221,7 +231,7 @@
                                                 <td><b>TOTAL :</b></td>
                                                 <td></td>
                                                 <td></td>
-                                                <td><b>Rp.  {{ number_format($totalResep, 2, ',', '.') }}</b></td>
+                                                <td><b>Rp. {{ number_format($totalResep, 2, ',', '.') }}</b></td>
                                             </tr>
                                         </table>
                                         <table border="0px" width="1000px" class="mt-4" class="">
@@ -231,7 +241,7 @@
                                                 </td>
                                                 <td width="150px"></td>
                                                 <td width="250px" class="text-center">
-                                                    <p>Bandar Lampung,  {{ date('Y-m-d') }}</p>
+                                                    <p>Bandar Lampung, {{ date('Y-m-d') }}</p>
                                                     <br class="mt-4">
                                                     <p><b>PETUGAS</b></p>
                                                 </td>

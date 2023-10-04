@@ -270,6 +270,10 @@
         $(function() {
             bsCustomFileInput.init();
         });
+
+        $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
     </script>
 
 

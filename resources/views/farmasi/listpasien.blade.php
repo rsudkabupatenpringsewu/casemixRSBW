@@ -87,41 +87,27 @@
                                     @else
                                         <ul class="navbar-nav ml-auto">
                                             <li class="nav-item dropdown">
-                                                <a class="" data-toggle="dropdown" href="#"
-                                                    style="color: inherit;">
+                                                <a class="" href="#" style="color: inherit;"
+                                                    data-toggle="tooltip" data-placement="top"
+                                                    title="Berkas SEP Dibuat di V-Claim dan Tidak Tersedia di
+                                                Khanza, Silahkan Gabung File Dengan Cara Manual">
                                                     <i class="nav-icon fas fa-question"></i>
                                                 </a>
-                                                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                                                    <div class="p-2">
-                                                        <p tabindex="-1">Berkas SEP Dibuat di V-Claim dan Tidak Tersedia di
-                                                            Khanza, Silahkan Gabung File Dengan Cara Manual</p>
-                                                    </div>
-                                                </div>
                                             </li>
                                         </ul>
                                     @endif
                                 </td>
                                 <td>{{ $item->nm_pasien }} |
                                     @if ($item->status_bayar === 'Sudah Bayar')
-                                        <a class="" data-toggle="dropdown" href="#" style="color: inherit;">
+                                        <a href="#" class="" data-toggle="tooltip" data-placement="top"
+                                            title="Sudah Bayar" style="color: inherit;">
                                             <i class="text-success nav-icon fas fa-check"></i>
                                         </a>
-                                        <div
-                                            class="dropdown-menu dropdown-menu-xs dropdown-menu-right d-flex justify-content-center align-items-center">
-                                            <b class="text-success">
-                                                Status Sudah Bayar
-                                            </b>
-                                        </div>
                                     @else
-                                        <a class="" data-toggle="dropdown" href="#" style="color: inherit;">
+                                        <a class="" href="#" data-toggle="tooltip" data-placement="top"
+                                            title="Belum Bayar" style="color: inherit;">
                                             <i class="nav-icon fas fa-dollar-sign"></i>
                                         </a>
-                                        <div
-                                            class="dropdown-menu dropdown-menu-xs dropdown-menu-right d-flex justify-content-center align-items-center">
-                                            <b>
-                                                Status Belum Bayar
-                                            </b>
-                                        </div>
                                     @endif
                                 </td>
                                 <td>{{ $item->nm_poli }}</td>

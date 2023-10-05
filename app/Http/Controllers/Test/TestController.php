@@ -145,7 +145,51 @@ class TestController extends Controller
     // }
 
     // TESSSSST AWAL MEDISSSSSSSSSSSSSSSS
-    function Test(Request $request) {
-        return view('test.test',[ ]);
+    // function Test(Request $request) {
+    //     return view('test.test',[ ]);
+    // }
+//
+    // TEST RESUME MEDIS
+
+    function Test() {
+        $getSEPFisio = DB::table('pemeriksaan_ralan')
+        ->select('pemeriksaan_ralan.no_rawat',
+            'pemeriksaan_ralan.tgl_perawatan',
+            'pemeriksaan_ralan.jam_rawat',
+            'pemeriksaan_ralan.suhu_tubuh',
+            'pemeriksaan_ralan.tensi',
+            'pemeriksaan_ralan.nadi',
+            'pemeriksaan_ralan.respirasi',
+            'pemeriksaan_ralan.tinggi',
+            'pemeriksaan_ralan.berat',
+            'pemeriksaan_ralan.spo2',
+            'pemeriksaan_ralan.gcs',
+            'pemeriksaan_ralan.kesadaran',
+            'pemeriksaan_ralan.keluhan',
+            'pemeriksaan_ralan.pemeriksaan',
+            'pemeriksaan_ralan.alergi',
+            'pemeriksaan_ralan.lingkar_perut',
+            'pemeriksaan_ralan.rtl',
+            'pemeriksaan_ralan.penilaian',
+            'pemeriksaan_ralan.instruksi',
+            'pemeriksaan_ralan.evaluasi',
+            'pemeriksaan_ralan.nip',
+            'reg_periksa.no_rkm_medis',
+            'reg_periksa.kd_dokter',
+            'reg_periksa.kd_poli',
+            'poliklinik.nm_poli',
+            'pasien.nm_pasien',
+            'dokter.nm_dokter',
+            'reg_periksa.tgl_registrasi')
+        ->join('reg_periksa','pemeriksaan_ralan.no_rawat','=','reg_periksa.no_rawat')
+        ->join('poliklinik','reg_periksa.kd_poli','=','poliklinik.kd_poli')
+        ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
+        ->join('dokter','reg_periksa.kd_dokter','=','dokter.kd_dokter')
+        ->where('pemeriksaan_ralan.no_rawat','=','2023/10/03/000484')
+        ->first();
+
+        return view('test.test', [
+            'getSEPFisio'=>$getSEPFisio,
+        ]);
     }
 }

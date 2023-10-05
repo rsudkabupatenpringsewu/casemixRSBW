@@ -31,6 +31,8 @@ class ListPasienRalan extends Controller
                 ->select('no_sep')
                 ->whereIn('no_sep', $daftarPasien->pluck('no_sep')->toArray())
                 ->get();
+        $jmldaftarPasien = $daftarPasien->count();
+        $jmldownloadBerkas = $downloadBerkas->count();
 
         session(['tgl1' => $tanggl1]);
         session(['tgl2' => $tanggl2]);
@@ -40,6 +42,8 @@ class ListPasienRalan extends Controller
             'daftarPasien'=>$daftarPasien,
             'downloadBerkas'=>$downloadBerkas,
             'cekTerkirimInacbg'=>$cekTerkirimInacbg,
+            'jmldaftarPasien'=>$jmldaftarPasien,
+            'jmldownloadBerkas'=>$jmldownloadBerkas,
             'penjamnin'=>$penjamnin,
             'tanggl1'=>$tanggl1,
             'tanggl2'=>$tanggl2,
@@ -69,6 +73,8 @@ class ListPasienRalan extends Controller
             ->select('no_sep')
             ->whereIn('no_sep', $daftarPasien->pluck('no_sep')->toArray())
             ->get();
+        $jmldaftarPasien = $daftarPasien->count();
+        $jmldownloadBerkas = $downloadBerkas->count();
 
         session(['tgl1' => $request->tgl1]);
         session(['tgl2' => $request->tgl2]);
@@ -78,6 +84,8 @@ class ListPasienRalan extends Controller
             'daftarPasien'=>$daftarPasien,
             'downloadBerkas'=>$downloadBerkas,
             'cekTerkirimInacbg'=>$cekTerkirimInacbg,
+            'jmldaftarPasien'=>$jmldaftarPasien,
+            'jmldownloadBerkas'=>$jmldownloadBerkas,
             'penjamnin'=>$penjamnin,
             'tanggl1'=>$tanggl1,
             'tanggl2'=>$tanggl2,

@@ -3,6 +3,39 @@
 
 @section('konten')
     <div class="row">
+        <div class="col-md-4 col-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-info"><i class="nav-icon fas fa-receipt"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text"><b>Total List Pasien</b></span>
+                    <span class="info-box-number">
+                        <h4>{{ $jmldaftarPasien }}</h4>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-success"><i class="fas fa-check"></i></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text"><b>Total Yang Sudah Terbundling</b></span>
+                    <span class="info-box-number">
+                        <h4>{{ $jmldownloadBerkas }}</h4>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-warning"><i class="fas fa-pen-nib"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text"><b>Total Yang Belum Terbundling</b></span>
+                    <span class="info-box-number">
+                        <h4>{{ $jmldaftarPasien - $jmldownloadBerkas }}</h4>
+                    </span>
+                </div>
+            </div>
+        </div>
         <div class="col-md-12">
             <form action="{{ url('/cari-list-pasein-ralan') }}" action="POST">
                 @csrf
@@ -91,9 +124,11 @@
                                 <td>
                                     {{ $item->nm_pasien }} &nbsp;
                                     @if ($matchingBerksInacbg->isNotEmpty())
-                                        <span class="text-success"><i class="fas fa-check"></i></span>
+                                        <span class="text-success" data-toggle="tooltip" data-placement="top"
+                                        title="Terikirm E-Klaim" style="cursor: pointer;"><i class="fas fa-check"></i></span>
                                     @else
-                                        <span class="text-danger"><i class="fas fa-pen-nib"></i></span>
+                                        <span class="text-danger" data-toggle="tooltip" data-placement="top"
+                                        title="Belum Terkirim E-Klaim" style="cursor: pointer;"><i class="fas fa-pen-nib"></i></span>
                                     @endif
                                 </td>
                                 <td>{{ $item->status_bayar }}</td>

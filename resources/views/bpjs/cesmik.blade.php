@@ -4,7 +4,6 @@
 @section('konten')
     <div class="row">
         <div class="col-md-12">
-
             @if (session('success'))
                 @php
                     $cardColor = 'card-success';
@@ -195,10 +194,10 @@
 
                         {{-- RESUME PASIEN ============================================================= --}}
                         @if ($getResume && $statusLanjut)
-                            @if ($statusLanjut->status_lanjut == 'Ranap')
-                                {{-- BERKAS RESUME RANAP --}}
+                            @if ($statusLanjut->kd_poli === 'U0061')
+                                {{-- BERKAS RESUME FISIO --}}
                                 <div class="card-body">
-                                    <div class="card py-4  d-flex justify-content-center align-items-center">
+                                    <div class="card p-4 d-flex justify-content-center align-items-center">
                                         <table border="0px" width="1000px">
                                             <tr>
                                                 <td rowspan="3"> <img src="../img/rs.png" alt="Girl in a jacket"
@@ -206,554 +205,676 @@
                                                 <td class="text-center">
                                                     <h4>RS. BUMI WARAS </h4>
                                                 </td>
+                                                <td class="text-center" width="100px">
+                                                </td>
                                             </tr>
-                                            <tr class="text-center">
+                                            <tr class="text-center mr-5">
                                                 <td>Jln. Wolter Monginsidi No. 235 , Bandar Lampung, Lampung
                                                     (0721) 254589</td>
                                             </tr>
                                             <tr class="text-center">
                                                 <td> E-mail : www.rsbumiwaras.co.id</td>
                                             </tr>
-                                            <tr class="text-center">
-                                                <td colspan="2">
-                                                    <h4 class="mt-2"><b>RESUME MEDIS PASIEN</b></h4>
-                                                </td>
-                                            </tr>
                                         </table>
+                                        <hr width="1000px" class="mt-1 mb-0"
+                                            style=" height:2px; border-top:1px solid black; border-bottom:2px solid black;">
                                         <table border="0px" width="1000px">
-                                            <tr style="vertical-align: top;">
-                                                <td width="100px">Nama Pasien</td>
-                                                <td width="400px">: {{ $getResume->nm_pasien }}</td>
-                                                <td width="100px">No. Rekam Medis</td>
-                                                <td width="200px">: {{ $getResume->no_rkm_medis }}</td>
-                                            </tr>
-                                            <tr style="vertical-align: top;">
-                                                <td width="100px">Umur</td>
-                                                <td width="400px">: {{ $getResume->umurdaftar }} Th</td>
-                                                <td width="100px">Ruang</td>
-                                                <td width="200px">: {{ $getResume->kd_kamar }} |
-                                                    {{ $getResume->nm_bangsal }}
-                                                </td>
-                                            </tr>
-                                            <tr style="vertical-align: top;">
-                                                <td width="100px">Tgl Lahir</td>
-                                                <td width="400px">:
-                                                    {{ date('d-m-Y', strtotime($getResume->tgl_lahir)) }}
-                                                </td>
-                                                <td width="100px">Jenis Kelamin</td>
-                                                @php
-                                                    $jnsKelamin = $getResume->jenis_kelamin == 'P' ? 'Perempuan' : 'Laki-laki';
-                                                @endphp
-                                                <td width="200px">: {{ $jnsKelamin }}</td>
-                                            </tr>
-                                            <tr style="vertical-align: top;">
-                                                <td width="100px">Pekerjaan</td>
-                                                <td width="400px">: {{ $getResume->pekerjaan }}</td>
-                                                <td width="100px">Tanggal Masuk</td>
-                                                <td width="200px">:
-                                                    {{ date('d-m-Y', strtotime($getResume->tgl_masuk)) }}
-                                                </td>
-                                            </tr>
-                                            <tr style="vertical-align: top;">
-                                                <td width="100px">Alamat</td>
-                                                <td width="400px">: {{ $getResume->almt_pj }}</td>
-                                                <td width="100px">Tanggak Keluar</td>
-                                                <td width="200px">:
-                                                    {{ date('d-m-Y', strtotime($getResume->tgl_keluar)) }}
+                                            <tr class="text-center">
+                                                <td colspan="0">
+                                                    <h5 class="mt-2">LEMBAR FORMULIR RAWAT JALAN <br /> LAYANAN KEDOKTERAN
+                                                        FISIK DAN REHABILITAS</h5>
                                                 </td>
                                             </tr>
                                         </table>
-                                        <table border="0px" width="1000px" class="mt-3">
-                                            <tr>
-                                                <td width="250px" style="vertical-align: top;">Diagnosa Awal Masuk
-                                                </td>
-                                                <td style="vertical-align: top;"> : {{ $getResume->diagnosa_awal }}
-                                                </td>
-                                                <td width="250px"></td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px" style="vertical-align: top;">Alasan Masuk Dirawat
-                                                </td>
-                                                <td style="vertical-align: top;"> : {{ $getResume->alasan }}</td>
-                                                <td width="250px"></td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px" style="vertical-align: top;">Keluhan Utama Riwayat
-                                                    Penyakit
-                                                </td>
-                                                <td style="vertical-align: top;"> : {{ $getResume->keluhan_utama }}
-                                                </td>
-                                                <td width="250px"></td>
-                                            </tr>
-                                        </table>
-                                        <table border="0px" width="1000px" class="mt-3">
-                                            <tr>
-                                                <td width="250px" style="vertical-align: top;">Pemeriksaan Fisik</td>
-                                                <td style="vertical-align: top;"> :
-                                                    {{ $getResume->pemeriksaan_fisik }}
-                                                </td>
-                                                <td width="250px"></td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px" style="vertical-align: top;">Jalannya Penyakit
-                                                    Selama
-                                                    Perawatan
-                                                </td>
-                                                <td style="vertical-align: top;"> :
-                                                    {{ $getResume->jalannya_penyakit }}
-                                                </td>
-                                                <td width="250px"></td>
-                                            </tr>
-                                        </table>
-                                        <table border="0px" width="1000px" class="mt-3">
-                                            <tr>
-                                                <td width="250px" style="vertical-align: top;">Pemeriksaan Penunjang
-                                                    Radiologi
-                                                    Terpenting
-                                                </td>
-                                                <td style="vertical-align: top;"> :
-                                                    {{ $getResume->pemeriksaan_penunjang }}
-                                                </td>
-                                                <td width="200px"></td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px" style="vertical-align: top;">Pemeriksaan Penunjang
-                                                    Laboratorium
-                                                    Terpenting</td>
-                                                <td style="vertical-align: top;"> : {{ $getResume->hasil_laborat }}
-                                                </td>
-                                                <td width="200px"></td>
-                                            </tr>
-                                        </table>
-                                        <table border="0px" width="1000px" class="mt-3">
-                                            <tr>
-                                                <td width="250px" style="vertical-align: top;">Tindakan/Operasi
-                                                    Selama
-                                                    Perawatan
-                                                </td>
-                                                <td style="vertical-align: top;"> :
-                                                    {{ $getResume->tindakan_dan_operasi }}
-                                                </td>
-                                                <td width="200px"></td>
-                                            </tr>
-                                        </table>
-                                        <table border="0px" width="1000px" class="mt-3">
-                                            <tr>
-                                                <td width="250px" style="vertical-align: top;">Obat-obatan Selama
-                                                    Perawatan
-                                                </td>
-                                                <td style="vertical-align: top;"> : {{ $getResume->obat_di_rs }}</td>
-                                                <td width="200px"></td>
-                                            </tr>
-                                        </table>
-                                        <table border="0px" width="1000px" class="mt-3">
-                                            <tr>
-                                                <td width="250px">Diagnosa Akhir</td>
-                                                <td colspan="2"></td>
-                                                <td width="80px" class="text-center">Kode ICD</td>
-                                                <td width="20px"></td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px">&nbsp; - Diagnosa Utama </td>
-                                                <td>: {{ $getResume->diagnosa_utama }}</td>
-                                                <td width="20px" class="text-right">(</td>
-                                                <td width="80px" class="text-center">
-                                                    {{ $getResume->kd_diagnosa_utama }}
-                                                </td>
-                                                <td>)</td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px">&nbsp; - Diagnosa Sekunder </td>
-                                                <td>: 1. {{ $getResume->diagnosa_sekunder }}</td>
-                                                <td width="20px" class="text-right">(</td>
-                                                <td width="80px" class="text-center">
-                                                    {{ $getResume->kd_diagnosa_sekunder }}
-                                                </td>
-                                                <td>)</td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px"></td>
-                                                <td>&nbsp; 2. {{ $getResume->diagnosa_sekunder2 }}</td>
-                                                <td width="20px" class="text-right">(</td>
-                                                <td width="80px" class="text-center">
-                                                    {{ $getResume->kd_diagnosa_sekunder2 }}
-                                                </td>
-                                                <td>)</td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px"></td>
-                                                <td>&nbsp; 3. {{ $getResume->diagnosa_sekunder3 }}</td>
-                                                <td width="20px" class="text-right">(</td>
-                                                <td width="80px" class="text-center">
-                                                    {{ $getResume->kd_diagnosa_sekunder3 }}
-                                                </td>
-                                                <td>)</td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px"></td>
-                                                <td>&nbsp; 4. {{ $getResume->diagnosa_sekunder4 }}</td>
-                                                <td width="20px" class="text-right">(</td>
-                                                <td width="80px" class="text-center">
-                                                    {{ $getResume->kd_diagnosa_sekunder4 }}
-                                                </td>
-                                                <td>)</td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px">&nbsp; - Prosedur/Tindakan Utama </td>
-                                                <td>: {{ $getResume->prosedur_utama }}</td>
-                                                <td width="20px" class="text-right">(</td>
-                                                <td width="80px" class="text-center">
-                                                    {{ $getResume->kd_prosedur_utama }}
-                                                </td>
-                                                <td>)</td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px">&nbsp; - Prosedur/Tindakan Sekunder </td>
-                                                <td>: 1. {{ $getResume->prosedur_sekunder }}</td>
-                                                <td width="20px" class="text-right">(</td>
-                                                <td width="80px" class="text-center">
-                                                    {{ $getResume->prosedur_sekunder }}
-                                                </td>
-                                                <td>)</td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px"></td>
-                                                <td>&nbsp; 2. {{ $getResume->prosedur_sekunder2 }}</td>
-                                                <td width="20px" class="text-right">(</td>
-                                                <td width="80px" class="text-center">
-                                                    {{ $getResume->kd_prosedur_sekunder2 }}
-                                                </td>
-                                                <td>)</td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px"></td>
-                                                <td>&nbsp; 3. {{ $getResume->prosedur_sekunder3 }}</td>
-                                                <td width="20px" class="text-right">(</td>
-                                                <td width="80px" class="text-center">
-                                                    {{ $getResume->kd_prosedur_sekunder3 }}
-                                                </td>
-                                                <td>)</td>
-                                            </tr>
-                                        </table>
-                                        <table border="0px" width="1000px" class="mt-3">
-                                            <tr>
-                                                <td width="250px">Alergi / Reaksi Obat</td>
-                                                <td>: {{ $getResume->alergi }}</td>
-                                                <td width="200px"></td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px" style="vertical-align: top;">Diet Selama Perawatan
-                                                </td>
-                                                <td style="vertical-align: top;">: {{ $getResume->diet }}</td>
-                                                <td width="200px"></td>
-                                            </tr>
-                                        </table>
-                                        <table border="0px" width="1000px" class="mt-3">
-                                            <tr>
-                                                <td width="250px" style="vertical-align: top;">Hasil Lab Yang Belum
-                                                    Selesai
-                                                    (Pending)
-                                                </td>
-                                                <td style="vertical-align: top;">: {{ $getResume->lab_belum }}</td>
-                                                <td width="200px"></td>
-                                            </tr>
-                                        </table>
-                                        <table border="0px" width="1000px" class="mt-3">
-                                            <tr>
-                                                <td width="250px" style="vertical-align: top;">Instruksi/Anjuran Dan
-                                                    Edukasi
-                                                    (Follow
-                                                    Up)
-                                                </td>
-                                                <td style="vertical-align: top;">: {{ $getResume->edukasi }}</td>
-                                                <td width="200px"></td>
-                                            </tr>
-                                        </table>
-                                        <table border="0px" width="1000px" class="mt-3">
-                                            <tr>
-                                                <td width="197px">Keadaan Pulang</td>
-                                                <td width="370px">: {{ $getResume->keadaan }}</td>
-                                                <td width="197px">Cara Keluar</td>
-                                                <td width="235px">: {{ $getResume->cara_keluar }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td width="197px">Dilanjutkan</td>
-                                                <td width="370px">: {{ $getResume->dilanjutkan }}</td>
-                                                <td width="197px">Tanggal Kontrol</td>
-                                                <td width="235px">:
-                                                    {{ date('d-m-Y h:i', strtotime($getResume->kontrol)) }}
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <table border="0px" width="1000px" class="mt-3">
-                                            <tr>
-                                                <td width="250px" style="vertical-align: top;">Obat-obatan waktu
-                                                    pulang
-                                                </td>
-                                                <td style="vertical-align: top;">: {{ $getResume->obat_pulang }}</td>
-                                                <td width="200px"></td>
-                                            </tr>
-                                        </table>
+                                        <div style="border:solid black 2px;">
+                                            <table border="0px" width="985px" class="mx-1">
+                                                <tr>
+                                                    <td><b>Data Pasien</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px">No.Rawat</td>
+                                                    <td>: {{ $getResume->no_rawat }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>No.RM</td>
+                                                    <td>: {{ $getResume->no_rkm_medis }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Nama Pasien</td>
+                                                    <td>: {{ $getResume->nm_pasien }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Poliklinik</td>
+                                                    <td>: {{ $getResume->nm_poli }}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div style="border:solid black 2px; margin-top: 10px">
+                                            <table border="0px" width="985px" class="mx-1">
+                                                <tr>
+                                                    <td><b>Diisi oleh Dokter</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px">Tanggal Pelayanan</td>
+                                                    <td>: {{ $getResume->tgl_perawatan }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Anamnesa</td>
+                                                    <td>: {{ $getResume->keluhan }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Diagnosa</td>
+                                                    <td>: {{ $getResume->penilaian }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Pemeriksaan Fisik dan Uji Fungsi</td>
+                                                    <td>: {{ $getResume->pemeriksaan }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Suhu Tubuh</td>
+                                                    <td>: {{ $getResume->suhu_tubuh }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tensi</td>
+                                                    <td>: {{ $getResume->tensi }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Nadi</td>
+                                                    <td>: {{ $getResume->nadi }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Anjuran</td>
+                                                    <td>: {{ $getResume->instruksi }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Evaluasi</td>
+                                                    <td>: {{ $getResume->evaluasi }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tata Laksana KFR (ICD 9 CM)</td>
+                                                    <td>: {{ $getResume->rtl }}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
                                         <table border="0px" width="1000px" class="mt-3" class="">
                                             <tr>
                                                 <td width="250px" class="text-center">
-                                                    Dokter Penanggung Jawab
-                                                    <div class="barcode mt-1">
-                                                        <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di RS. BUMI WARAS, Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $getResume->nm_dokter . ' ID ' . $getResume->kd_dokter . ' ' . $getResume->tgl_keluar, 'QRCODE') }}"
-                                                            alt="barcode" width="80px" height="75px" />
-                                                    </div>
-                                                    {{ $getResume->nm_dokter }}
+
                                                 </td>
                                                 <td width="150px"></td>
                                                 <td width="250px" class="text-center">
-                                                    Dokter Penanggung Jawab2
+                                                    Dokter Penanggung Jawab
                                                     <div class="barcode mt-1">
-                                                        <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di RS. BUMI WARAS, Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $getResume->nm_dokter . ' ID ' . $getResume->kd_dokter . ' ' . $getResume->tgl_keluar, 'QRCODE') }}"
+                                                        <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di RS. BUMI WARAS, Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh dr. Sanjoto Santibudi, Sp.KFR ID ' . $getResume->kd_dokter . ' ' . $getResume->tgl_registrasi, 'QRCODE') }}"
                                                             alt="barcode" width="80px" height="75px" />
                                                     </div>
-                                                    {{ $getResume->nm_dokter }}
+                                                    dr. Sanjoto Santibudi, Sp.KFR
                                                 </td>
                                             </tr>
                                         </table>
                                     </div>
                                 </div>
                             @else
-                                {{-- BERKAS RESUME RALAN --}}
-                                <div class="card-body">
-                                    <div class="card py-4  d-flex justify-content-center align-items-center">
-                                        <table border="0px" width="1000px">
-                                            <tr>
-                                                <td rowspan="3"> <img src="../img/rs.png" alt="Girl in a jacket"
-                                                        width="90" height="75"></td>
-                                                <td class="text-center">
-                                                    <h4>RS. BUMI WARAS </h4>
-                                                </td>
-                                            </tr>
-                                            <tr class="text-center">
-                                                <td>Jln. Wolter Monginsidi No. 235 , Bandar Lampung, Lampung
-                                                    (0721) 254589</td>
-                                            </tr>
-                                            <tr class="text-center">
-                                                <td> E-mail : www.rsbumiwaras.co.id</td>
-                                            </tr>
-                                            <tr class="text-center">
-                                                <td colspan="2">
-                                                    <h4 class="mt-2"><b>RESUME MEDIS</b></h4>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <table border="0px" width="1000px">
-                                            <tr style="vertical-align: top;">
-                                                <td width="100px">Nama Pasien</td>
-                                                <td width="400px">: {{ $getResume->nm_pasien }}</td>
-                                                <td width="100px">No. Rekam Medis</td>
-                                                <td width="200px">: {{ $getResume->no_rkm_medis }}</td>
-                                            </tr>
-                                            <tr style="vertical-align: top;">
-                                                <td width="100px">Umur</td>
-                                                <td width="400px">: {{ $getResume->umurdaftar }} Th</td>
-                                                <td width="100px">Ruang</td>
-                                                <td width="200px">: {{ $getResume->nm_poli }} </td>
-                                            </tr>
-                                            <tr style="vertical-align: top;">
-                                                <td width="100px">Tgl Lahir</td>
-                                                <td width="400px">:
-                                                    {{ date('d-m-Y', strtotime($getResume->tgl_lahir)) }}
-                                                </td>
-                                                <td width="100px">Jenis Kelamin</td>
-                                                @php
-                                                    $jnsKelamin = $getResume->jk == 'P' ? 'Perempuan' : 'Laki-laki';
-                                                @endphp
-                                                <td width="200px">: {{ $jnsKelamin }}</td>
-                                            </tr>
-                                            <tr style="vertical-align: top;">
-                                                <td width="100px">Pekerjaan</td>
-                                                <td width="400px">: {{ $getResume->pekerjaan }}</td>
-                                                <td width="100px">Tanggal Masuk</td>
-                                                <td width="200px">:
-                                                    {{ date('d-m-Y', strtotime($getResume->tgl_registrasi)) }}
-                                                </td>
-                                            </tr>
-                                            <tr style="vertical-align: top;">
-                                                <td width="100px">Alamat</td>
-                                                <td width="400px">: {{ $getResume->almt_pj }}</td>
-                                                <td width="100px">Tanggak Keluar</td>
-                                                <td width="200px">:
-                                                    {{ date('d-m-Y', strtotime($getResume->tgl_registrasi)) }}
-                                                </td>
-                                            </tr>
-                                        </table>
-                                        <table border="0px" width="1000px" class="mt-3">
-
-                                            <tr>
-                                                <td width="250px" style="vertical-align: top;">Keluhan utama dari
-                                                    riwayat
-                                                    penyakit
-                                                    yang positif</td>
-                                                <td style="vertical-align: top;"> : {{ $getResume->keluhan_utama }}
-                                                </td>
-                                                <td width="250px"></td>
-                                            </tr>
-                                        </table>
-                                        <table border="0px" width="1000px" class="mt-3">
-                                            <tr>
-                                                <td width="250px" style="vertical-align: top;">Jalannya Penyakit
-                                                    Selama
-                                                    Perawatan
-                                                </td>
-                                                <td style="vertical-align: top;"> :
-                                                    {{ $getResume->jalannya_penyakit }}
-                                                </td>
-                                                <td width="250px"></td>
-                                            </tr>
-                                        </table>
-                                        <table border="0px" width="1000px" class="mt-3">
-                                            <tr>
-                                                <td width="250px" style="vertical-align: top;">Pemeriksaan penunjang
-                                                    yang
-                                                    positif
-                                                </td>
-                                                <td style="vertical-align: top;"> :
-                                                    {{ $getResume->pemeriksaan_penunjang }}
-                                                </td>
-                                                <td width="200px"></td>
-                                            </tr>
-                                        </table>
-                                        <table border="0px" width="1000px" class="mt-3">
-                                            <tr>
-                                                <td width="250px" style="vertical-align: top;">Hasil laboratorium
-                                                    yang
-                                                    positif
-                                                </td>
-                                                <td style="vertical-align: top;"> : {{ $getResume->hasil_laborat }}
-                                                </td>
-                                                <td width="200px"></td>
-                                            </tr>
-                                        </table>
-                                        <table border="0px" width="1000px" class="mt-3">
-                                            <tr>
-                                                <td width="250px">Diagnosa Akhir</td>
-                                                <td colspan="2"></td>
-                                                <td width="80px" class="text-center">Kode ICD</td>
-                                                <td width="20px"></td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px">&nbsp; - Diagnosa Utama </td>
-                                                <td>: {{ $getResume->diagnosa_utama }}</td>
-                                                <td width="20px" class="text-right">(</td>
-                                                <td width="80px" class="text-center">
-                                                    {{ $getResume->kd_diagnosa_utama }}
-                                                </td>
-                                                <td>)</td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px">&nbsp; - Diagnosa Sekunder </td>
-                                                <td>: 1. {{ $getResume->diagnosa_sekunder }}</td>
-                                                <td width="20px" class="text-right">(</td>
-                                                <td width="80px" class="text-center">
-                                                    {{ $getResume->kd_diagnosa_sekunder }}
-                                                </td>
-                                                <td>)</td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px"></td>
-                                                <td>&nbsp; 2. {{ $getResume->diagnosa_sekunder2 }}</td>
-                                                <td width="20px" class="text-right">(</td>
-                                                <td width="80px" class="text-center">
-                                                    {{ $getResume->kd_diagnosa_sekunder2 }}
-                                                </td>
-                                                <td>)</td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px"></td>
-                                                <td>&nbsp; 3. {{ $getResume->diagnosa_sekunder3 }}</td>
-                                                <td width="20px" class="text-right">(</td>
-                                                <td width="80px" class="text-center">
-                                                    {{ $getResume->kd_diagnosa_sekunder3 }}
-                                                </td>
-                                                <td>)</td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px"></td>
-                                                <td>&nbsp; 4. {{ $getResume->diagnosa_sekunder4 }}</td>
-                                                <td width="20px" class="text-right">(</td>
-                                                <td width="80px" class="text-center">
-                                                    {{ $getResume->kd_diagnosa_sekunder4 }}
-                                                </td>
-                                                <td>)</td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px">&nbsp; - Prosedur/Tindakan Utama </td>
-                                                <td>: {{ $getResume->prosedur_utama }}</td>
-                                                <td width="20px" class="text-right">(</td>
-                                                <td width="80px" class="text-center">
-                                                    {{ $getResume->kd_prosedur_utama }}
-                                                </td>
-                                                <td>)</td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px">&nbsp; - Prosedur/Tindakan Sekunder </td>
-                                                <td>: 1. {{ $getResume->prosedur_sekunder }}</td>
-                                                <td width="20px" class="text-right">(</td>
-                                                <td width="80px" class="text-center">
-                                                    {{ $getResume->prosedur_sekunder }}
-                                                </td>
-                                                <td>)</td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px"></td>
-                                                <td>&nbsp; 2. {{ $getResume->prosedur_sekunder2 }}</td>
-                                                <td width="20px" class="text-right">(</td>
-                                                <td width="80px" class="text-center">
-                                                    {{ $getResume->kd_prosedur_sekunder2 }}
-                                                </td>
-                                                <td>)</td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px"></td>
-                                                <td>&nbsp; 3. {{ $getResume->prosedur_sekunder3 }}</td>
-                                                <td width="20px" class="text-right">(</td>
-                                                <td width="80px" class="text-center">
-                                                    {{ $getResume->kd_prosedur_sekunder3 }}
-                                                </td>
-                                                <td>)</td>
-                                            </tr>
-                                        </table>
-                                        <table border="0px" width="1000px" class="mt-3">
-                                            <tr>
-                                                <td width="250px" style="vertical-align: top;">Kondisi pasien pulang
-                                                </td>
-                                                <td style="vertical-align: top;"> : {{ $getResume->kondisi_pulang }}
-                                                </td>
-                                                <td width="200px"></td>
-                                            </tr>
-                                            <tr>
-                                                <td width="250px" style="vertical-align: top;">Obat-obatan waktu
-                                                    pulang/nasihat
-                                                </td>
-                                                <td style="vertical-align: top;"> : {{ $getResume->obat_pulang }}
-                                                </td>
-                                                <td width="200px"></td>
-                                            </tr>
-                                        </table>
-                                        <table border="0px" width="1000px" class="mt-3" class="">
-                                            <tr>
-                                                <td width="250px" class="text-center">
-
-                                                </td>
-                                                <td width="150px"></td>
-                                                <td width="250px" class="text-center">
-                                                    Dokter Penanggung Jawab2
-                                                    <div class="barcode mt-1">
-                                                        <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di RS. BUMI WARAS, Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $getResume->nm_dokter . ' ID ' . $getResume->kd_dokter . ' ' . $getResume->tgl_registrasi, 'QRCODE') }}"
-                                                            alt="barcode" width="80px" height="75px" />
-                                                    </div>
-                                                    {{ $getResume->nm_dokter }}
-                                                </td>
-                                            </tr>
-                                        </table>
+                                @if ($statusLanjut->status_lanjut == 'Ranap')
+                                    {{-- BERKAS RESUME RANAP --}}
+                                    <div class="card-body">
+                                        <div class="card py-4  d-flex justify-content-center align-items-center">
+                                            <table border="0px" width="1000px">
+                                                <tr>
+                                                    <td rowspan="3"> <img src="../img/rs.png" alt="Girl in a jacket"
+                                                            width="90" height="75"></td>
+                                                    <td class="text-center">
+                                                        <h4>RS. BUMI WARAS </h4>
+                                                    </td>
+                                                </tr>
+                                                <tr class="text-center">
+                                                    <td>Jln. Wolter Monginsidi No. 235 , Bandar Lampung, Lampung
+                                                        (0721) 254589</td>
+                                                </tr>
+                                                <tr class="text-center">
+                                                    <td> E-mail : www.rsbumiwaras.co.id</td>
+                                                </tr>
+                                                <tr class="text-center">
+                                                    <td colspan="2">
+                                                        <h4 class="mt-2"><b>RESUME MEDIS PASIEN</b></h4>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <table border="0px" width="1000px">
+                                                <tr style="vertical-align: top;">
+                                                    <td width="100px">Nama Pasien</td>
+                                                    <td width="400px">: {{ $getResume->nm_pasien }}</td>
+                                                    <td width="100px">No. Rekam Medis</td>
+                                                    <td width="200px">: {{ $getResume->no_rkm_medis }}</td>
+                                                </tr>
+                                                <tr style="vertical-align: top;">
+                                                    <td width="100px">Umur</td>
+                                                    <td width="400px">: {{ $getResume->umurdaftar }} Th</td>
+                                                    <td width="100px">Ruang</td>
+                                                    <td width="200px">: {{ $getResume->kd_kamar }} |
+                                                        {{ $getResume->nm_bangsal }}
+                                                    </td>
+                                                </tr>
+                                                <tr style="vertical-align: top;">
+                                                    <td width="100px">Tgl Lahir</td>
+                                                    <td width="400px">:
+                                                        {{ date('d-m-Y', strtotime($getResume->tgl_lahir)) }}
+                                                    </td>
+                                                    <td width="100px">Jenis Kelamin</td>
+                                                    @php
+                                                        $jnsKelamin = $getResume->jenis_kelamin == 'P' ? 'Perempuan' : 'Laki-laki';
+                                                    @endphp
+                                                    <td width="200px">: {{ $jnsKelamin }}</td>
+                                                </tr>
+                                                <tr style="vertical-align: top;">
+                                                    <td width="100px">Pekerjaan</td>
+                                                    <td width="400px">: {{ $getResume->pekerjaan }}</td>
+                                                    <td width="100px">Tanggal Masuk</td>
+                                                    <td width="200px">:
+                                                        {{ date('d-m-Y', strtotime($getResume->tgl_masuk)) }}
+                                                    </td>
+                                                </tr>
+                                                <tr style="vertical-align: top;">
+                                                    <td width="100px">Alamat</td>
+                                                    <td width="400px">: {{ $getResume->almt_pj }}</td>
+                                                    <td width="100px">Tanggak Keluar</td>
+                                                    <td width="200px">:
+                                                        {{ date('d-m-Y', strtotime($getResume->tgl_keluar)) }}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <table border="0px" width="1000px" class="mt-3">
+                                                <tr>
+                                                    <td width="250px" style="vertical-align: top;">Diagnosa Awal Masuk
+                                                    </td>
+                                                    <td style="vertical-align: top;"> : {{ $getResume->diagnosa_awal }}
+                                                    </td>
+                                                    <td width="250px"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px" style="vertical-align: top;">Alasan Masuk Dirawat
+                                                    </td>
+                                                    <td style="vertical-align: top;"> : {{ $getResume->alasan }}</td>
+                                                    <td width="250px"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px" style="vertical-align: top;">Keluhan Utama Riwayat
+                                                        Penyakit
+                                                    </td>
+                                                    <td style="vertical-align: top;"> : {{ $getResume->keluhan_utama }}
+                                                    </td>
+                                                    <td width="250px"></td>
+                                                </tr>
+                                            </table>
+                                            <table border="0px" width="1000px" class="mt-3">
+                                                <tr>
+                                                    <td width="250px" style="vertical-align: top;">Pemeriksaan Fisik</td>
+                                                    <td style="vertical-align: top;"> :
+                                                        {{ $getResume->pemeriksaan_fisik }}
+                                                    </td>
+                                                    <td width="250px"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px" style="vertical-align: top;">Jalannya Penyakit
+                                                        Selama
+                                                        Perawatan
+                                                    </td>
+                                                    <td style="vertical-align: top;"> :
+                                                        {{ $getResume->jalannya_penyakit }}
+                                                    </td>
+                                                    <td width="250px"></td>
+                                                </tr>
+                                            </table>
+                                            <table border="0px" width="1000px" class="mt-3">
+                                                <tr>
+                                                    <td width="250px" style="vertical-align: top;">Pemeriksaan Penunjang
+                                                        Radiologi
+                                                        Terpenting
+                                                    </td>
+                                                    <td style="vertical-align: top;"> :
+                                                        {{ $getResume->pemeriksaan_penunjang }}
+                                                    </td>
+                                                    <td width="200px"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px" style="vertical-align: top;">Pemeriksaan Penunjang
+                                                        Laboratorium
+                                                        Terpenting</td>
+                                                    <td style="vertical-align: top;"> : {{ $getResume->hasil_laborat }}
+                                                    </td>
+                                                    <td width="200px"></td>
+                                                </tr>
+                                            </table>
+                                            <table border="0px" width="1000px" class="mt-3">
+                                                <tr>
+                                                    <td width="250px" style="vertical-align: top;">Tindakan/Operasi
+                                                        Selama
+                                                        Perawatan
+                                                    </td>
+                                                    <td style="vertical-align: top;"> :
+                                                        {{ $getResume->tindakan_dan_operasi }}
+                                                    </td>
+                                                    <td width="200px"></td>
+                                                </tr>
+                                            </table>
+                                            <table border="0px" width="1000px" class="mt-3">
+                                                <tr>
+                                                    <td width="250px" style="vertical-align: top;">Obat-obatan Selama
+                                                        Perawatan
+                                                    </td>
+                                                    <td style="vertical-align: top;"> : {{ $getResume->obat_di_rs }}</td>
+                                                    <td width="200px"></td>
+                                                </tr>
+                                            </table>
+                                            <table border="0px" width="1000px" class="mt-3">
+                                                <tr>
+                                                    <td width="250px">Diagnosa Akhir</td>
+                                                    <td colspan="2"></td>
+                                                    <td width="80px" class="text-center">Kode ICD</td>
+                                                    <td width="20px"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px">&nbsp; - Diagnosa Utama </td>
+                                                    <td>: {{ $getResume->diagnosa_utama }}</td>
+                                                    <td width="20px" class="text-right">(</td>
+                                                    <td width="80px" class="text-center">
+                                                        {{ $getResume->kd_diagnosa_utama }}
+                                                    </td>
+                                                    <td>)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px">&nbsp; - Diagnosa Sekunder </td>
+                                                    <td>: 1. {{ $getResume->diagnosa_sekunder }}</td>
+                                                    <td width="20px" class="text-right">(</td>
+                                                    <td width="80px" class="text-center">
+                                                        {{ $getResume->kd_diagnosa_sekunder }}
+                                                    </td>
+                                                    <td>)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px"></td>
+                                                    <td>&nbsp; 2. {{ $getResume->diagnosa_sekunder2 }}</td>
+                                                    <td width="20px" class="text-right">(</td>
+                                                    <td width="80px" class="text-center">
+                                                        {{ $getResume->kd_diagnosa_sekunder2 }}
+                                                    </td>
+                                                    <td>)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px"></td>
+                                                    <td>&nbsp; 3. {{ $getResume->diagnosa_sekunder3 }}</td>
+                                                    <td width="20px" class="text-right">(</td>
+                                                    <td width="80px" class="text-center">
+                                                        {{ $getResume->kd_diagnosa_sekunder3 }}
+                                                    </td>
+                                                    <td>)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px"></td>
+                                                    <td>&nbsp; 4. {{ $getResume->diagnosa_sekunder4 }}</td>
+                                                    <td width="20px" class="text-right">(</td>
+                                                    <td width="80px" class="text-center">
+                                                        {{ $getResume->kd_diagnosa_sekunder4 }}
+                                                    </td>
+                                                    <td>)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px">&nbsp; - Prosedur/Tindakan Utama </td>
+                                                    <td>: {{ $getResume->prosedur_utama }}</td>
+                                                    <td width="20px" class="text-right">(</td>
+                                                    <td width="80px" class="text-center">
+                                                        {{ $getResume->kd_prosedur_utama }}
+                                                    </td>
+                                                    <td>)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px">&nbsp; - Prosedur/Tindakan Sekunder </td>
+                                                    <td>: 1. {{ $getResume->prosedur_sekunder }}</td>
+                                                    <td width="20px" class="text-right">(</td>
+                                                    <td width="80px" class="text-center">
+                                                        {{ $getResume->prosedur_sekunder }}
+                                                    </td>
+                                                    <td>)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px"></td>
+                                                    <td>&nbsp; 2. {{ $getResume->prosedur_sekunder2 }}</td>
+                                                    <td width="20px" class="text-right">(</td>
+                                                    <td width="80px" class="text-center">
+                                                        {{ $getResume->kd_prosedur_sekunder2 }}
+                                                    </td>
+                                                    <td>)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px"></td>
+                                                    <td>&nbsp; 3. {{ $getResume->prosedur_sekunder3 }}</td>
+                                                    <td width="20px" class="text-right">(</td>
+                                                    <td width="80px" class="text-center">
+                                                        {{ $getResume->kd_prosedur_sekunder3 }}
+                                                    </td>
+                                                    <td>)</td>
+                                                </tr>
+                                            </table>
+                                            <table border="0px" width="1000px" class="mt-3">
+                                                <tr>
+                                                    <td width="250px">Alergi / Reaksi Obat</td>
+                                                    <td>: {{ $getResume->alergi }}</td>
+                                                    <td width="200px"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px" style="vertical-align: top;">Diet Selama Perawatan
+                                                    </td>
+                                                    <td style="vertical-align: top;">: {{ $getResume->diet }}</td>
+                                                    <td width="200px"></td>
+                                                </tr>
+                                            </table>
+                                            <table border="0px" width="1000px" class="mt-3">
+                                                <tr>
+                                                    <td width="250px" style="vertical-align: top;">Hasil Lab Yang Belum
+                                                        Selesai
+                                                        (Pending)
+                                                    </td>
+                                                    <td style="vertical-align: top;">: {{ $getResume->lab_belum }}</td>
+                                                    <td width="200px"></td>
+                                                </tr>
+                                            </table>
+                                            <table border="0px" width="1000px" class="mt-3">
+                                                <tr>
+                                                    <td width="250px" style="vertical-align: top;">Instruksi/Anjuran Dan
+                                                        Edukasi
+                                                        (Follow
+                                                        Up)
+                                                    </td>
+                                                    <td style="vertical-align: top;">: {{ $getResume->edukasi }}</td>
+                                                    <td width="200px"></td>
+                                                </tr>
+                                            </table>
+                                            <table border="0px" width="1000px" class="mt-3">
+                                                <tr>
+                                                    <td width="197px">Keadaan Pulang</td>
+                                                    <td width="370px">: {{ $getResume->keadaan }}</td>
+                                                    <td width="197px">Cara Keluar</td>
+                                                    <td width="235px">: {{ $getResume->cara_keluar }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="197px">Dilanjutkan</td>
+                                                    <td width="370px">: {{ $getResume->dilanjutkan }}</td>
+                                                    <td width="197px">Tanggal Kontrol</td>
+                                                    <td width="235px">:
+                                                        {{ date('d-m-Y h:i', strtotime($getResume->kontrol)) }}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <table border="0px" width="1000px" class="mt-3">
+                                                <tr>
+                                                    <td width="250px" style="vertical-align: top;">Obat-obatan waktu
+                                                        pulang
+                                                    </td>
+                                                    <td style="vertical-align: top;">: {{ $getResume->obat_pulang }}</td>
+                                                    <td width="200px"></td>
+                                                </tr>
+                                            </table>
+                                            <table border="0px" width="1000px" class="mt-3" class="">
+                                                <tr>
+                                                    <td width="250px" class="text-center">
+                                                        Dokter Penanggung Jawab
+                                                        <div class="barcode mt-1">
+                                                            <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di RS. BUMI WARAS, Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $getResume->nm_dokter . ' ID ' . $getResume->kd_dokter . ' ' . $getResume->tgl_keluar, 'QRCODE') }}"
+                                                                alt="barcode" width="80px" height="75px" />
+                                                        </div>
+                                                        {{ $getResume->nm_dokter }}
+                                                    </td>
+                                                    <td width="150px"></td>
+                                                    <td width="250px" class="text-center">
+                                                        Dokter Penanggung Jawab2
+                                                        <div class="barcode mt-1">
+                                                            <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di RS. BUMI WARAS, Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $getResume->nm_dokter . ' ID ' . $getResume->kd_dokter . ' ' . $getResume->tgl_keluar, 'QRCODE') }}"
+                                                                alt="barcode" width="80px" height="75px" />
+                                                        </div>
+                                                        {{ $getResume->nm_dokter }}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
+                                @else
+                                    {{-- BERKAS RESUME RALAN --}}
+                                    <div class="card-body">
+                                        <div class="card py-4  d-flex justify-content-center align-items-center">
+                                            <table border="0px" width="1000px">
+                                                <tr>
+                                                    <td rowspan="3"> <img src="../img/rs.png" alt="Girl in a jacket"
+                                                            width="90" height="75"></td>
+                                                    <td class="text-center">
+                                                        <h4>RS. BUMI WARAS </h4>
+                                                    </td>
+                                                </tr>
+                                                <tr class="text-center">
+                                                    <td>Jln. Wolter Monginsidi No. 235 , Bandar Lampung, Lampung
+                                                        (0721) 254589</td>
+                                                </tr>
+                                                <tr class="text-center">
+                                                    <td> E-mail : www.rsbumiwaras.co.id</td>
+                                                </tr>
+                                                <tr class="text-center">
+                                                    <td colspan="2">
+                                                        <h4 class="mt-2"><b>RESUME MEDIS</b></h4>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <table border="0px" width="1000px">
+                                                <tr style="vertical-align: top;">
+                                                    <td width="100px">Nama Pasien</td>
+                                                    <td width="400px">: {{ $getResume->nm_pasien }}</td>
+                                                    <td width="100px">No. Rekam Medis</td>
+                                                    <td width="200px">: {{ $getResume->no_rkm_medis }}</td>
+                                                </tr>
+                                                <tr style="vertical-align: top;">
+                                                    <td width="100px">Umur</td>
+                                                    <td width="400px">: {{ $getResume->umurdaftar }} Th</td>
+                                                    <td width="100px">Ruang</td>
+                                                    <td width="200px">: {{ $getResume->nm_poli }} </td>
+                                                </tr>
+                                                <tr style="vertical-align: top;">
+                                                    <td width="100px">Tgl Lahir</td>
+                                                    <td width="400px">:
+                                                        {{ date('d-m-Y', strtotime($getResume->tgl_lahir)) }}
+                                                    </td>
+                                                    <td width="100px">Jenis Kelamin</td>
+                                                    @php
+                                                        $jnsKelamin = $getResume->jk == 'P' ? 'Perempuan' : 'Laki-laki';
+                                                    @endphp
+                                                    <td width="200px">: {{ $jnsKelamin }}</td>
+                                                </tr>
+                                                <tr style="vertical-align: top;">
+                                                    <td width="100px">Pekerjaan</td>
+                                                    <td width="400px">: {{ $getResume->pekerjaan }}</td>
+                                                    <td width="100px">Tanggal Masuk</td>
+                                                    <td width="200px">:
+                                                        {{ date('d-m-Y', strtotime($getResume->tgl_registrasi)) }}
+                                                    </td>
+                                                </tr>
+                                                <tr style="vertical-align: top;">
+                                                    <td width="100px">Alamat</td>
+                                                    <td width="400px">: {{ $getResume->almt_pj }}</td>
+                                                    <td width="100px">Tanggak Keluar</td>
+                                                    <td width="200px">:
+                                                        {{ date('d-m-Y', strtotime($getResume->tgl_registrasi)) }}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <table border="0px" width="1000px" class="mt-3">
+
+                                                <tr>
+                                                    <td width="250px" style="vertical-align: top;">Keluhan utama dari
+                                                        riwayat
+                                                        penyakit
+                                                        yang positif</td>
+                                                    <td style="vertical-align: top;"> : {{ $getResume->keluhan_utama }}
+                                                    </td>
+                                                    <td width="250px"></td>
+                                                </tr>
+                                            </table>
+                                            <table border="0px" width="1000px" class="mt-3">
+                                                <tr>
+                                                    <td width="250px" style="vertical-align: top;">Jalannya Penyakit
+                                                        Selama
+                                                        Perawatan
+                                                    </td>
+                                                    <td style="vertical-align: top;"> :
+                                                        {{ $getResume->jalannya_penyakit }}
+                                                    </td>
+                                                    <td width="250px"></td>
+                                                </tr>
+                                            </table>
+                                            <table border="0px" width="1000px" class="mt-3">
+                                                <tr>
+                                                    <td width="250px" style="vertical-align: top;">Pemeriksaan penunjang
+                                                        yang
+                                                        positif
+                                                    </td>
+                                                    <td style="vertical-align: top;"> :
+                                                        {{ $getResume->pemeriksaan_penunjang }}
+                                                    </td>
+                                                    <td width="200px"></td>
+                                                </tr>
+                                            </table>
+                                            <table border="0px" width="1000px" class="mt-3">
+                                                <tr>
+                                                    <td width="250px" style="vertical-align: top;">Hasil laboratorium
+                                                        yang
+                                                        positif
+                                                    </td>
+                                                    <td style="vertical-align: top;"> : {{ $getResume->hasil_laborat }}
+                                                    </td>
+                                                    <td width="200px"></td>
+                                                </tr>
+                                            </table>
+                                            <table border="0px" width="1000px" class="mt-3">
+                                                <tr>
+                                                    <td width="250px">Diagnosa Akhir</td>
+                                                    <td colspan="2"></td>
+                                                    <td width="80px" class="text-center">Kode ICD</td>
+                                                    <td width="20px"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px">&nbsp; - Diagnosa Utama </td>
+                                                    <td>: {{ $getResume->diagnosa_utama }}</td>
+                                                    <td width="20px" class="text-right">(</td>
+                                                    <td width="80px" class="text-center">
+                                                        {{ $getResume->kd_diagnosa_utama }}
+                                                    </td>
+                                                    <td>)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px">&nbsp; - Diagnosa Sekunder </td>
+                                                    <td>: 1. {{ $getResume->diagnosa_sekunder }}</td>
+                                                    <td width="20px" class="text-right">(</td>
+                                                    <td width="80px" class="text-center">
+                                                        {{ $getResume->kd_diagnosa_sekunder }}
+                                                    </td>
+                                                    <td>)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px"></td>
+                                                    <td>&nbsp; 2. {{ $getResume->diagnosa_sekunder2 }}</td>
+                                                    <td width="20px" class="text-right">(</td>
+                                                    <td width="80px" class="text-center">
+                                                        {{ $getResume->kd_diagnosa_sekunder2 }}
+                                                    </td>
+                                                    <td>)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px"></td>
+                                                    <td>&nbsp; 3. {{ $getResume->diagnosa_sekunder3 }}</td>
+                                                    <td width="20px" class="text-right">(</td>
+                                                    <td width="80px" class="text-center">
+                                                        {{ $getResume->kd_diagnosa_sekunder3 }}
+                                                    </td>
+                                                    <td>)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px"></td>
+                                                    <td>&nbsp; 4. {{ $getResume->diagnosa_sekunder4 }}</td>
+                                                    <td width="20px" class="text-right">(</td>
+                                                    <td width="80px" class="text-center">
+                                                        {{ $getResume->kd_diagnosa_sekunder4 }}
+                                                    </td>
+                                                    <td>)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px">&nbsp; - Prosedur/Tindakan Utama </td>
+                                                    <td>: {{ $getResume->prosedur_utama }}</td>
+                                                    <td width="20px" class="text-right">(</td>
+                                                    <td width="80px" class="text-center">
+                                                        {{ $getResume->kd_prosedur_utama }}
+                                                    </td>
+                                                    <td>)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px">&nbsp; - Prosedur/Tindakan Sekunder </td>
+                                                    <td>: 1. {{ $getResume->prosedur_sekunder }}</td>
+                                                    <td width="20px" class="text-right">(</td>
+                                                    <td width="80px" class="text-center">
+                                                        {{ $getResume->prosedur_sekunder }}
+                                                    </td>
+                                                    <td>)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px"></td>
+                                                    <td>&nbsp; 2. {{ $getResume->prosedur_sekunder2 }}</td>
+                                                    <td width="20px" class="text-right">(</td>
+                                                    <td width="80px" class="text-center">
+                                                        {{ $getResume->kd_prosedur_sekunder2 }}
+                                                    </td>
+                                                    <td>)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px"></td>
+                                                    <td>&nbsp; 3. {{ $getResume->prosedur_sekunder3 }}</td>
+                                                    <td width="20px" class="text-right">(</td>
+                                                    <td width="80px" class="text-center">
+                                                        {{ $getResume->kd_prosedur_sekunder3 }}
+                                                    </td>
+                                                    <td>)</td>
+                                                </tr>
+                                            </table>
+                                            <table border="0px" width="1000px" class="mt-3">
+                                                <tr>
+                                                    <td width="250px" style="vertical-align: top;">Kondisi pasien pulang
+                                                    </td>
+                                                    <td style="vertical-align: top;"> : {{ $getResume->kondisi_pulang }}
+                                                    </td>
+                                                    <td width="200px"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="250px" style="vertical-align: top;">Obat-obatan waktu
+                                                        pulang/nasihat
+                                                    </td>
+                                                    <td style="vertical-align: top;"> : {{ $getResume->obat_pulang }}
+                                                    </td>
+                                                    <td width="200px"></td>
+                                                </tr>
+                                            </table>
+                                            <table border="0px" width="1000px" class="mt-3" class="">
+                                                <tr>
+                                                    <td width="250px" class="text-center">
+
+                                                    </td>
+                                                    <td width="150px"></td>
+                                                    <td width="250px" class="text-center">
+                                                        Dokter Penanggung Jawab2
+                                                        <div class="barcode mt-1">
+                                                            <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di RS. BUMI WARAS, Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $getResume->nm_dokter . ' ID ' . $getResume->kd_dokter . ' ' . $getResume->tgl_registrasi, 'QRCODE') }}"
+                                                                alt="barcode" width="80px" height="75px" />
+                                                        </div>
+                                                        {{ $getResume->nm_dokter }}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                @endif
                             @endif
                         @else
                             {{-- NULL --}}
@@ -861,11 +982,12 @@
                                             <td></td>
                                             <td>
                                                 <b>{{ number_format($totalBiaya, 0, ',', '.') }}</b>
-                                                <button class="btn-sm" onclick="copyToClipboard('{{$totalBiaya}}')"
-                                                style="border: none; background: none; cursor: pointer;" >
+                                                <button class="btn-sm" onclick="copyToClipboard('{{ $totalBiaya }}')"
+                                                    style="border: none; background: none; cursor: pointer;">
                                                     <i class="fas fa-copy"></i>
                                                 </button>
-                                                <span id="copyText" style="display: none;"><b><i class="fas fa-check text-success"></i></b></span>
+                                                <span id="copyText" style="display: none;"><b><i
+                                                            class="fas fa-check text-success"></i></b></span>
                                             </td>
                                         </tr>
 
@@ -1157,43 +1279,47 @@
                                     <div style="border: 1px solid #000;">
                                         <table border="0px" width="1000px">
                                             <tr>
-                                                <td class="text-center" style="background-color: rgb(236, 230, 197)"><h5>PENILAIAN AWAL MEDIS RAWAT INAP</h5></td>
+                                                <td class="text-center" style="background-color: rgb(236, 230, 197)">
+                                                    <h5>PENILAIAN AWAL MEDIS RAWAT INAP</h5>
+                                                </td>
                                             </tr>
                                         </table>
                                         <table width="1000px" style="border-top: 1px solid #000;">
                                             <tr>
                                                 <td width="181px"> No. RM</td>
-                                                <td width="252px">: {{$awalMedis->no_rkm_medis}}</td>
+                                                <td width="252px">: {{ $awalMedis->no_rkm_medis }}</td>
                                                 <td width="155px"> Jenis Kelamin</td>
                                                 @php
-                                                    $jenisKelamin = ($awalMedis->jk == 'P') ? "Perempuan" : "Laki-laki";
+                                                    $jenisKelamin = $awalMedis->jk == 'P' ? 'Perempuan' : 'Laki-laki';
                                                 @endphp
-                                                <td width="131px">: {{$jenisKelamin}}</td>
+                                                <td width="131px">: {{ $jenisKelamin }}</td>
                                                 <td width="116px"> Tanggal</td>
-                                                <td width="165px">: {{ date('d/m/Y h:i:s', strtotime($awalMedis->tanggal)) }}</td>
+                                                <td width="165px">:
+                                                    {{ date('d/m/Y h:i:s', strtotime($awalMedis->tanggal)) }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Nama Pasien</td>
-                                                <td>: {{$awalMedis->nm_pasien}}</td>
+                                                <td>: {{ $awalMedis->nm_pasien }}</td>
                                                 <td>Tanggal Lahir</td>
                                                 <td>: {{ date('d/m/Y', strtotime($awalMedis->tgl_lahir)) }}</td>
                                                 <td>Anamnesis</td>
-                                                <td>: {{$awalMedis->anamnesis}}</td>
+                                                <td>: {{ $awalMedis->anamnesis }}</td>
                                             </tr>
                                         </table>
                                         <table width="1000px" style="border-top: 1px solid #000;">
                                             <tr>
                                                 <td width="500px">
                                                     I. RIWAYAT KESEHATAN
-                                                    <p>Keluhan Utama : {{$awalMedis->keluhan_utama}}</p>
+                                                    <p>Keluhan Utama : {{ $awalMedis->keluhan_utama }}</p>
                                                 </td>
                                                 <td width="500px"></td>
                                             </tr>
                                         </table>
-                                        <table border="0px" width="1000px" class="" style="border-top: 1px solid #000;">
+                                        <table border="0px" width="1000px" class=""
+                                            style="border-top: 1px solid #000;">
                                             <tr>
                                                 <td width="500px" height="60px" style="vertical-align: top;">
-                                                    Riwayat Penyakit Sekarang : {{$awalMedis->rps}}
+                                                    Riwayat Penyakit Sekarang : {{ $awalMedis->rps }}
                                                 </td>
                                                 <td width="500px"></td>
                                             </tr>
@@ -1201,137 +1327,143 @@
                                         <table width="1000px" style="border-top: 1px solid #000;">
                                             <tr>
                                                 <td width="500px" height="50px" style="vertical-align: top;">
-                                                    Riwayat Penyakit Dahulu : {{$awalMedis->rpd}}
+                                                    Riwayat Penyakit Dahulu : {{ $awalMedis->rpd }}
                                                 </td>
                                                 <td width="500px" height="50px" style="vertical-align: top;">
-                                                    Riwayat Penyakit dalam Keluarga : {{$awalMedis->rpk}}
+                                                    Riwayat Penyakit dalam Keluarga : {{ $awalMedis->rpk }}
                                                 </td>
                                             </tr>
                                         </table>
-                                        <table  width="1000px" style="border-top: 1px solid #000;">
+                                        <table width="1000px" style="border-top: 1px solid #000;">
                                             <tr>
                                                 <td width="500px" height="50px" style="vertical-align: top;">
-                                                    Riwayat Pengobatan : {{$awalMedis->rpo}}
+                                                    Riwayat Pengobatan : {{ $awalMedis->rpo }}
                                                 </td>
                                                 <td width="500px" height="50px" style="vertical-align: top;">
-                                                    Riwayat Alergi : {{$awalMedis->alergi}}
+                                                    Riwayat Alergi : {{ $awalMedis->alergi }}
                                                 </td>
                                             </tr>
                                         </table>
-                                        <table  width="1000px" style="border-top: 1px solid #000;">
+                                        <table width="1000px" style="border-top: 1px solid #000;">
                                             <tr>
                                                 <td>II. PEMERIKSAAN FISIK</td>
                                             </tr>
                                         </table>
-                                        <table  width="1000px" style="border-top: 1px solid #000;">
+                                        <table width="1000px" style="border-top: 1px solid #000;">
                                             <tr>
                                                 <td width="129px">Keadaan Umum</td>
-                                                <td width="269px">: {{$awalMedis->keadaan}}</td>
+                                                <td width="269px">: {{ $awalMedis->keadaan }}</td>
                                                 <td width="117px">Kesadaraan </td>
-                                                <td width="183px">: {{$awalMedis->kesadaran}}</td>
+                                                <td width="183px">: {{ $awalMedis->kesadaran }}</td>
                                                 <td width="106px">GCS(E,V,M)</td>
-                                                <td width="195px">: {{$awalMedis->gcs}}</td>
+                                                <td width="195px">: {{ $awalMedis->gcs }}</td>
                                             </tr>
                                         </table>
-                                        <table  width="1000px" style="border-top: 1px solid #000;">
+                                        <table width="1000px" style="border-top: 1px solid #000;">
                                             <tr>
                                                 <td class="text-center">
                                                     Tanda Vital :
-                                                    TD : {{$awalMedis->td}}mmHg
-                                                    N :{{$awalMedis->nadi}} x/m
-                                                    R : {{$awalMedis->rr}} x/m
-                                                    S : {{$awalMedis->suhu}}
-                                                    SPO2 : {{$awalMedis->spo}} %
-                                                    BB : {{$awalMedis->bb}} Kg
-                                                    TB : {{$awalMedis->tb}}cm
+                                                    TD : {{ $awalMedis->td }}mmHg
+                                                    N :{{ $awalMedis->nadi }} x/m
+                                                    R : {{ $awalMedis->rr }} x/m
+                                                    S : {{ $awalMedis->suhu }}
+                                                    SPO2 : {{ $awalMedis->spo }} %
+                                                    BB : {{ $awalMedis->bb }} Kg
+                                                    TB : {{ $awalMedis->tb }}cm
                                                 </td>
                                             </tr>
                                         </table>
-                                        <table  width="1000px" style="border-top: 1px solid #000;">
+                                        <table width="1000px" style="border-top: 1px solid #000;">
                                             <tr>
                                                 <td width="129 px">Kepala</td>
-                                                <td width="148px">: {{$awalMedis->kepala}}</td>
+                                                <td width="148px">: {{ $awalMedis->kepala }}</td>
                                                 <td width="117px">Thoraks</td>
-                                                <td width="106px">: {{$awalMedis->thoraks}}</td>
+                                                <td width="106px">: {{ $awalMedis->thoraks }}</td>
                                                 <td width="500px"></td>
                                             </tr>
                                             <tr>
                                                 <td>Mata</td>
-                                                <td>: {{$awalMedis->mata}}</td>
+                                                <td>: {{ $awalMedis->mata }}</td>
                                                 <td>Abdomen</td>
-                                                <td>: {{$awalMedis->abdomen}}</td>
+                                                <td>: {{ $awalMedis->abdomen }}</td>
                                                 <td></td>
                                             </tr>
                                             <tr>
                                                 <td>Gigi & Mulut</td>
-                                                <td>: {{$awalMedis->gigi}}</td>
+                                                <td>: {{ $awalMedis->gigi }}</td>
                                                 <td>Genital & Anus</td>
-                                                <td>: {{$awalMedis->genital}}</td>
+                                                <td>: {{ $awalMedis->genital }}</td>
                                                 <td></td>
                                             </tr>
                                             <tr>
                                                 <td>Leher</td>
-                                                <td>: {{$awalMedis->leher}}</td>
+                                                <td>: {{ $awalMedis->leher }}</td>
                                                 <td>Ekstremitas</td>
-                                                <td>: {{$awalMedis->ekstremitas}}</td>
+                                                <td>: {{ $awalMedis->ekstremitas }}</td>
                                                 <td></td>
                                             </tr>
                                         </table>
-                                        <table  width="1000px" style="border-top: 1px solid #000;">
+                                        <table width="1000px" style="border-top: 1px solid #000;">
                                             <tr>
                                                 <td>III. STATUS LOKALIS</td>
                                             </tr>
                                         </table>
-                                        <table  width="1000px" style="border-top: 1px solid #000;">
+                                        <table width="1000px" style="border-top: 1px solid #000;">
                                             <tr>
-                                                <td height="200px" style="vertical-align: top;">{{$awalMedis->ket_lokalis}}</td>
+                                                <td height="200px" style="vertical-align: top;">
+                                                    {{ $awalMedis->ket_lokalis }}</td>
                                             </tr>
                                         </table>
-                                        <table  width="1000px" style="border-top: 1px solid #000;">
+                                        <table width="1000px" style="border-top: 1px solid #000;">
                                             <tr>
-                                                <td height="80px" style="vertical-align: top;">Keterangan : {{$awalMedis->ket_fisik}}</td>
+                                                <td height="80px" style="vertical-align: top;">Keterangan :
+                                                    {{ $awalMedis->ket_fisik }}</td>
                                             </tr>
                                         </table>
-                                        <table  width="1000px" style="border-top: 1px solid #000;">
+                                        <table width="1000px" style="border-top: 1px solid #000;">
                                             <tr>
                                                 <td>IV. PEMERIKSAAN PENUNJANG</td>
                                             </tr>
                                         </table>
-                                        <table  width="1000px" style="border-top: 1px solid #000;">
+                                        <table width="1000px" style="border-top: 1px solid #000;">
                                             <tr height="50px">
-                                                <td width="330px" style="vertical-align: top;">EKG : {{$awalMedis->ekg}}</td>
-                                                <td width="330px" style="vertical-align: top;">Radiologi  : {{$awalMedis->rad}}</td>
-                                                <td width="330px" style="vertical-align: top;">Laboratorium : {{$awalMedis->lab}}</td>
+                                                <td width="330px" style="vertical-align: top;">EKG :
+                                                    {{ $awalMedis->ekg }}</td>
+                                                <td width="330px" style="vertical-align: top;">Radiologi :
+                                                    {{ $awalMedis->rad }}</td>
+                                                <td width="330px" style="vertical-align: top;">Laboratorium :
+                                                    {{ $awalMedis->lab }}</td>
                                             </tr>
                                         </table>
-                                        <table  width="1000px" style="border-top: 1px solid #000;">
+                                        <table width="1000px" style="border-top: 1px solid #000;">
                                             <tr>
                                                 <td>
                                                     V. DIAGNOSIS
-                                                    <p>{{$awalMedis->diagnosis}}</p>
+                                                    <p>{{ $awalMedis->diagnosis }}</p>
                                                 </td>
                                             </tr>
                                         </table>
-                                        <table  width="1000px" style="border-top: 1px solid #000;">
+                                        <table width="1000px" style="border-top: 1px solid #000;">
                                             <tr>
                                                 <td>
                                                     VI. TATALAKSANA
-                                                    <p>{{$awalMedis->tata}}</p>
+                                                    <p>{{ $awalMedis->tata }}</p>
                                                 </td>
                                             </tr>
                                         </table>
-                                        <table  width="1000px" style="border-top: 1px solid #000;">
+                                        <table width="1000px" style="border-top: 1px solid #000;">
                                             <tr class="text-center">
                                                 <td width="500px">Tanggal dan Jam </td>
                                                 <td width="500px">Nama Dokter dan Tanda Tangan </td>
                                             </tr>
                                             <tr class="text-center">
-                                                <td width="500px">{{ date('d/m/Y h:i:s', strtotime($awalMedis->tanggal)) }} WIB</td>
                                                 <td width="500px">
-                                                    <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di ' .'RS. BUMI WARAS,' . ' Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $awalMedis->nm_dokter . ' ID ' . $awalMedis->kd_dokter . ' ' , 'QRCODE') }}"
+                                                    {{ date('d/m/Y h:i:s', strtotime($awalMedis->tanggal)) }} WIB</td>
+                                                <td width="500px">
+                                                    <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di ' . 'RS. BUMI WARAS,' . ' Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $awalMedis->nm_dokter . ' ID ' . $awalMedis->kd_dokter . ' ', 'QRCODE') }}"
                                                         alt="barcode" width="80px" height="75px" />
-                                                        <br>
-                                                    {{$awalMedis->nm_dokter}}
+                                                    <br>
+                                                    {{ $awalMedis->nm_dokter }}
                                                 </td>
                                             </tr>
                                         </table>
@@ -1375,7 +1507,7 @@
             setTimeout(function() {
                 copyText.style.display = "none"; // Menghilangkan teks setelah beberapa detik
             }, 4000);
-            }
+        }
     </script>
 
 @endsection

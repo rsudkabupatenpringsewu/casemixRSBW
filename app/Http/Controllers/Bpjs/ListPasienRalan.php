@@ -14,8 +14,11 @@ class ListPasienRalan extends Controller
         $penjamnin = 'BPJ';
 
         $daftarPasien = DB::table('reg_periksa')
-            ->select('reg_periksa.no_rkm_medis', 'reg_periksa.no_rawat', 'reg_periksa.status_bayar', 'bridging_sep.no_sep', 'pasien.nm_pasien', 'bridging_sep.tglsep')
+            ->select('reg_periksa.no_rkm_medis', 'reg_periksa.no_rawat', 'reg_periksa.status_bayar', 'bridging_sep.no_sep', 'pasien.nm_pasien', 'bridging_sep.tglsep',
+            'poliklinik.nm_poli'
+            )
             ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
+            ->join('poliklinik','reg_periksa.kd_poli','=','poliklinik.kd_poli')
             ->leftJoin('bridging_sep','bridging_sep.no_rawat','=','reg_periksa.no_rawat')
             ->whereBetween('reg_periksa.tgl_registrasi',[$tanggl1, $tanggl2])
             ->where('reg_periksa.status_lanjut','=','Ralan')
@@ -27,10 +30,6 @@ class ListPasienRalan extends Controller
                 ->whereIn('no_rawat', $daftarPasien->pluck('no_rawat')->toArray())
                 ->where('jenis_berkas', 'HASIL')
                 ->get();
-            $cekTerkirimInacbg = DB::table('inacbg_klaim_baru2')
-                ->select('no_sep')
-                ->whereIn('no_sep', $daftarPasien->pluck('no_sep')->toArray())
-                ->get();
         $jmldaftarPasien = $daftarPasien->count();
         $jmldownloadBerkas = $downloadBerkas->count();
 
@@ -41,7 +40,6 @@ class ListPasienRalan extends Controller
         return view('bpjs.listpasien-ralan', [
             'daftarPasien'=>$daftarPasien,
             'downloadBerkas'=>$downloadBerkas,
-            'cekTerkirimInacbg'=>$cekTerkirimInacbg,
             'jmldaftarPasien'=>$jmldaftarPasien,
             'jmldownloadBerkas'=>$jmldownloadBerkas,
             'penjamnin'=>$penjamnin,
@@ -69,10 +67,6 @@ class ListPasienRalan extends Controller
                 ->whereIn('no_rawat', $daftarPasien->pluck('no_rawat')->toArray())
                 ->where('jenis_berkas', 'HASIL')
                 ->get();
-            $cekTerkirimInacbg = DB::table('inacbg_klaim_baru2')
-            ->select('no_sep')
-            ->whereIn('no_sep', $daftarPasien->pluck('no_sep')->toArray())
-            ->get();
         $jmldaftarPasien = $daftarPasien->count();
         $jmldownloadBerkas = $downloadBerkas->count();
 
@@ -83,7 +77,6 @@ class ListPasienRalan extends Controller
         return view('bpjs.listpasien-ralan', [
             'daftarPasien'=>$daftarPasien,
             'downloadBerkas'=>$downloadBerkas,
-            'cekTerkirimInacbg'=>$cekTerkirimInacbg,
             'jmldaftarPasien'=>$jmldaftarPasien,
             'jmldownloadBerkas'=>$jmldownloadBerkas,
             'penjamnin'=>$penjamnin,

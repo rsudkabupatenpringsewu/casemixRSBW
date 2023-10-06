@@ -45,6 +45,7 @@
                                 <th>Nama</th>
                                 <th>No_Rawat</th>
                                 <th>No_SEP</th>
+                                <th>Sts Lanjut</th>
                                 <th>Tanggl</th>
                                 <th style="width: 40px" class="text-center">Aksi</th>
                             </tr>
@@ -52,11 +53,15 @@
                         <tbody>
                             @if ($getPasien)
                                 @foreach ($getPasien as $item)
+                                    @php
+                                        $stsLanjut = $item->jnspelayanan == '1' ? 'Rawat Inap' : 'Rawat Jalan';
+                                    @endphp
                                     <tr>
                                         <td>{{ $item->no_rkm_medis }}</td>
                                         <td>{{ $item->nm_pasien }}</td>
                                         <td>{{ $item->no_rawat }}</td>
                                         <td>{{ $item->no_sep }}</td>
+                                        <td>{{ $stsLanjut }}</td>
                                         <td>{{ $item->tgl_registrasi }}</td>
                                         <td>
                                             <div class="btn-group">
@@ -66,7 +71,7 @@
                                                 <form action="{{ url('cariNorawat-ClaimBpjs') }}" method="">
                                                     @csrf
                                                     <input name="cariNoSep" value="{{ $item->no_sep }}" hidden>
-                                                    <input name="cariNoSep" value="{{ $item->no_rawat }}" hidden>
+                                                    <input name="cariNorawat" value="{{ $item->no_rawat }}" hidden>
                                                     <button class="badge {{ $color }}">
                                                         <i class="fas fa-upload"> File Scan</i>
                                                     </button>
@@ -93,7 +98,8 @@
                                                     <input name="cariNorawat" value="{{ $item->no_rawat }}" hidden>
                                                     <input name="tgl1" value="{{ session('tgl1') }}" hidden>
                                                     <input name="tgl2" value="{{ session('tgl2') }}" hidden>
-                                                    <input name="statusLanjut" value="{{ session('statusLanjut') }}" hidden>
+                                                    <input name="statusLanjut" value="{{ session('statusLanjut') }}"
+                                                        hidden>
                                                     <button class="badge {{ $color3 }}">
                                                         <i class="fas fa-save"> Gabung</i>
                                                     </button>
@@ -101,7 +107,7 @@
                                                 @if ($downloadFile)
                                                     <a href="{{ url('hasil_pdf/' . $downloadFile->file) }}" download
                                                         class="ml-2 text-success">
-                                                            <i class="fas fa-download"></i>
+                                                        <i class="fas fa-download"></i>
                                                     </a>
                                                 @endif
                                             </div>

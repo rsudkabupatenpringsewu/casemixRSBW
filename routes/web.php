@@ -29,7 +29,7 @@ use App\Http\Controllers\Farmasi\ViewSepResepController;
 Route::get('/miantance-laravel-update', [AuthController::class, 'Maintance']);
 Route::group(['middleware' => 'default'], function () {
 Route::get('/test', [TestController::class, 'Test']);
-Route::get('/test-cari', [TestController::class, 'Test']);
+Route::get('/test-cari', [TestController::class, 'TestCari']);
 
 Route::get('/login', [AuthController::class, 'Login'])->name('login');
 Route::post('/mesinlogin', [AuthController::class, 'mesinLogin']);

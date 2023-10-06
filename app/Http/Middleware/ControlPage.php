@@ -26,9 +26,9 @@ class ControlPage
     }
     private function checkPermision()
     {
-        $stringDefault = 'eyJpdiI6IldKaWpTbDBhWEJTc25ic1ltaDc2b0E9PSIsInZhbHVlIjoiWEhZdUlkYy9EU2xwYlUyRU9zWEx1QT09IiwibWFjIjoiYjA5NmUyYTcyZTVhMmRmY2M5NWRlM2JkODhiZTU2ZGRkMmY5ZDQzMmNiNzZhYzRhZjljZTM0YmMxMTY4YjEwNSIsInRhZyI6IiJ9';
-        $endDateString = Crypt::decryptString($stringDefault);
-        $EndDateTimestamp = strtotime($endDateString);
+        // $stringDefault = 'eyJpdiI6IldKaWpTbDBhWEJTc25ic1ltaDc2b0E9PSIsInZhbHVlIjoiWEhZdUlkYy9EU2xwYlUyRU9zWEx1QT09IiwibWFjIjoiYjA5NmUyYTcyZTVhMmRmY2M5NWRlM2JkODhiZTU2ZGRkMmY5ZDQzMmNiNzZhYzRhZjljZTM0YmMxMTY4YjEwNSIsInRhZyI6IiJ9';
+        // $endDateString = Crypt::decryptString($stringDefault);
+        $EndDateTimestamp = strtotime('2024-02-02');
         return time() <= $EndDateTimestamp;
     }
 }

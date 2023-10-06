@@ -19,6 +19,7 @@ class ListPasienRanap extends Controller
                 'reg_periksa.status_bayar',
                 'kamar_inap.tgl_masuk',
                 'bridging_sep.no_sep',
+                'bridging_sep.jnspelayanan',
                 'pasien.nm_pasien',
                 'poliklinik.nm_poli')
             ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
@@ -35,10 +36,6 @@ class ListPasienRanap extends Controller
                 ->whereIn('no_rawat', $daftarPasien->pluck('no_rawat')->toArray())
                 ->where('jenis_berkas', 'HASIL')
                 ->get();
-            $cekTerkirimInacbg = DB::table('inacbg_klaim_baru2')
-                ->select('no_sep')
-                ->whereIn('no_sep', $daftarPasien->pluck('no_sep')->toArray())
-                ->get();
         $jmldaftarPasien = $daftarPasien->count();
         $jmldownloadBerkas = $downloadBerkas->count();
 
@@ -49,7 +46,6 @@ class ListPasienRanap extends Controller
         return view('bpjs.listpasien-ranap', [
             'daftarPasien'=>$daftarPasien,
             'downloadBerkas'=>$downloadBerkas,
-            'cekTerkirimInacbg'=>$cekTerkirimInacbg,
             'jmldaftarPasien'=>$jmldaftarPasien,
             'jmldownloadBerkas'=>$jmldownloadBerkas,
             'penjamnin'=>$penjamnin,
@@ -69,6 +65,7 @@ class ListPasienRanap extends Controller
                     'reg_periksa.status_bayar',
                     'kamar_inap.tgl_masuk',
                     'bridging_sep.no_sep',
+                    'bridging_sep.jnspelayanan',
                     'pasien.nm_pasien',
                     'poliklinik.nm_poli')
             ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
@@ -85,10 +82,6 @@ class ListPasienRanap extends Controller
                 ->whereIn('no_rawat', $daftarPasien->pluck('no_rawat')->toArray())
                 ->where('jenis_berkas', 'HASIL')
                 ->get();
-            $cekTerkirimInacbg = DB::table('inacbg_klaim_baru2')
-                ->select('no_sep')
-                ->whereIn('no_sep', $daftarPasien->pluck('no_sep')->toArray())
-                ->get();
             $jmldaftarPasien = $daftarPasien->count();
             $jmldownloadBerkas = $downloadBerkas->count();
 
@@ -99,7 +92,6 @@ class ListPasienRanap extends Controller
         return view('bpjs.listpasien-ranap', [
             'daftarPasien'=>$daftarPasien,
             'downloadBerkas'=>$downloadBerkas,
-            'cekTerkirimInacbg'=>$cekTerkirimInacbg,
             'jmldaftarPasien'=>$jmldaftarPasien,
             'jmldownloadBerkas'=>$jmldownloadBerkas,
             'penjamnin'=>$penjamnin,

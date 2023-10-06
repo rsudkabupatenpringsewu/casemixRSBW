@@ -80,7 +80,7 @@
                     @php
                         $penjab = $penjamnin === 'BPJ' ? 'BPJS' : '';
                     @endphp
-                    <h3 class="card-title">List Pasien <b>{{ $penjab }}</b> Berdasarkan Tanggal Pulang, Dari Tanggal:
+                    <h3 class="card-title">List Pasien <b>{{ $penjab }}</b> Berdasarkan <b>Tanggal Pulang</b>, Dari Tanggal:
                         <b>{{ date('d/m/Y', strtotime($tanggl1)) }}</b>
                         sampai <b>{{ date('d/m/Y', strtotime($tanggl2)) }} Rawat Inap</b>
                     </h3>
@@ -100,10 +100,12 @@
                     </thead>
                     <tbody>
                         @foreach ($daftarPasien as $item)
-                            <tr>
+                           @php
+                               $colortr = $item->jnspelayanan == '1' ? '' : 'text-danger';
+                           @endphp
+                            <tr class="{{$colortr}} color-palette">
                                 @php
                                     $matchingBerks = $downloadBerkas->where('no_rawat', $item->no_rawat);
-                                    $matchingBerksInacbg = $cekTerkirimInacbg->where('no_sep', $item->no_sep);
                                 @endphp
                                 <td class="text-center">
                                     @if ($matchingBerks->isNotEmpty())
@@ -126,17 +128,20 @@
                                 <td>{{ $item->no_rkm_medis }}</td>
                                 <td>{{ $item->no_rawat }}</td>
                                 <td>{{ $item->no_sep }}</td>
-                                <td>
-                                    {{ $item->nm_pasien }} &nbsp;
-                                    @if ($matchingBerksInacbg->isNotEmpty())
-                                        <span class="text-success" data-toggle="tooltip" data-placement="top"
-                                            title="Terikirm E-Klaim" style="cursor: pointer;"><i class="fas fa-check"></i></span>
+                                <td>{{ $item->nm_pasien }}</td>
+                                <td class="text-center">
+                                    @if ($item->status_bayar === 'Sudah Bayar')
+                                        <a href="#" class="" data-toggle="tooltip" data-placement="top"
+                                            title="Sudah Bayar" style="color: inherit;">
+                                            <i class="text-success nav-icon fas fa-check"></i>
+                                        </a>
                                     @else
-                                        <span class="text-danger" data-toggle="tooltip" data-placement="top"
-                                            title="Belum Terkirim E-Klaim" style="cursor: pointer;"><i class="fas fa-pen-nib"></i></span>
+                                        <a class="" href="#" data-toggle="tooltip" data-placement="top"
+                                            title="Belum Bayar" style="color: inherit;">
+                                            <i class="nav-icon fas fa-dollar-sign"></i>
+                                        </a>
                                     @endif
                                 </td>
-                                <td>{{ $item->status_bayar }}</td>
                                 <td>{{ $item->nm_poli }}</td>
                                 <td>{{ date('d/m/Y', strtotime($item->tgl_masuk)) }}</td>
                             </tr>

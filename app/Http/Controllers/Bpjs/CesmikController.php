@@ -14,7 +14,7 @@ class CesmikController extends Controller
         $noSep = $request->cariNoSep;
 
         $cekNorawat = DB::table('reg_periksa')
-        ->select('status_lanjut')
+        ->select('status_lanjut', 'kd_poli')
         ->where('no_rawat', '=', $noRawat);
         $jumlahData = $cekNorawat->count();
         $statusLanjut = $cekNorawat->first();
@@ -84,122 +84,160 @@ class CesmikController extends Controller
                 ->first();
 
             // 2 BERKAS RESUME
-            if ($statusLanjut->status_lanjut === 'Ranap') {
-                $getResume = DB::table('resume_pasien_ranap')
-                    ->select('reg_periksa.no_rkm_medis',
-                            'reg_periksa.umurdaftar',
-                            'reg_periksa.almt_pj',
-                            'pasien.nm_pasien',
-                            'pasien.tgl_lahir',
-                            'pasien.jk as jenis_kelamin',
-                            'pasien.pekerjaan',
-                            'dokter.nm_dokter',
-                            'kamar_inap.kd_kamar',
-                            'kamar_inap.tgl_masuk',
-                            'kamar_inap.tgl_keluar',
-                            'bangsal.nm_bangsal',
-                            'resume_pasien_ranap.no_rawat',
-                            'resume_pasien_ranap.kd_dokter',
-                            'resume_pasien_ranap.diagnosa_awal',
-                            'resume_pasien_ranap.alasan',
-                            'resume_pasien_ranap.keluhan_utama',
-                            'resume_pasien_ranap.pemeriksaan_fisik',
-                            'resume_pasien_ranap.jalannya_penyakit',
-                            'resume_pasien_ranap.pemeriksaan_penunjang',
-                            'resume_pasien_ranap.hasil_laborat',
-                            'resume_pasien_ranap.tindakan_dan_operasi',
-                            'resume_pasien_ranap.obat_di_rs',
-                            'resume_pasien_ranap.diagnosa_utama',
-                            'resume_pasien_ranap.kd_diagnosa_utama',
-                            'resume_pasien_ranap.diagnosa_sekunder',
-                            'resume_pasien_ranap.kd_diagnosa_sekunder',
-                            'resume_pasien_ranap.diagnosa_sekunder2',
-                            'resume_pasien_ranap.kd_diagnosa_sekunder2',
-                            'resume_pasien_ranap.diagnosa_sekunder3',
-                            'resume_pasien_ranap.kd_diagnosa_sekunder3',
-                            'resume_pasien_ranap.diagnosa_sekunder4',
-                            'resume_pasien_ranap.kd_diagnosa_sekunder4',
-                            'resume_pasien_ranap.prosedur_utama',
-                            'resume_pasien_ranap.kd_prosedur_utama',
-                            'resume_pasien_ranap.prosedur_sekunder',
-                            'resume_pasien_ranap.kd_prosedur_sekunder',
-                            'resume_pasien_ranap.prosedur_sekunder2',
-                            'resume_pasien_ranap.kd_prosedur_sekunder2',
-                            'resume_pasien_ranap.prosedur_sekunder3',
-                            'resume_pasien_ranap.kd_prosedur_sekunder3',
-                            'resume_pasien_ranap.alergi',
-                            'resume_pasien_ranap.diet',
-                            'resume_pasien_ranap.lab_belum',
-                            'resume_pasien_ranap.edukasi',
-                            'resume_pasien_ranap.cara_keluar',
-                            'resume_pasien_ranap.ket_keluar',
-                            'resume_pasien_ranap.keadaan',
-                            'resume_pasien_ranap.ket_keadaan',
-                            'resume_pasien_ranap.dilanjutkan',
-                            'resume_pasien_ranap.ket_dilanjutkan',
-                            'resume_pasien_ranap.kontrol',
-                            'resume_pasien_ranap.obat_pulang')
-                    ->join('reg_periksa','resume_pasien_ranap.no_rawat','=','reg_periksa.no_rawat')
-                    ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
-                    ->join('kamar_inap','kamar_inap.no_rawat','=','reg_periksa.no_rawat')
-                    ->join('kamar','kamar_inap.kd_kamar','=','kamar.kd_kamar')
-                    ->join('bangsal','kamar.kd_bangsal','=','bangsal.kd_bangsal')
-                    ->join('dokter','resume_pasien_ranap.kd_dokter','=','dokter.kd_dokter')
-                    ->where('resume_pasien_ranap.no_rawat','=', $noRawat)
-                    ->first();
-            } else {
-                $getResume = DB::table('resume_pasien')
-                    ->select('reg_periksa.tgl_registrasi',
-                            'poliklinik.nm_poli',
-                            'reg_periksa.almt_pj',
-                            'pasien.pekerjaan',
-                            'reg_periksa.umurdaftar',
-                            'reg_periksa.no_rkm_medis',
-                            'pasien.nm_pasien',
-                            'pasien.tmp_lahir',
-                            'pasien.tgl_lahir',
-                            'dokter.kd_dokter',
-                            'dokter.nm_dokter',
-                            'pasien.jk',
-                            'pasien.alamat',
-                            'pasien.umur',
-                            'reg_periksa.status_lanjut',
-                            'reg_periksa.kd_pj',
-                            'resume_pasien.no_rawat',
-                            'resume_pasien.kd_dokter',
-                            'resume_pasien.keluhan_utama',
-                            'resume_pasien.jalannya_penyakit',
-                            'resume_pasien.pemeriksaan_penunjang',
-                            'resume_pasien.hasil_laborat',
-                            'resume_pasien.diagnosa_utama',
-                            'resume_pasien.kd_diagnosa_utama',
-                            'resume_pasien.diagnosa_sekunder',
-                            'resume_pasien.kd_diagnosa_sekunder',
-                            'resume_pasien.diagnosa_sekunder2',
-                            'resume_pasien.kd_diagnosa_sekunder2',
-                            'resume_pasien.diagnosa_sekunder3',
-                            'resume_pasien.kd_diagnosa_sekunder3',
-                            'resume_pasien.diagnosa_sekunder4',
-                            'resume_pasien.kd_diagnosa_sekunder4',
-                            'resume_pasien.prosedur_utama',
-                            'resume_pasien.kd_prosedur_utama',
-                            'resume_pasien.prosedur_sekunder',
-                            'resume_pasien.kd_prosedur_sekunder',
-                            'resume_pasien.prosedur_sekunder2',
-                            'resume_pasien.kd_prosedur_sekunder2',
-                            'resume_pasien.prosedur_sekunder3',
-                            'resume_pasien.kd_prosedur_sekunder3',
-                            'resume_pasien.kondisi_pulang',
-                            'resume_pasien.obat_pulang')
-                    ->join('reg_periksa','resume_pasien.no_rawat','=','reg_periksa.no_rawat')
-                    ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
-                    ->join('dokter',function($join) {
-                        $join->on('resume_pasien.kd_dokter','=','dokter.kd_dokter')
-                        ->on('reg_periksa.kd_dokter','=','dokter.kd_dokter');
-                    })
-                    ->join('poliklinik','reg_periksa.kd_poli','=','poliklinik.kd_poli')
-                    ->where('resume_pasien.no_rawat','=', $noRawat)
-                    ->first();
+            if($statusLanjut->kd_poli === 'U0061'){ // U0061 = FisoTerapi
+                $getResume = DB::table('pemeriksaan_ralan')
+                ->select('pemeriksaan_ralan.no_rawat',
+                    'pemeriksaan_ralan.tgl_perawatan',
+                    'pemeriksaan_ralan.jam_rawat',
+                    'pemeriksaan_ralan.suhu_tubuh',
+                    'pemeriksaan_ralan.tensi',
+                    'pemeriksaan_ralan.nadi',
+                    'pemeriksaan_ralan.respirasi',
+                    'pemeriksaan_ralan.tinggi',
+                    'pemeriksaan_ralan.berat',
+                    'pemeriksaan_ralan.spo2',
+                    'pemeriksaan_ralan.gcs',
+                    'pemeriksaan_ralan.kesadaran',
+                    'pemeriksaan_ralan.keluhan',
+                    'pemeriksaan_ralan.pemeriksaan',
+                    'pemeriksaan_ralan.alergi',
+                    'pemeriksaan_ralan.lingkar_perut',
+                    'pemeriksaan_ralan.rtl',
+                    'pemeriksaan_ralan.penilaian',
+                    'pemeriksaan_ralan.instruksi',
+                    'pemeriksaan_ralan.evaluasi',
+                    'pemeriksaan_ralan.nip',
+                    'reg_periksa.no_rkm_medis',
+                    'reg_periksa.kd_dokter',
+                    'reg_periksa.kd_poli',
+                    'poliklinik.nm_poli',
+                    'pasien.nm_pasien',
+                    'dokter.nm_dokter',
+                    'reg_periksa.tgl_registrasi')
+                ->join('reg_periksa','pemeriksaan_ralan.no_rawat','=','reg_periksa.no_rawat')
+                ->join('poliklinik','reg_periksa.kd_poli','=','poliklinik.kd_poli')
+                ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
+                ->join('dokter','reg_periksa.kd_dokter','=','dokter.kd_dokter')
+                ->where('pemeriksaan_ralan.no_rawat','=',$noRawat)
+                ->first();
+            }else{
+                if ($statusLanjut->status_lanjut === 'Ranap') {
+                    $getResume = DB::table('resume_pasien_ranap')
+                        ->select('reg_periksa.no_rkm_medis',
+                                'reg_periksa.umurdaftar',
+                                'reg_periksa.almt_pj',
+                                'pasien.nm_pasien',
+                                'pasien.tgl_lahir',
+                                'pasien.jk as jenis_kelamin',
+                                'pasien.pekerjaan',
+                                'dokter.nm_dokter',
+                                'kamar_inap.kd_kamar',
+                                'kamar_inap.tgl_masuk',
+                                'kamar_inap.tgl_keluar',
+                                'bangsal.nm_bangsal',
+                                'resume_pasien_ranap.no_rawat',
+                                'resume_pasien_ranap.kd_dokter',
+                                'resume_pasien_ranap.diagnosa_awal',
+                                'resume_pasien_ranap.alasan',
+                                'resume_pasien_ranap.keluhan_utama',
+                                'resume_pasien_ranap.pemeriksaan_fisik',
+                                'resume_pasien_ranap.jalannya_penyakit',
+                                'resume_pasien_ranap.pemeriksaan_penunjang',
+                                'resume_pasien_ranap.hasil_laborat',
+                                'resume_pasien_ranap.tindakan_dan_operasi',
+                                'resume_pasien_ranap.obat_di_rs',
+                                'resume_pasien_ranap.diagnosa_utama',
+                                'resume_pasien_ranap.kd_diagnosa_utama',
+                                'resume_pasien_ranap.diagnosa_sekunder',
+                                'resume_pasien_ranap.kd_diagnosa_sekunder',
+                                'resume_pasien_ranap.diagnosa_sekunder2',
+                                'resume_pasien_ranap.kd_diagnosa_sekunder2',
+                                'resume_pasien_ranap.diagnosa_sekunder3',
+                                'resume_pasien_ranap.kd_diagnosa_sekunder3',
+                                'resume_pasien_ranap.diagnosa_sekunder4',
+                                'resume_pasien_ranap.kd_diagnosa_sekunder4',
+                                'resume_pasien_ranap.prosedur_utama',
+                                'resume_pasien_ranap.kd_prosedur_utama',
+                                'resume_pasien_ranap.prosedur_sekunder',
+                                'resume_pasien_ranap.kd_prosedur_sekunder',
+                                'resume_pasien_ranap.prosedur_sekunder2',
+                                'resume_pasien_ranap.kd_prosedur_sekunder2',
+                                'resume_pasien_ranap.prosedur_sekunder3',
+                                'resume_pasien_ranap.kd_prosedur_sekunder3',
+                                'resume_pasien_ranap.alergi',
+                                'resume_pasien_ranap.diet',
+                                'resume_pasien_ranap.lab_belum',
+                                'resume_pasien_ranap.edukasi',
+                                'resume_pasien_ranap.cara_keluar',
+                                'resume_pasien_ranap.ket_keluar',
+                                'resume_pasien_ranap.keadaan',
+                                'resume_pasien_ranap.ket_keadaan',
+                                'resume_pasien_ranap.dilanjutkan',
+                                'resume_pasien_ranap.ket_dilanjutkan',
+                                'resume_pasien_ranap.kontrol',
+                                'resume_pasien_ranap.obat_pulang')
+                        ->join('reg_periksa','resume_pasien_ranap.no_rawat','=','reg_periksa.no_rawat')
+                        ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
+                        ->join('kamar_inap','kamar_inap.no_rawat','=','reg_periksa.no_rawat')
+                        ->join('kamar','kamar_inap.kd_kamar','=','kamar.kd_kamar')
+                        ->join('bangsal','kamar.kd_bangsal','=','bangsal.kd_bangsal')
+                        ->join('dokter','resume_pasien_ranap.kd_dokter','=','dokter.kd_dokter')
+                        ->where('resume_pasien_ranap.no_rawat','=', $noRawat)
+                        ->first();
+                } else {
+                    $getResume = DB::table('resume_pasien')
+                        ->select('reg_periksa.tgl_registrasi',
+                                'poliklinik.nm_poli',
+                                'reg_periksa.almt_pj',
+                                'pasien.pekerjaan',
+                                'reg_periksa.umurdaftar',
+                                'reg_periksa.no_rkm_medis',
+                                'pasien.nm_pasien',
+                                'pasien.tmp_lahir',
+                                'pasien.tgl_lahir',
+                                'dokter.kd_dokter',
+                                'dokter.nm_dokter',
+                                'pasien.jk',
+                                'pasien.alamat',
+                                'pasien.umur',
+                                'reg_periksa.status_lanjut',
+                                'reg_periksa.kd_pj',
+                                'resume_pasien.no_rawat',
+                                'resume_pasien.kd_dokter',
+                                'resume_pasien.keluhan_utama',
+                                'resume_pasien.jalannya_penyakit',
+                                'resume_pasien.pemeriksaan_penunjang',
+                                'resume_pasien.hasil_laborat',
+                                'resume_pasien.diagnosa_utama',
+                                'resume_pasien.kd_diagnosa_utama',
+                                'resume_pasien.diagnosa_sekunder',
+                                'resume_pasien.kd_diagnosa_sekunder',
+                                'resume_pasien.diagnosa_sekunder2',
+                                'resume_pasien.kd_diagnosa_sekunder2',
+                                'resume_pasien.diagnosa_sekunder3',
+                                'resume_pasien.kd_diagnosa_sekunder3',
+                                'resume_pasien.diagnosa_sekunder4',
+                                'resume_pasien.kd_diagnosa_sekunder4',
+                                'resume_pasien.prosedur_utama',
+                                'resume_pasien.kd_prosedur_utama',
+                                'resume_pasien.prosedur_sekunder',
+                                'resume_pasien.kd_prosedur_sekunder',
+                                'resume_pasien.prosedur_sekunder2',
+                                'resume_pasien.kd_prosedur_sekunder2',
+                                'resume_pasien.prosedur_sekunder3',
+                                'resume_pasien.kd_prosedur_sekunder3',
+                                'resume_pasien.kondisi_pulang',
+                                'resume_pasien.obat_pulang')
+                        ->join('reg_periksa','resume_pasien.no_rawat','=','reg_periksa.no_rawat')
+                        ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
+                        ->join('dokter',function($join) {
+                            $join->on('resume_pasien.kd_dokter','=','dokter.kd_dokter')
+                            ->on('reg_periksa.kd_dokter','=','dokter.kd_dokter');
+                        })
+                        ->join('poliklinik','reg_periksa.kd_poli','=','poliklinik.kd_poli')
+                        ->where('resume_pasien.no_rawat','=', $noRawat)
+                        ->first();
+                }
             }
 
             // RIANCIAN BIAYA

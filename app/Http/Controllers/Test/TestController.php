@@ -149,47 +149,133 @@ class TestController extends Controller
     //     return view('test.test',[ ]);
     // }
 //
-    // TEST RESUME MEDIS
+    // // // TEST RESUME MEDIS
 
-    function Test() {
-        $getSEPFisio = DB::table('pemeriksaan_ralan')
-        ->select('pemeriksaan_ralan.no_rawat',
-            'pemeriksaan_ralan.tgl_perawatan',
-            'pemeriksaan_ralan.jam_rawat',
-            'pemeriksaan_ralan.suhu_tubuh',
-            'pemeriksaan_ralan.tensi',
-            'pemeriksaan_ralan.nadi',
-            'pemeriksaan_ralan.respirasi',
-            'pemeriksaan_ralan.tinggi',
-            'pemeriksaan_ralan.berat',
-            'pemeriksaan_ralan.spo2',
-            'pemeriksaan_ralan.gcs',
-            'pemeriksaan_ralan.kesadaran',
-            'pemeriksaan_ralan.keluhan',
-            'pemeriksaan_ralan.pemeriksaan',
-            'pemeriksaan_ralan.alergi',
-            'pemeriksaan_ralan.lingkar_perut',
-            'pemeriksaan_ralan.rtl',
-            'pemeriksaan_ralan.penilaian',
-            'pemeriksaan_ralan.instruksi',
-            'pemeriksaan_ralan.evaluasi',
-            'pemeriksaan_ralan.nip',
-            'reg_periksa.no_rkm_medis',
-            'reg_periksa.kd_dokter',
-            'reg_periksa.kd_poli',
-            'poliklinik.nm_poli',
-            'pasien.nm_pasien',
-            'dokter.nm_dokter',
-            'reg_periksa.tgl_registrasi')
-        ->join('reg_periksa','pemeriksaan_ralan.no_rawat','=','reg_periksa.no_rawat')
-        ->join('poliklinik','reg_periksa.kd_poli','=','poliklinik.kd_poli')
-        ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
-        ->join('dokter','reg_periksa.kd_dokter','=','dokter.kd_dokter')
-        ->where('pemeriksaan_ralan.no_rawat','=','2023/10/03/000484')
-        ->first();
+    // // function Test() {
+    // //     $getSEPFisio = DB::table('pemeriksaan_ralan')
+    // //     ->select('pemeriksaan_ralan.no_rawat',
+    // //         'pemeriksaan_ralan.tgl_perawatan',
+    // //         'pemeriksaan_ralan.jam_rawat',
+    // //         'pemeriksaan_ralan.suhu_tubuh',
+    // //         'pemeriksaan_ralan.tensi',
+    // //         'pemeriksaan_ralan.nadi',
+    // //         'pemeriksaan_ralan.respirasi',
+    // //         'pemeriksaan_ralan.tinggi',
+    // //         'pemeriksaan_ralan.berat',
+    // //         'pemeriksaan_ralan.spo2',
+    // //         'pemeriksaan_ralan.gcs',
+    // //         'pemeriksaan_ralan.kesadaran',
+    // //         'pemeriksaan_ralan.keluhan',
+    // //         'pemeriksaan_ralan.pemeriksaan',
+    // //         'pemeriksaan_ralan.alergi',
+    // //         'pemeriksaan_ralan.lingkar_perut',
+    // //         'pemeriksaan_ralan.rtl',
+    // //         'pemeriksaan_ralan.penilaian',
+    // //         'pemeriksaan_ralan.instruksi',
+    // //         'pemeriksaan_ralan.evaluasi',
+    // //         'pemeriksaan_ralan.nip',
+    // //         'reg_periksa.no_rkm_medis',
+    // //         'reg_periksa.kd_dokter',
+    // //         'reg_periksa.kd_poli',
+    // //         'poliklinik.nm_poli',
+    // //         'pasien.nm_pasien',
+    // //         'dokter.nm_dokter',
+    // //         'reg_periksa.tgl_registrasi')
+    // //     ->join('reg_periksa','pemeriksaan_ralan.no_rawat','=','reg_periksa.no_rawat')
+    // //     ->join('poliklinik','reg_periksa.kd_poli','=','poliklinik.kd_poli')
+    // //     ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
+    // //     ->join('dokter','reg_periksa.kd_dokter','=','dokter.kd_dokter')
+    // //     ->where('pemeriksaan_ralan.no_rawat','=','2023/10/03/000484')
+    // //     ->first();
+
+    // //     return view('test.test', [
+    // //         'getSEPFisio'=>$getSEPFisio,
+    // //     ]);
+    // }
+
+    function Test(){
+        $kelasKamar =DB::table('kamar')
+            ->select('kamar.kelas')
+            ->where('kamar.statusdata','=','1')
+            ->groupBy('kamar.kelas')
+            ->get();
+
+        $cariKelas = DB::table('reg_periksa')
+            ->select('reg_periksa.no_rawat',
+                'pasien.nm_pasien',
+                'kamar.kelas',
+                'reg_periksa.kd_pj',
+                'penjab.png_jawab',
+                'kamar.trf_kamar',
+                'pasien.alamat',
+                'kamar_inap.tgl_masuk',
+                'kamar_inap.jam_masuk',
+                'kamar_inap.tgl_keluar',
+                'kamar_inap.jam_keluar',
+                'kamar_inap.lama')
+            ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
+            ->join('kamar_inap','reg_periksa.no_rawat','=','kamar_inap.no_rawat')
+            ->join('kamar','kamar_inap.kd_kamar','=','kamar.kd_kamar')
+            ->join('penjab',function($join) {
+                $join->on('pasien.kd_pj','=','penjab.kd_pj')
+                ->on('reg_periksa.kd_pj','=','penjab.kd_pj');
+            })
+            ->whereBetween('kamar_inap.tgl_masuk',['2023-01-01','2023-07-31'])
+            ->where('kamar.kelas','=','Kelas Vvip')
+            ->where('pasien.kd_pj','!=','BPJ')
+            ->get();
 
         return view('test.test', [
-            'getSEPFisio'=>$getSEPFisio,
+            'cariKelas'=>$cariKelas,
+            'kelasKamar'=>$kelasKamar,
+        ]);
+    }
+    function TestCari(Request $request){
+        $tipeKelas = $request->kelasKamar;
+        $tgl1 = $request->tgl1;
+        $tgl2 = $request->tgl2;
+        $penjab = $request->penjab;
+        $kelasKamar =DB::table('kamar')
+            ->select('kamar.kelas')
+            ->where('kamar.statusdata','=','1')
+            ->groupBy('kamar.kelas')
+            ->get();
+
+        $kelas = DB::table('reg_periksa')
+            ->select('reg_periksa.no_rawat',
+                'pasien.nm_pasien',
+                'kamar.kelas',
+                'reg_periksa.kd_pj',
+                'penjab.png_jawab',
+                'kamar.trf_kamar',
+                'pasien.alamat',
+                'kamar_inap.tgl_masuk',
+                'kamar_inap.jam_masuk',
+                'kamar_inap.tgl_keluar',
+                'kamar_inap.jam_keluar',
+                'kamar_inap.lama')
+            ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
+            ->join('kamar_inap','reg_periksa.no_rawat','=','kamar_inap.no_rawat')
+            ->join('kamar','kamar_inap.kd_kamar','=','kamar.kd_kamar')
+            ->join('penjab',function($join) {
+                $join->on('pasien.kd_pj','=','penjab.kd_pj')
+                ->on('reg_periksa.kd_pj','=','penjab.kd_pj');
+            })
+            ->whereBetween('kamar_inap.tgl_masuk',[$tgl1, $tgl2])
+            ->where('kamar.kelas','=', $tipeKelas);
+            if($penjab === 'BPJS'){
+                $cariKelas = $kelas->where('pasien.kd_pj','=','BPJ')
+                ->get();
+            }else{
+                $cariKelas = $kelas->where('pasien.kd_pj','!=','BPJ')
+                ->get();
+
+            }
+
+            // dd($kelasKamar);
+        return view('test.test', [
+            'cariKelas'=>$cariKelas,
+            'kelasKamar'=>$kelasKamar,
         ]);
     }
 }

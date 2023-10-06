@@ -54,8 +54,10 @@ class ListPasienRalan extends Controller
         $penjamnin = 'BPJ';
 
         $daftarPasien = DB::table('reg_periksa')
-            ->select('reg_periksa.no_rkm_medis', 'reg_periksa.no_rawat', 'reg_periksa.status_bayar', 'bridging_sep.no_sep', 'pasien.nm_pasien', 'bridging_sep.tglsep')
+            ->select('reg_periksa.no_rkm_medis', 'reg_periksa.no_rawat', 'reg_periksa.status_bayar', 'bridging_sep.no_sep', 'pasien.nm_pasien', 'bridging_sep.tglsep',
+            'poliklinik.nm_poli')
             ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
+            ->join('poliklinik','reg_periksa.kd_poli','=','poliklinik.kd_poli')
             ->leftJoin('bridging_sep','bridging_sep.no_rawat','=','reg_periksa.no_rawat')
             ->whereBetween('reg_periksa.tgl_registrasi',[$tanggl1, $tanggl2])
             ->where('reg_periksa.status_lanjut','=','Ralan')

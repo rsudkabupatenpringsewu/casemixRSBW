@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 
 class AuthRsbw
@@ -27,17 +28,35 @@ class AuthRsbw
             return redirect('/login');
         }
 
-        // UNTUK AUTHORIZE USER
-        $permissionValue  = DB::table('user')
-            ->select('penyakit', 'obat', 'pasien', 'inacbg_klaim_baru_otomatis')
-            ->whereRaw("aes_decrypt(user.id_user, 'nur') = ? ", [$idUser])
-            ->first();
-            session([
-                'penyakit' => $permissionValue->penyakit,
-                'obat' => $permissionValue->obat,
-                'pasien' => $permissionValue->pasien,
-                'inacbg_klaim_baru_otomatis' => $permissionValue->inacbg_klaim_baru_otomatis,
-            ]);
+        // // UNTUK AUTHORIZE USER
+        // $permissionValue  = DB::table('user')
+        //     ->select('penyakit', 'obat', 'pasien', 'inacbg_klaim_baru_otomatis')
+        //     ->whereRaw("aes_decrypt(user.id_user, 'nur') = ? ", [$idUser])
+        //     ->first();
+        //     session([
+        //         'penyakit' => $permissionValue->penyakit,
+        //         'obat' => $permissionValue->obat,
+        //         'pasien' => $permissionValue->pasien,
+        //         'inacbg_klaim_baru_otomatis' => $permissionValue->inacbg_klaim_baru_otomatis,
+        //     ]);
+
+        $cacheKey = 'user_permissions_' . $idUser;
+        if (Cache::has($cacheKey)) {
+            $permissionValue = Cache::get($cacheKey);
+        } else {
+            $permissionValue = DB::table('user')
+                ->select('penyakit', 'obat', 'pasien', 'inacbg_klaim_baru_otomatis')
+                ->whereRaw("aes_decrypt(user.id_user, 'nur') = ? ", [$idUser])
+                ->first();
+            Cache::put($cacheKey, $permissionValue, 360);
+        }
+        // dd(Cache::get($cacheKey));
+        session([
+            'penyakit' => $permissionValue->penyakit,
+            'obat' => $permissionValue->obat,
+            'pasien' => $permissionValue->pasien,
+            'inacbg_klaim_baru_otomatis' => $permissionValue->inacbg_klaim_baru_otomatis,
+        ]);
 
         $result = DB::table('user')
         ->select('id_user', 'password')

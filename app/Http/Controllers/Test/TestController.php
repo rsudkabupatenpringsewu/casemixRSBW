@@ -193,89 +193,98 @@ class TestController extends Controller
     // //     ]);
     // }
 
-    function Test(){
-        $kelasKamar =DB::table('kamar')
-            ->select('kamar.kelas')
-            ->where('kamar.statusdata','=','1')
-            ->groupBy('kamar.kelas')
-            ->get();
+    // function Test(){
+    //     $kelasKamar =DB::table('kamar')
+    //         ->select('kamar.kelas')
+    //         ->where('kamar.statusdata','=','1')
+    //         ->groupBy('kamar.kelas')
+    //         ->get();
 
-        $cariKelas = DB::table('reg_periksa')
-            ->select('reg_periksa.no_rawat',
-                'pasien.nm_pasien',
-                'kamar.kelas',
-                'reg_periksa.kd_pj',
-                'penjab.png_jawab',
-                'kamar.trf_kamar',
-                'pasien.alamat',
-                'kamar_inap.tgl_masuk',
-                'kamar_inap.jam_masuk',
-                'kamar_inap.tgl_keluar',
-                'kamar_inap.jam_keluar',
-                'kamar_inap.lama')
-            ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
-            ->join('kamar_inap','reg_periksa.no_rawat','=','kamar_inap.no_rawat')
-            ->join('kamar','kamar_inap.kd_kamar','=','kamar.kd_kamar')
-            ->join('penjab',function($join) {
-                $join->on('pasien.kd_pj','=','penjab.kd_pj')
-                ->on('reg_periksa.kd_pj','=','penjab.kd_pj');
-            })
-            ->whereBetween('kamar_inap.tgl_masuk',['2023-01-01','2023-07-31'])
-            ->where('kamar.kelas','=','Kelas Vvip')
-            ->where('pasien.kd_pj','!=','BPJ')
-            ->get();
+    //     $cariKelas = DB::table('reg_periksa')
+    //         ->select('reg_periksa.no_rawat',
+    //             'pasien.nm_pasien',
+    //             'kamar.kelas',
+    //             'reg_periksa.kd_pj',
+    //             'penjab.png_jawab',
+    //             'kamar.trf_kamar',
+    //             'pasien.alamat',
+    //             'kamar_inap.tgl_masuk',
+    //             'kamar_inap.jam_masuk',
+    //             'kamar_inap.tgl_keluar',
+    //             'kamar_inap.jam_keluar',
+    //             'kamar_inap.lama')
+    //         ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
+    //         ->join('kamar_inap','reg_periksa.no_rawat','=','kamar_inap.no_rawat')
+    //         ->join('kamar','kamar_inap.kd_kamar','=','kamar.kd_kamar')
+    //         ->join('penjab',function($join) {
+    //             $join->on('pasien.kd_pj','=','penjab.kd_pj')
+    //             ->on('reg_periksa.kd_pj','=','penjab.kd_pj');
+    //         })
+    //         ->whereBetween('kamar_inap.tgl_masuk',['2023-01-01','2023-07-31'])
+    //         ->where('kamar.kelas','=','Kelas Vvip')
+    //         ->where('pasien.kd_pj','!=','BPJ')
+    //         ->get();
 
-        return view('test.test', [
-            'cariKelas'=>$cariKelas,
-            'kelasKamar'=>$kelasKamar,
-        ]);
-    }
-    function TestCari(Request $request){
-        $tipeKelas = $request->kelasKamar;
-        $tgl1 = $request->tgl1;
-        $tgl2 = $request->tgl2;
-        $penjab = $request->penjab;
-        $kelasKamar =DB::table('kamar')
-            ->select('kamar.kelas')
-            ->where('kamar.statusdata','=','1')
-            ->groupBy('kamar.kelas')
-            ->get();
+    //     return view('test.test', [
+    //         'cariKelas'=>$cariKelas,
+    //         'kelasKamar'=>$kelasKamar,
+    //     ]);
+    // }
+    // function TestCari(Request $request){
+    //     $tipeKelas = $request->kelasKamar;
+    //     $tgl1 = $request->tgl1;
+    //     $tgl2 = $request->tgl2;
+    //     $penjab = $request->penjab;
+    //     $kelasKamar =DB::table('kamar')
+    //         ->select('kamar.kelas')
+    //         ->where('kamar.statusdata','=','1')
+    //         ->groupBy('kamar.kelas')
+    //         ->get();
 
-        $kelas = DB::table('reg_periksa')
-            ->select('reg_periksa.no_rawat',
-                'pasien.nm_pasien',
-                'kamar.kelas',
-                'reg_periksa.kd_pj',
-                'penjab.png_jawab',
-                'kamar.trf_kamar',
-                'pasien.alamat',
-                'kamar_inap.tgl_masuk',
-                'kamar_inap.jam_masuk',
-                'kamar_inap.tgl_keluar',
-                'kamar_inap.jam_keluar',
-                'kamar_inap.lama')
-            ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
-            ->join('kamar_inap','reg_periksa.no_rawat','=','kamar_inap.no_rawat')
-            ->join('kamar','kamar_inap.kd_kamar','=','kamar.kd_kamar')
-            ->join('penjab',function($join) {
-                $join->on('pasien.kd_pj','=','penjab.kd_pj')
-                ->on('reg_periksa.kd_pj','=','penjab.kd_pj');
-            })
-            ->whereBetween('kamar_inap.tgl_masuk',[$tgl1, $tgl2])
-            ->where('kamar.kelas','=', $tipeKelas);
-            if($penjab === 'BPJS'){
-                $cariKelas = $kelas->where('pasien.kd_pj','=','BPJ')
-                ->get();
-            }else{
-                $cariKelas = $kelas->where('pasien.kd_pj','!=','BPJ')
-                ->get();
+    //     $kelas = DB::table('reg_periksa')
+    //         ->select('reg_periksa.no_rawat',
+    //             'pasien.nm_pasien',
+    //             'kamar.kelas',
+    //             'reg_periksa.kd_pj',
+    //             'penjab.png_jawab',
+    //             'kamar.trf_kamar',
+    //             'pasien.alamat',
+    //             'kamar_inap.tgl_masuk',
+    //             'kamar_inap.jam_masuk',
+    //             'kamar_inap.tgl_keluar',
+    //             'kamar_inap.jam_keluar',
+    //             'kamar_inap.lama')
+    //         ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
+    //         ->join('kamar_inap','reg_periksa.no_rawat','=','kamar_inap.no_rawat')
+    //         ->join('kamar','kamar_inap.kd_kamar','=','kamar.kd_kamar')
+    //         ->join('penjab',function($join) {
+    //             $join->on('pasien.kd_pj','=','penjab.kd_pj')
+    //             ->on('reg_periksa.kd_pj','=','penjab.kd_pj');
+    //         })
+    //         ->whereBetween('kamar_inap.tgl_masuk',[$tgl1, $tgl2])
+    //         ->where('kamar.kelas','=', $tipeKelas);
+    //         if($penjab === 'BPJS'){
+    //             $cariKelas = $kelas->where('pasien.kd_pj','=','BPJ')
+    //             ->get();
+    //         }else{
+    //             $cariKelas = $kelas->where('pasien.kd_pj','!=','BPJ')
+    //             ->get();
 
-            }
+    //         }
 
-            // dd($kelasKamar);
-        return view('test.test', [
-            'cariKelas'=>$cariKelas,
-            'kelasKamar'=>$kelasKamar,
-        ]);
-    }
+    //         // dd($kelasKamar);
+    //     return view('test.test', [
+    //         'cariKelas'=>$cariKelas,
+    //         'kelasKamar'=>$kelasKamar,
+    //     ]);
+    // }
+//
+
+function Test(){
+    $test = 'tets';
+    return view('test.test',[
+        'test'=>$test,
+    ]);    
+}
+
 }

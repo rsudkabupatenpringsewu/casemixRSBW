@@ -274,7 +274,8 @@
                                     <td>: {{ $getResume->pemeriksaan }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Suhu Tubuh</td>
+                                    {{-- <td>Suhu Tubuh</td> --}}
+                                    <td>Program Terapi Ke</td>
                                     <td>: {{ $getResume->suhu_tubuh }}</td>
                                 </tr>
                                 <tr>

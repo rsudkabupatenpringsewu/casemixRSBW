@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
@@ -18,10 +19,19 @@ class AuthController extends Controller
             'id_user' => $request->id_user,
             'password' => $request->password,
         ];
-        $result = DB::table('user')
+
+        $cacheKey = 'user_' . $data['id_user'];
+        if (Cache::has($cacheKey)) {
+            $result = Cache::get($cacheKey);
+        } else {
+            $result = DB::table('user')
             ->select('id_user', 'password')
             ->whereRaw("aes_decrypt(user.id_user, 'nur') = ? AND aes_decrypt(user.password, 'windi') = ?", [$data['id_user'], $data['password']])
             ->first();
+            Cache::put($cacheKey, $result, 360);
+        }
+        // dd(Cache::get($cacheKey));
+
         if(!$result){
             Session::flash('errorLogin', 'Cek kembali akun anda');
             return redirect('/login');

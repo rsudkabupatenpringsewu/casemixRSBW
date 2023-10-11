@@ -2,7 +2,8 @@
 @section('title', 'Casemix Bpjs')
 
 @section('konten')
-    <form action="{{ url('/test-cari') }}" action="">
+    {{-- KAK REZA --}}
+    {{-- <form action="{{ url('/test-cari') }}" action="">
         @csrf
         <div class="row">
             <div class="col-md-2">
@@ -82,5 +83,8 @@
                 </tr>
             @endforeach
         </tbody>
-    </table>
+    </table> --}}
+
+    {{-- PAK OGAN --}}
+    {{$test}}
 @endsection

@@ -12,6 +12,12 @@
                 title: '{{ session('successupload') }}'
             });
         @endif
+        @if (session('successSavePDF'))
+            Toast.fire({
+                icon: 'success',
+                title: '{{ session('successSavePDF') }}'
+            });
+        @endif
     });
 </script>
 

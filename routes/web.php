@@ -69,6 +69,7 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
 
     Route::get('/view-sep-resep', [ViewSepResepController::class, 'ViewBerkasSepResep']);
     Route::get('/print-sep-resep', [ViewSepResepController::class, 'PrintBerkasSepResep']);
+    Route::post('/upload-berkas-farmasi', [ViewSepResepController::class, 'UploadBerkasFarmasi']);
 });
 });
 

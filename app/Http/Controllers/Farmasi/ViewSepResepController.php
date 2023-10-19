@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Farmasi;
 
+use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class ViewSepResepController extends Controller
 {
@@ -17,6 +20,15 @@ class ViewSepResepController extends Controller
         $jumlahData = $cekNorawat->count();
 
         if ($jumlahData > 0) {
+            $pasien = DB::table('reg_periksa')
+                ->join('pasien', 'pasien.no_rkm_medis', '=', 'reg_periksa.no_rkm_medis')
+                ->join('penjab', 'penjab.kd_pj', '=', 'reg_periksa.kd_pj')
+                ->leftJoin('bridging_sep','bridging_sep.no_rawat','=','reg_periksa.no_rawat')
+                ->where('bridging_sep.no_sep', '=', $noSep)
+                ->where('reg_periksa.no_rawat', '=', $noRawat)
+                ->select('pasien.no_rkm_medis', 'pasien.nm_pasien', 'bridging_sep.no_sep', 'reg_periksa.no_rawat', 'penjab.png_jawab');
+            $getPasien = $pasien->first();
+
             $getSEP = DB::table('bridging_sep')
                 ->select('bridging_sep.no_sep',
                     'reg_periksa.no_reg',
@@ -122,18 +134,45 @@ class ViewSepResepController extends Controller
             'noRawat'=>$noRawat,
             'noSep'=>$noSep,
             'jumlahData'=>$jumlahData,
+            'getPasien'=>$getPasien,
             'getSEP'=>$getSEP,
             'berkasResep'=>$berkasResep,
         ]);
     }
+
+    // UPLOAD BERKAS
+    function UploadBerkasFarmasi(Request $request) {
+        if ($request->hasFile('file_scan_farmasi')) {
+            $file = $request->file('file_scan_farmasi');
+            $no_rawatSTR = str_replace('/', '', $request->no_rawat);
+            $path_file = 'FILE-SCAN-FARMASI' . '-' . $no_rawatSTR. '.' . $file->getClientOriginalExtension();
+            Storage::disk('public')->put('file_scan_farmasi/' . $path_file, file_get_contents($file));
+            $cekBerkas = DB::connection('db_con2')->table('file_farmasi')->where('no_rawat', $request->no_rawat)
+                ->where('jenis_berkas', 'FILE-SCAN-FARMASI')
+                ->exists();
+            if (!$cekBerkas){
+                DB::connection('db_con2')->table('file_farmasi')->insert([
+                    'no_rkm_medis' => $request->no_rkm_medis,
+                    'no_rawat' => $request->no_rawat,
+                    'nama_pasein' => $request->nama_pasein,
+                    'jenis_berkas' => 'FILE-SCAN-FARMASI',
+                    'file' => $path_file,
+                ]);
+            }
+           return back()->with('successupload', 'Berhasil Menyimpan Data & Mengunggah File');
+        }
+    }
+
     // PRINT
     function PrintBerkasSepResep(Request $request) {
         $noRawat = $request->cariNoRawat;
         $noSep = $request->cariNoSep;
         $cekNorawat = DB::table('reg_periksa')
-        ->select('status_lanjut')
+        ->select('reg_periksa.status_lanjut', 'pasien.nm_pasien', 'reg_periksa.no_rkm_medis', 'reg_periksa.kd_poli')
+        ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
         ->where('no_rawat', '=', $noRawat);
         $jumlahData = $cekNorawat->count();
+        $getpasien = $cekNorawat->first();
 
         if ($jumlahData > 0) {
             $getSEP = DB::table('bridging_sep')
@@ -237,13 +276,39 @@ class ViewSepResepController extends Controller
                     $itemresep->detailberkasResep = $detailberkasResep;
                 }
         }
-        return view('farmasi.print-berkas-sep-resep', [
+        else {
+            $noRawat = '';
+            $noSep = '';
+            $jumlahData = '';
+            $getSEP = '';
+            $berkasResep = '';
+        }
+        $pdf = PDF::loadView('farmasi.print-berkas-sep-resep', [
             'noRawat'=>$noRawat,
             'noSep'=>$noSep,
             'jumlahData'=>$jumlahData,
             'getSEP'=>$getSEP,
             'berkasResep'=>$berkasResep,
         ]);
+        $no_rawatSTR = str_replace('/', '', $noRawat);
+        $pdfFilename = 'SEP-RESEP-'.$no_rawatSTR.'.pdf';
+        Storage::disk('public')->put('file_sepresep_farmasi/' . $pdfFilename, $pdf->output());
+        $cekBerkas = DB::connection('db_con2')->table('file_farmasi')->where('no_rawat', $noRawat)
+            ->where('jenis_berkas', 'SEP-RESEP')
+            ->exists();
+        if (!$cekBerkas){
+            DB::connection('db_con2')->table('file_farmasi')->insert([
+                'no_rkm_medis' => $getpasien->no_rkm_medis,
+                'no_rawat' => $noRawat,
+                'nama_pasein' => $getpasien->nm_pasien,
+                'jenis_berkas' => 'SEP-RESEP',
+                'file' => $pdfFilename,
+            ]);
+        }
+        $redirectUrl = url('/view-sep-resep');
+        $csrfToken = Session::token();
+        $redirectUrlWithToken = $redirectUrl . '?' . http_build_query(['_token' => $csrfToken, 'cariNoRawat' => $noRawat, 'cariNoSep' => $noSep,]);
+        return redirect($redirectUrlWithToken)->with('successSavePDF', 'Berhasil menyimpan file ke bentuk pdf');
     }
 
 }

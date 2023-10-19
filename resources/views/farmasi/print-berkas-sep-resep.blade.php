@@ -13,21 +13,23 @@
     }
 
     .text-xs {
-        font-size: 12px;
+        font-size: 8px;
         /* Adjust font size for paragraphs */
     }
 
-    .font-16px {
-        font-size: 16px
+    .h3 {
+        font-size: 18px;
+        font-weight: 700;
     }
-    .font-18px {
-        font-size: 18px
+
+    .h4 {
+        font-size: 14px;
     }
 
     table {
         width: 100%;
         border-collapse: collapse;
-        font-size: 14px;
+        font-size: 10px;
         /* Adjust font size for tables */
     }
 
@@ -39,19 +41,20 @@
         text-align: center;
     }
 
-    .pr-5 {
-        padding-right: 120px;
-    }
-
-    .pr-4 {
-        padding-right: 80px;
-    }
-
-    .mt-2 {
-        margin-top: 15px;
-    }
     .mt-1 {
-        margin-top: 6px;
+        margin-top: 10px;
+    }
+
+    .mt-0 {
+        margin-top: 0px;
+    }
+
+    .mb-0 {
+        margin-bottom: 0px;
+    }
+
+    .mx-1 {
+        margin: 5px 8px;
     }
 
     .card-body {
@@ -69,40 +72,40 @@
         @if ($getSEP)
             <div class="card-body">
                 <div class="card p-4 d-flex justify-content-center align-items-center">
-                    <table width="990px" border="0px">
+                    <table width="700px">
                         <thead>
                             <tr>
-                                <th rowspan="2" width="250px"><img src="img/bpjs.png" width="250px" class="mt-0"
-                                        alt="">
+                                <th rowspan="2" width="150px"><img src="{{ public_path('img/bpjs.png') }}"
+                                        width="150px" class="mt-0" alt="">
                                 </th>
-                                <th class="text-center pr-5">
-                                    <b class="font-16px">SURAT ELEGIBILITAS PESERTA</b>
+                                <th class="text-center">
+                                    <span class="h3">SURAT ELEGIBILITAS PESERTA</span>
                                 </th>
                             </tr>
                             <tr>
-                                <th class="text-center pr-5">
-                                    <b class="font-16px">RS.BUMI WARAS</b>
+                                <th class="text-center">
+                                    <span class="h3">RS.BUMI WARAS</span>
                                 </th>
                             </tr>
                             <tr>
                                 <th colspan="4" class="text-right">
                                     <img class="mt-2"
                                         src="data:image/png;base64,{{ DNS1D::getBarcodePNG($getSEP->no_sep, 'C39+') }}"
-                                        alt="barcode" width="300px" height="35px" />
+                                        alt="barcode" width="200px" height="30px" />
                                 </th>
                             </tr>
                         </thead>
                     </table>
-                    <table width="990px" border="0px" class="mt-2">
+                    <table width="700px" class="mt-2">
                         <tr>
-                            <td width="150px">No. SEP</td>
-                            <td width="400px">: {{ $getSEP->no_sep }}</td>
-                            <td width="150px">No. Rawat</td>
-                            <td width="279px">: {{ $getSEP->no_rawat }}</td>
+                            <td width="144px">No. SEP</td>
+                            <td width="250px">: {{ $getSEP->no_sep }}</td>
+                            <td width="144px">No. Rawat</td>
+                            <td width="150px">: {{ $getSEP->no_rawat }}</td>
                         </tr>
                         <tr>
                             <td>Tgl. SEP</td>
-                            <td width="450px">: {{ date('d/m/Y', strtotime($getSEP->tglsep)) }}</td>
+                            <td>: {{ date('d/m/Y', strtotime($getSEP->tglsep)) }}</td>
                             <td>No. Reg</td>
                             <td>: {{ $getSEP->no_reg }}</td>
                         </tr>
@@ -172,7 +175,7 @@
                             <td></td>
                         </tr>
                     </table>
-                    <table width="990px" border="0px">
+                    <table width="700px">
                         <tr>
                             <td class="text-xs">
                                 *Saya Menyetujui BPJS Kesehatan Menggunakan Informasi Medis Pasien jika
@@ -182,11 +185,11 @@
                                 Catatan Ke 1 {{ date('d/m/Y', strtotime($getSEP->tglsep)) }}
 
                             </td>
-                            <td class="text-center" width="350px">
+                            <td class="text-center" width="220px">
                                 Pasien/Keluarga Pasien <br>
                                 <div class="barcode mt-1">
                                     <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di ' . $getSEP->nmppkpelayanan . ',' . ' Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $getSEP->nama_pasien . ' ID ' . $getSEP->no_kartu . ' ' . $getSEP->tglsep, 'QRCODE') }}"
-                                        alt="barcode" width="80px" height="75px" />
+                                        alt="barcode" width="55px" height="55px" />
                                 </div>
                                 <b class="mt-1">{{ $getSEP->nama_pasien }}</b>
                             </td>
@@ -204,13 +207,15 @@
             @foreach ($berkasResep as $itemresep)
                 <div class="card-body">
                     <div class="card p-4 d-flex justify-content-center align-items-center">
-                        <table border="0px" width="1000px">
+                        <table width="700px">
                             <tr>
-                                <td rowspan="5"> <img src="../img/rs.png" alt="Girl in a jacket" width="90"
-                                        height="75">
+                                <td rowspan="5"> <img src="{{ public_path('img/rs.png') }}" alt="Girl in a jacket"
+                                        width="90" height="75">
                                 </td>
-                                <td class="text-center pr-4 font-18px">
-                                    RS. BUMI WARAS
+                                <td class="text-center">
+                                    <span class="h3">RS. BUMI WARAS </span>
+                                </td>
+                                <td class="text-center" width="100px">
                                 </td>
                             </tr>
                             <tr class="text-center">
@@ -223,35 +228,35 @@
                                 <td class="pr-4">www.rsbumiwaras.co.id</td>
                             </tr>
                         </table>
-                        <hr width="1000px"
+                        <hr width="700px"
                             style=" height:2px; border-top:1px solid black; border-bottom:2px solid black;">
-                        <table border="0px" width="1000px">
+                        <table width="700px">
                             <tr style="vertical-align: top;">
                                 <td width="130px">Nama Pasien</td>
-                                <td width="870px">: {{ $itemresep->nm_pasien }}</td>
+                                <td width="530px">: {{ $itemresep->nm_pasien }}</td>
                             </tr>
                             <tr style="vertical-align: top;">
                                 <td width="130px">No.RM</td>
-                                <td width="870px">: {{ $itemresep->no_rkm_medis }}</td>
+                                <td>: {{ $itemresep->no_rkm_medis }}</td>
                             </tr>
                             <tr style="vertical-align: top;">
                                 <td width="130px">No.Rawat</td>
-                                <td width="870px">: {{ $itemresep->no_rawat }}</td>
+                                <td>: {{ $itemresep->no_rawat }}</td>
                             </tr>
                             <tr style="vertical-align: top;">
                                 <td width="130px">Penanggung</td>
-                                <td width="870px">: {{ $itemresep->png_jawab }}</td>
+                                <td>: {{ $itemresep->png_jawab }}</td>
                             </tr>
                             <tr style="vertical-align: top;">
                                 <td width="130px">Pemberi Resep</td>
-                                <td width="870px">: -</td>
+                                <td>: -</td>
                             </tr>
                             <tr style="vertical-align: top;">
                                 <td width="130px">No. Resep</td>
-                                <td width="870px">: {{ $itemresep->no_resep }}</td>
+                                <td>: {{ $itemresep->no_resep }}</td>
                             </tr>
                         </table>
-                        <table border="0px" width="1000px" class="mt-2">
+                        <table width="700px" class="mt-1">
                             @php
                                 $no = 1;
                                 $totalResep = 0;
@@ -259,9 +264,9 @@
                             @foreach ($itemresep->detailberkasResep as $itemresep)
                                 <tr>
                                     <td width="30px" class="text-center">{{ $no++ }}</td>
-                                    <td width="500px">{{ $itemresep->nama_brng }}</td>
-                                    <td width="100px" class="text-center">{{ $itemresep->jml }}</td>
-                                    <td width="150px">{{ $itemresep->kode_sat }}</td>
+                                    <td width="350px">{{ $itemresep->nama_brng }}</td>
+                                    <td width="50px" class="text-center">{{ $itemresep->jml }}</td>
+                                    <td width="80px">{{ $itemresep->kode_sat }}</td>
                                     <td>Rp. {{ number_format($itemresep->total, 2, ',', '.') }}</td>
                                 </tr>
                                 @php
@@ -276,7 +281,7 @@
                                 <td><b>Rp. {{ number_format($totalResep, 2, ',', '.') }}</b></td>
                             </tr>
                         </table>
-                        <table border="0px" width="1000px" class="mt-4" class="">
+                        <table width="700px" class="mt-1">
                             <tr>
                                 <td width="250px" class="text-center">
 
@@ -297,9 +302,6 @@
         @endif
         {{-- ERROR HANDLING ============================================================= --}}
     @endif
-    <script>
-        window.addEventListener("load", window.print());
-    </script>
 </body>
 
 </html>

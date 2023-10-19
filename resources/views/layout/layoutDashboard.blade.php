@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/plugins/fontawesome-free/css/all.min.css" />
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
     <link rel="stylesheet" href="/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css" />
+    <link rel="stylesheet" href="/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
     <link rel="stylesheet" href="/plugins/icheck-bootstrap/icheck-bootstrap.min.css" />
     <link rel="stylesheet" href="/plugins/jqvmap/jqvmap.min.css" />
     <link rel="stylesheet" href="/dist/css/adminlte.min.css" />
@@ -54,7 +55,7 @@
                         <a class="dropdown-item" tabindex="-1" href="#">Another action</a>
                         <a class="dropdown-item" tabindex="-1" href="#">Something else here</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" tabindex="-1" href="{{route('logout')}}">
+                        <a class="dropdown-item" tabindex="-1" href="{{ route('logout') }}">
                             <i class='fas fa-sign-out-alt'></i> Logout
                         </a>
                     </div>
@@ -66,7 +67,7 @@
         <!-- INI MENUUU SAMPING -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="{{url('/')}}" class="brand-link">
+            <a href="{{ url('/') }}" class="brand-link">
                 <img src="/img/logo.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
                     style="opacity: 0.8" />
                 <span class="brand-text font-weight-light">RSBW 1.8</span>
@@ -85,7 +86,7 @@
                                 @php
                                     $auth = session('user');
                                 @endphp
-                               {{ $auth->nama }}
+                                {{ $auth->nama }}
                             @endif
                         </a>
                     </div>
@@ -120,7 +121,7 @@
                                     </a>
                                 </li>
                             </ul>
-                            </li>
+                        </li>
                         {{-- MENU CASEMIX --}}
                         <li class="nav-item">{{-- menu-open --}}
                             <a href="#" class="nav-link">{{-- active --}}
@@ -164,7 +165,7 @@
                             </ul>
                         </li>
                         {{-- MENU FARMASI --}}
-                        @if(session('obat') === 'true')
+                        @if (session('obat') === 'true')
                             <li class="nav-item">{{-- menu-open --}}
                                 <a href="#" class="nav-link">{{-- active --}}
                                     <i class="nav-icon fas fa-mortar-pestle"></i>
@@ -176,7 +177,7 @@
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="{{url('list-pasien-farmasi')}}" class="nav-link">
+                                        <a href="{{ url('list-pasien-farmasi') }}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Berkas SEP & Resep</p>
                                         </a>
@@ -255,6 +256,7 @@
     <script src="/dist/js/adminlte.js"></script>
     <script src="/dist/js/pages/dashboard.js"></script>
     <script src="/js/sidebarmenu.js"></script>
+    <script src="/plugins/sweetalert2/sweetalert2.min.js"></script>
     {{-- TEST --}}
 
 
@@ -271,12 +273,11 @@
             bsCustomFileInput.init();
         });
 
-        $(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
     </script>
-
-
+    @include('layout.component.allert')
 </body>
 
 </html>

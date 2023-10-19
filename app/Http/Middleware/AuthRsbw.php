@@ -48,7 +48,7 @@ class AuthRsbw
                 ->select('penyakit', 'obat', 'pasien', 'inacbg_klaim_baru_otomatis')
                 ->whereRaw("aes_decrypt(user.id_user, 'nur') = ? ", [$idUser])
                 ->first();
-            Cache::put($cacheKey, $permissionValue, 360);
+            Cache::put($cacheKey, $permissionValue, 720);
         }
         // dd(Cache::get($cacheKey));
         session([

@@ -28,7 +28,7 @@ class AuthController extends Controller
             ->select('id_user', 'password')
             ->whereRaw("aes_decrypt(user.id_user, 'nur') = ? AND aes_decrypt(user.password, 'windi') = ?", [$data['id_user'], $data['password']])
             ->first();
-            Cache::put($cacheKey, $result, 360);
+            Cache::put($cacheKey, $result, 720);
         }
         // dd(Cache::get($cacheKey));
 

@@ -9,28 +9,21 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Response;
 
-class ViewSepResepController extends Controller
+class BundlingFarmasi extends Controller
 {
-    function ViewBerkasSepResep(Request $request) {
+    // PRINT
+    function PrintBerkasSepResep(Request $request) {
         $noRawat = $request->cariNoRawat;
         $noSep = $request->cariNoSep;
         $cekNorawat = DB::table('reg_periksa')
-        ->select('status_lanjut')
-        ->where('no_rawat', '=', $noRawat);
+            ->select('reg_periksa.status_lanjut', 'pasien.nm_pasien', 'reg_periksa.no_rkm_medis', 'reg_periksa.kd_poli')
+            ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
+            ->where('no_rawat', '=', $noRawat);
         $jumlahData = $cekNorawat->count();
+        $getpasien = $cekNorawat->first();
 
         if ($jumlahData > 0) {
-            $pasien = DB::table('reg_periksa')
-                ->join('pasien', 'pasien.no_rkm_medis', '=', 'reg_periksa.no_rkm_medis')
-                ->join('penjab', 'penjab.kd_pj', '=', 'reg_periksa.kd_pj')
-                ->leftJoin('bridging_sep','bridging_sep.no_rawat','=','reg_periksa.no_rawat')
-                ->where('bridging_sep.no_sep', '=', $noSep)
-                ->where('reg_periksa.no_rawat', '=', $noRawat)
-                ->select('pasien.no_rkm_medis', 'pasien.nm_pasien', 'bridging_sep.no_sep', 'reg_periksa.no_rawat', 'penjab.png_jawab');
-            $getPasien = $pasien->first();
-
             $getSEP = DB::table('bridging_sep')
                 ->select('bridging_sep.no_sep',
                     'reg_periksa.no_reg',
@@ -132,66 +125,94 @@ class ViewSepResepController extends Controller
                     $itemresep->detailberkasResep = $detailberkasResep;
                 }
         }
-        $cekBerkas = DB::connection('db_con2')->table('file_farmasi')
-            ->select('jenis_berkas')
-            ->where('no_rawat', $noRawat)
-            ->get();
-
-        return view('farmasi.view-berkas-sep-resep', [
+        else {
+            $noRawat = '';
+            $noSep = '';
+            $jumlahData = '';
+            $getSEP = '';
+            $berkasResep = '';
+        }
+        $pdf = PDF::loadView('farmasi.print-berkas-sep-resep', [
             'noRawat'=>$noRawat,
-            'cekBerkas'=>$cekBerkas,
             'noSep'=>$noSep,
             'jumlahData'=>$jumlahData,
-            'getPasien'=>$getPasien,
             'getSEP'=>$getSEP,
             'berkasResep'=>$berkasResep,
         ]);
+        $no_rawatSTR = str_replace('/', '', $noRawat);
+        $pdfFilename = 'SEP-RESEP-'.$no_rawatSTR.'.pdf';
+        Storage::disk('public')->put('file_sepresep_farmasi/' . $pdfFilename, $pdf->output());
+        $cekBerkas = DB::connection('db_con2')->table('file_farmasi')->where('no_rawat', $noRawat)
+            ->where('jenis_berkas', 'SEP-RESEP')
+            ->exists();
+        if (!$cekBerkas){
+            DB::connection('db_con2')->table('file_farmasi')->insert([
+                'no_rkm_medis' => $getpasien->no_rkm_medis,
+                'no_rawat' => $noRawat,
+                'nama_pasein' => $getpasien->nm_pasien,
+                'jenis_berkas' => 'SEP-RESEP',
+                'file' => $pdfFilename,
+            ]);
+        }
+        $redirectUrl = url('/view-sep-resep');
+        $csrfToken = Session::token();
+        $redirectUrlWithToken = $redirectUrl . '?' . http_build_query(['_token' => $csrfToken, 'cariNoRawat' => $noRawat, 'cariNoSep' => $noSep,]);
+        return redirect($redirectUrlWithToken)->with('successSavePDF', 'Berhasil menyimpan file ke bentuk pdf');
     }
 
-    // UPLOAD BERKAS
-    function UploadBerkasFarmasi(Request $request) {
-        if ($request->hasFile('file_scan_farmasi')) {
-            $file = $request->file('file_scan_farmasi');
+    // GABUNG BERKAS
+    function GabungBergkas(Request $request) {
+        $cekNorawat = DB::table('reg_periksa')
+            ->select('reg_periksa.status_lanjut', 'pasien.nm_pasien', 'reg_periksa.no_rkm_medis')
+            ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
+            ->where('no_rawat', '=', $request->no_rawat);
+        $getpasien = $cekNorawat->first();
+
+        $cekFileScan = DB::connection('db_con2')->table('file_farmasi')->where('no_rawat', $request->no_rawat)
+            ->where('jenis_berkas', 'FILE-SCAN-FARMASI')
+            ->first();
+        $cekSepResep = DB::connection('db_con2')->table('file_farmasi')->where('no_rawat', $request->no_rawat)
+            ->where('jenis_berkas', 'SEP-RESEP')
+            ->first();
+            $pdf = new Fpdi();
+        if($cekFileScan){
+            $pdfPathSCAN = public_path('storage/file_scan_farmasi/'.$cekFileScan->file);
+            $pdfSepResep = public_path('storage/file_sepresep_farmasi/'.$cekSepResep->file);
+
+            $pageCountSCAN = $pdf->setSourceFile($pdfPathSCAN);
+            for ($pageNumber = 1; $pageNumber <= $pageCountSCAN; $pageNumber++) {
+                $template = $pdf->importPage($pageNumber);
+                $size = $pdf->getTemplateSize($template);
+                $pdf->AddPage($size['orientation'], $size);
+                $pdf->useTemplate($template);
+            }
+            $pageCountSepResep = $pdf->setSourceFile($pdfSepResep);
+            for ($pageNumber = 1; $pageNumber <= $pageCountSepResep; $pageNumber++) {
+                $template = $pdf->importPage($pageNumber);
+                $size = $pdf->getTemplateSize($template);
+                $pdf->AddPage($size['orientation'], $size);
+                $pdf->useTemplate($template);
+            }
+
             $no_rawatSTR = str_replace('/', '', $request->no_rawat);
-            $path_file = 'FILE-SCAN-FARMASI' . '-' . $no_rawatSTR. '.' . $file->getClientOriginalExtension();
-            Storage::disk('public')->put('file_scan_farmasi/' . $path_file, file_get_contents($file));
+            $path_file = 'HASIL-FARMASI' . '-' . $no_rawatSTR.'.pdf';
+            $outputPath = public_path('hasil_farmasi_pdf/'.$path_file);
+            $pdf->Output($outputPath, 'F');
+
             $cekBerkas = DB::connection('db_con2')->table('file_farmasi')->where('no_rawat', $request->no_rawat)
-                ->where('jenis_berkas', 'FILE-SCAN-FARMASI')
+                ->where('jenis_berkas', 'HASIL-FARMASI')
                 ->exists();
             if (!$cekBerkas){
                 DB::connection('db_con2')->table('file_farmasi')->insert([
-                    'no_rkm_medis' => $request->no_rkm_medis,
+                    'no_rkm_medis' => $getpasien->no_rkm_medis,
                     'no_rawat' => $request->no_rawat,
-                    'nama_pasein' => $request->nama_pasein,
-                    'jenis_berkas' => 'FILE-SCAN-FARMASI',
+                    'nama_pasein' => $getpasien->nm_pasien,
+                    'jenis_berkas' => 'HASIL-FARMASI',
                     'file' => $path_file,
                 ]);
             }
-           return back()->with('successupload', 'Berhasil Menyimpan Data & Mengunggah File');
+            return back()->with('successGabungberkas', 'Berhasil Menggabungkan File Khanza Dan Berkas Scan');
         }
+
     }
-
-    // DOWNLOAD BERKAS RESEP
-    function DonwloadSEPResep(Request $request){
-        $cekBerkas = DB::connection('db_con2')->table('file_farmasi')
-            ->select('file')
-            ->where('jenis_berkas', 'SEP-RESEP')
-            ->where('no_rawat', $request->no_rawat)
-            ->first();
-        $filePath = public_path('storage/file_sepresep_farmasi/' . $cekBerkas->file);
-        return Response::download($filePath, $cekBerkas->file);
-    }
-    // DOWNLOAD HASIL GABUNG
-    function DonwloadHasilGabung(Request $request){
-        $cekBerkas = DB::connection('db_con2')->table('file_farmasi')
-            ->select('file')
-            ->where('jenis_berkas', 'HASIL-FARMASI')
-            ->where('no_rawat', $request->no_rawat)
-            ->first();
-        $filePath = public_path('hasil_farmasi_pdf/' . $cekBerkas->file);
-        return Response::download($filePath, $cekBerkas->file);
-    }
-
-
-
 }

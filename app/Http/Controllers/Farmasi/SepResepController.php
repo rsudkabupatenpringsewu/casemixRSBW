@@ -27,7 +27,19 @@ class SepResepController extends Controller
             ->whereBetween('reg_periksa.tgl_registrasi',[$tanggl1, $tanggl2])
             ->orderBy('bridging_sep.no_rawat', 'asc')
             ->get();
-        return view('farmasi.listpasien', ['daftarPasien'=>$daftarPasien]);
+            $downloadBerkas = DB::connection('db_con2')
+                ->table('file_casemix')
+                ->select('no_rawat')
+                ->whereIn('no_rawat', $daftarPasien->pluck('no_rawat')->toArray())
+                ->where('jenis_berkas', 'SEP-RESEP')
+                ->get();
+
+        session(['tgl1' => $tanggl1]);
+        session(['tgl2' => $tanggl2]);
+        return view('farmasi.listpasien', [
+            'daftarPasien'=>$daftarPasien,
+            'downloadBerkas'=>$downloadBerkas
+        ]);
     }
     // 2 CARI LIST PASIEN
     function CariListPasienFarmasi(Request $request){
@@ -54,7 +66,20 @@ class SepResepController extends Controller
             })
             ->orderBy('bridging_sep.no_rawat', 'asc')
             ->get();
-        return view('farmasi.listpasien', ['daftarPasien'=>$daftarPasien]);
+            $downloadBerkas = DB::connection('db_con2')
+                ->table('file_farmasi')
+                ->select('no_rawat')
+                ->whereIn('no_rawat', $daftarPasien->pluck('no_rawat')->toArray())
+                ->where('jenis_berkas', 'SEP-RESEP')
+                ->get();
+
+        session(['tgl1' => $request->tgl1]);
+        session(['tgl2' => $request->tgl2]);
+        session(['cariNomor' => $cariNomor]);
+        return view('farmasi.listpasien', [
+            'daftarPasien'=>$daftarPasien,
+            'downloadBerkas'=>$downloadBerkas
+        ]);
     }
 
 }

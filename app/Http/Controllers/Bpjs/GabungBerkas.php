@@ -14,9 +14,9 @@ class GabungBerkas extends Controller
         // GET PASIEN
         $noRawat = $request->cariNorawat;
         $cekNorawat = DB::table('reg_periksa')
-        ->select('reg_periksa.status_lanjut', 'pasien.nm_pasien', 'reg_periksa.no_rkm_medis')
-        ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
-        ->where('no_rawat', '=', $noRawat);
+            ->select('reg_periksa.status_lanjut', 'pasien.nm_pasien', 'reg_periksa.no_rkm_medis')
+            ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
+            ->where('no_rawat', '=', $noRawat);
         $getpasien = $cekNorawat->first();
         // INACBG
         $cekINACBG = DB::connection('db_con2')->table('file_casemix')->where('no_rawat', $noRawat)

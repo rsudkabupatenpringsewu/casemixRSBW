@@ -10,6 +10,7 @@ use App\Http\Controllers\Test\TestController;
 use App\Http\Controllers\Bpjs\ListPasienRalan;
 use App\Http\Controllers\Bpjs\ListPasienRanap;
 use App\Http\Controllers\Bpjs\CesmikController;
+use App\Http\Controllers\Farmasi\BundlingFarmasi;
 use App\Http\Controllers\Laporan\PasienController;
 use App\Http\Controllers\Bpjs\PrintCesmikController;
 use App\Http\Controllers\Farmasi\SepResepController;
@@ -28,13 +29,13 @@ use App\Http\Controllers\Farmasi\ViewSepResepController;
 */
 Route::get('/miantance-laravel-update', [AuthController::class, 'Maintance']);
 Route::group(['middleware' => 'default'], function () {
-Route::get('/test', [TestController::class, 'Test']);
-Route::get('/test-cari', [TestController::class, 'TestCari']);
-
-Route::get('/login', [AuthController::class, 'Login'])->name('login');
-Route::post('/mesinlogin', [AuthController::class, 'mesinLogin']);
+    Route::get('/login', [AuthController::class, 'Login'])->name('login');
+    Route::post('/mesinlogin', [AuthController::class, 'mesinLogin']);
 
 Route::group(['middleware' => 'auth-rsbw'], function () {
+    Route::get('/test', [TestController::class, 'Test']);
+    Route::get('/test-cari', [TestController::class, 'TestCari']);
+
     Route::get('/logout', [AuthController::class, 'Logout'])->name('logout');
     Route::get('/', [PasienController::class, 'Pasien']);
 
@@ -68,8 +69,11 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     Route::get('/cari-list-pasien-farmasi', [SepResepController::class, 'CariListPasienFarmasi']);
 
     Route::get('/view-sep-resep', [ViewSepResepController::class, 'ViewBerkasSepResep']);
-    Route::get('/print-sep-resep', [ViewSepResepController::class, 'PrintBerkasSepResep']);
     Route::post('/upload-berkas-farmasi', [ViewSepResepController::class, 'UploadBerkasFarmasi']);
+    Route::get('/download-sepresep-farmasi', [ViewSepResepController::class, 'DonwloadSEPResep']);
+    Route::get('/download-hasilgabungberks', [ViewSepResepController::class, 'DonwloadHasilGabung']);
+    Route::get('/print-sep-resep', [BundlingFarmasi::class, 'PrintBerkasSepResep']);
+    Route::get('/gabung-berkas-farmasi', [BundlingFarmasi::class, 'GabungBergkas']);
 });
 });
 

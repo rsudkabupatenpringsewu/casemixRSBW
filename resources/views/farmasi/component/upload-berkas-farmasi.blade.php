@@ -38,14 +38,18 @@
                             <label for="exampleInputFile">Berkas Tambahan</label>
                             <div class="input-group">
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="exampleInputFile" name="file_scan_farmasi">
+                                    <input type="file" class="custom-file-input" id="exampleInputFile"
+                                        name="file_scan_farmasi" required>
                                     <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary mt-5 float-right btn-flat"><i class="fas fa-save"></i>
+                                Submit</button>
+                        </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary mt-3 float-right">Submit</button>
             </div>
         </form>
     </div>

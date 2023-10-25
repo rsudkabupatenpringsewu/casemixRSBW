@@ -2,27 +2,9 @@
 @section('title', 'Casemix Bpjs')
 
 @section('konten')
-    {{-- KAK REZA --}}
-    {{-- <form action="{{ url('/test-cari') }}" action="">
+    <form action="{{ url('/test-cari') }}">
         @csrf
         <div class="row">
-            <div class="col-md-2">
-                <div class="input-group">
-                    <select class="form-control" name="kelasKamar" id="">
-                        @foreach ($kelasKamar as $item)
-                            <option>{{$item->kelas}}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="input-group">
-                    <select class="form-control" name="penjab" id="">
-                            <option>BPJS</option>
-                            <option>NON BPJS</option>
-                    </select>
-                </div>
-            </div>
             <div class="col-md-2">
                 <div class="form-group">
                     <div class="input-group input-group-xs">
@@ -43,6 +25,49 @@
                     </div>
                 </div>
             </div>
+            <div class="col-2">
+                <div class="form-group">
+                    <div class="input-group input-group-xs">
+                        <button type="button"
+                            class="btn btn-default form-control form-control-xs d-flex justify-content-between"
+                            data-toggle="modal" data-target="#modal-lg">
+                            <p>Penjamin</p>
+                            <p><i class="nav-icon fas fa-credit-card"></i></p>
+                        </button>
+                    </div>
+                    <div class="modal fade" id="modal-lg">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Pilih Penjamin / Jenis Bayar</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <select multiple="multiple" size="10" name="duallistbox[]">
+                                        @foreach ($penjab as $item)
+                                            <option value="{{ $item->kd_pj }}">{{ $item->png_jawab }}</option>
+                                        @endforeach
+                                    </select>
+                                    <input type="hidden" name="kdPenjamin">
+                                    <script>
+                                        var demo1 = $('select[name="duallistbox[]"]').bootstrapDualListbox();
+                                        $('form').submit(function(e) {
+                                            e.preventDefault();
+                                            $('input[name="kdPenjamin"]').val($('select[name="duallistbox[]"]').val().join(','));
+                                            this.submit();
+                                        });
+                                    </script>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="col-md-2">
                 <div class="form-group">
                     <div class="input-group input-group-xs">
@@ -56,35 +81,16 @@
             </div>
         </div>
     </form>
-    <table class="table border">
-        <thead>
-            <tr>
-                <th>No Rawat</th>
-                <th>nm_pasien</th>
-                <th>kelas</th>
-                <th>kd_pj</th>
-                <th>png_jawab</th>
-                <th>trf_kamar</th>
-                <th>alamat</th>
-                <th>tgl_masuk</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($cariKelas as $item)
+    {{-- OUTPUT --}}
+    @if ($penjamin)
+        @foreach ($penjamin as $item)
+            <table>
                 <tr>
-                    <td scope="row">{{ $item->no_rawat }}</td>
-                    <td scope="row">{{ $item->nm_pasien }}</td>
-                    <td scope="row">{{ $item->kelas }}</td>
-                    <td scope="row">{{ $item->kd_pj }}</td>
-                    <td scope="row">{{ $item->png_jawab }}</td>
-                    <td scope="row">{{ $item->trf_kamar }}</td>
-                    <td scope="row">{{ $item->alamat }}</td>
-                    <td scope="row">{{ $item->tgl_masuk }}</td>
+                    <td>
+                        {{ $item->png_jawab }}
+                    </td>
                 </tr>
-            @endforeach
-        </tbody>
-    </table> --}}
-
-    {{-- PAK OGAN --}}
-    {{$test}}
+            </table>
+        @endforeach
+    @endif
 @endsection

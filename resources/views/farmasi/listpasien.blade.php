@@ -68,13 +68,17 @@
                     </thead>
                     <tbody>
                         @foreach ($daftarPasien as $item)
-                            <tr>
+                                @php
+                                    $matchingBerksDownload = $downloadBerkas->where('no_rawat', $item->no_rawat);
+                                    $color = $matchingBerksDownload->isNotEmpty() ? 'text-success' : '';
+                                @endphp
+                            <tr class="{{$color}}">
                                 <td class="text-center" width="55px">
                                     <form action="{{ url('view-sep-resep') }}" method="">
                                         @csrf
                                         <input name="cariNoRawat" value="{{ $item->no_rawat }}" hidden>
                                         <input name="cariNoSep" value="{{ $item->no_sep }}" hidden>
-                                        <button class="" style="background: none; border: none;">
+                                        <button class="{{$color}}" style="background: none; border: none;">
                                             <i class="nav-icon fas fa-search"></i>
                                         </button>
                                     </form>
@@ -100,13 +104,13 @@
                                 <td>{{ $item->nm_pasien }} |
                                     @if ($item->status_bayar === 'Sudah Bayar')
                                         <a href="#" class="" data-toggle="tooltip" data-placement="top"
-                                            title="Sudah Bayar" style="color: inherit;">
+                                            title="Sudah Bayar">
                                             <i class="text-success nav-icon fas fa-check"></i>
                                         </a>
                                     @else
                                         <a class="" href="#" data-toggle="tooltip" data-placement="top"
-                                            title="Belum Bayar" style="color: inherit;">
-                                            <i class="nav-icon fas fa-dollar-sign"></i>
+                                            title="Belum Bayar">
+                                            <i class="text-dark nav-icon fas fa-dollar-sign"></i>
                                         </a>
                                     @endif
                                 </td>

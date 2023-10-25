@@ -6,6 +6,12 @@
             showConfirmButton: false,
             timer: 5000
         });
+        @if (session('sucsessLogin'))
+            Toast.fire({
+                icon: 'success',
+                title: '{{ session('sucsessLogin') }}'
+            });
+        @endif
         @if (session('successupload'))
             Toast.fire({
                 icon: 'success',
@@ -16,6 +22,12 @@
             Toast.fire({
                 icon: 'success',
                 title: '{{ session('successSavePDF') }}'
+            });
+        @endif
+        @if (session('successGabungberkas'))
+            Toast.fire({
+                icon: 'success',
+                title: '{{ session('successGabungberkas') }}'
             });
         @endif
     });

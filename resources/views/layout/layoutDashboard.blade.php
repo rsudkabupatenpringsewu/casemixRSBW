@@ -19,8 +19,10 @@
     <link rel="stylesheet" href="/plugins/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="/plugins/summernote/summernote-bs4.min.css" />
     <script src="/js/plotly-latest.min.js"></script> {{-- CHART  --}}
-    {{-- <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script> --}}
+    <script src="/plugins/jquery/jquery.min.js"></script>
+    {{-- DUALIS --}}
+    <link rel="stylesheet" href="/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+    <script src="/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
     {{-- TEST --}}
 </head>
 
@@ -236,7 +238,7 @@
         <aside class="control-sidebar control-sidebar-dark">
         </aside>
     </div>
-    <script src="/plugins/jquery/jquery.min.js"></script>
+
     <script src="/plugins/jquery-ui/jquery-ui.min.js"></script>
     <script>
         $.widget.bridge("uibutton", $.ui.button);
@@ -257,6 +259,7 @@
     <script src="/dist/js/pages/dashboard.js"></script>
     <script src="/js/sidebarmenu.js"></script>
     <script src="/plugins/sweetalert2/sweetalert2.min.js"></script>
+    {{-- DUALIST --}}
     {{-- TEST --}}
 
 

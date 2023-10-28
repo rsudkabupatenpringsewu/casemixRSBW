@@ -352,8 +352,11 @@
                                                     <td width="100px">Umur</td>
                                                     <td width="400px">: {{ $getResume->umurdaftar }} Th</td>
                                                     <td width="100px">Ruang</td>
-                                                    <td width="200px">: {{ $getResume->kd_kamar }} |
-                                                        {{ $getResume->nm_bangsal }}
+                                                    <td width="200px">:
+                                                        @if ($getKamarInap)
+                                                            {{ $getKamarInap->kd_kamar }} |
+                                                            {{ $getKamarInap->nm_bangsal }}
+                                                        @endif
                                                     </td>
                                                 </tr>
                                                 <tr style="vertical-align: top;">
@@ -372,7 +375,9 @@
                                                     <td width="400px">: {{ $getResume->pekerjaan }}</td>
                                                     <td width="100px">Tanggal Masuk</td>
                                                     <td width="200px">:
-                                                        {{ date('d-m-Y', strtotime($getResume->tgl_masuk)) }}
+                                                        @if ($getKamarInap)
+                                                            {{ date('d-m-Y', strtotime($getResume->tgl_masuk_pasien)) }}
+                                                        @endif
                                                     </td>
                                                 </tr>
                                                 <tr style="vertical-align: top;">
@@ -380,7 +385,9 @@
                                                     <td width="400px">: {{ $getResume->almt_pj }}</td>
                                                     <td width="100px">Tanggak Keluar</td>
                                                     <td width="200px">:
-                                                        {{ date('d-m-Y', strtotime($getResume->tgl_keluar)) }}
+                                                        @if ($getKamarInap)
+                                                            {{ date('d-m-Y', strtotime($getKamarInap->tgl_keluar)) }}
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             </table>
@@ -620,7 +627,7 @@
                                                     <td width="250px" class="text-center">
                                                         Dokter Penanggung Jawab
                                                         <div class="barcode mt-1">
-                                                            <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di RS. BUMI WARAS, Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $getResume->nm_dokter . ' ID ' . $getResume->kd_dokter . ' ' . $getResume->tgl_keluar, 'QRCODE') }}"
+                                                            <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di RS. BUMI WARAS, Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $getResume->nm_dokter . ' ID ' . $getResume->kd_dokter . ' ' . $getKamarInap->tgl_keluar, 'QRCODE') }}"
                                                                 alt="barcode" width="80px" height="75px" />
                                                         </div>
                                                         {{ $getResume->nm_dokter }}
@@ -629,7 +636,7 @@
                                                     <td width="250px" class="text-center">
                                                         Dokter Penanggung Jawab2
                                                         <div class="barcode mt-1">
-                                                            <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di RS. BUMI WARAS, Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $getResume->nm_dokter . ' ID ' . $getResume->kd_dokter . ' ' . $getResume->tgl_keluar, 'QRCODE') }}"
+                                                            <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di RS. BUMI WARAS, Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $getResume->nm_dokter . ' ID ' . $getResume->kd_dokter . ' ' . $getKamarInap->tgl_keluar, 'QRCODE') }}"
                                                                 alt="barcode" width="80px" height="75px" />
                                                         </div>
                                                         {{ $getResume->nm_dokter }}

@@ -120,6 +120,7 @@ class CesmikController extends Controller
                 ->join('dokter','reg_periksa.kd_dokter','=','dokter.kd_dokter')
                 ->where('pemeriksaan_ralan.no_rawat','=',$noRawat)
                 ->first();
+                $getKamarInap = '';
             }else{
                 if ($statusLanjut->status_lanjut === 'Ranap') {
                     $getResume = DB::table('resume_pasien_ranap')
@@ -131,10 +132,7 @@ class CesmikController extends Controller
                                 'pasien.jk as jenis_kelamin',
                                 'pasien.pekerjaan',
                                 'dokter.nm_dokter',
-                                'kamar_inap.kd_kamar',
-                                'kamar_inap.tgl_masuk',
-                                'kamar_inap.tgl_keluar',
-                                'bangsal.nm_bangsal',
+                                'kamar_inap.tgl_masuk as tgl_masuk_pasien',
                                 'resume_pasien_ranap.no_rawat',
                                 'resume_pasien_ranap.kd_dokter',
                                 'resume_pasien_ranap.diagnosa_awal',
@@ -179,11 +177,23 @@ class CesmikController extends Controller
                         ->join('reg_periksa','resume_pasien_ranap.no_rawat','=','reg_periksa.no_rawat')
                         ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
                         ->join('kamar_inap','kamar_inap.no_rawat','=','reg_periksa.no_rawat')
-                        ->join('kamar','kamar_inap.kd_kamar','=','kamar.kd_kamar')
-                        ->join('bangsal','kamar.kd_bangsal','=','bangsal.kd_bangsal')
                         ->join('dokter','resume_pasien_ranap.kd_dokter','=','dokter.kd_dokter')
                         ->where('resume_pasien_ranap.no_rawat','=', $noRawat)
                         ->first();
+                        $getKamarInap = DB::table('kamar_inap')
+                            ->select([
+                                'kamar_inap.tgl_keluar',
+                                'kamar_inap.jam_keluar',
+                                'kamar_inap.kd_kamar',
+                                'bangsal.nm_bangsal'
+                            ])
+                            ->join('kamar', 'kamar_inap.kd_kamar', '=', 'kamar.kd_kamar')
+                            ->join('bangsal', 'kamar.kd_bangsal', '=', 'bangsal.kd_bangsal')
+                            ->whereIn('kamar_inap.no_rawat', [$getResume->no_rawat])
+                            ->orderByDesc('tgl_keluar')
+                            ->orderByDesc('jam_keluar')
+                            ->limit(1)
+                            ->first();
                 } else {
                     $getResume = DB::table('resume_pasien')
                         ->select('reg_periksa.tgl_registrasi',
@@ -237,6 +247,7 @@ class CesmikController extends Controller
                         ->join('poliklinik','reg_periksa.kd_poli','=','poliklinik.kd_poli')
                         ->where('resume_pasien.no_rawat','=', $noRawat)
                         ->first();
+                        $getKamarInap = '';
                 }
             }
 
@@ -401,12 +412,12 @@ class CesmikController extends Controller
             $getSEP = '';
             $statusLanjut = '';
             $getResume = '';
+            $getKamarInap= '';
             $bilingRalan = '';
             $getLaborat = '';
             $getRadiologi = '';
             $awalMedis= '';
         }
-
 
         // VIEW
         return view('bpjs.cesmik', [
@@ -414,10 +425,12 @@ class CesmikController extends Controller
             'getSEP'=>$getSEP,
             'statusLanjut'=>$statusLanjut,
             'getResume'=>$getResume,
+            'getKamarInap'=>$getKamarInap,
             'bilingRalan'=>$bilingRalan,
             'getLaborat'=>$getLaborat,
             'getRadiologi'=>$getRadiologi,
             'awalMedis'=>$awalMedis,
         ]);
+
     }
 }

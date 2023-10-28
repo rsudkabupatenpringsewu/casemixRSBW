@@ -127,12 +127,13 @@ class CesmikController extends Controller
                         ->select('reg_periksa.no_rkm_medis',
                                 'reg_periksa.umurdaftar',
                                 'reg_periksa.almt_pj',
+                                'reg_periksa.tgl_registrasi',
+                                'reg_periksa.status_lanjut',
                                 'pasien.nm_pasien',
                                 'pasien.tgl_lahir',
                                 'pasien.jk as jenis_kelamin',
                                 'pasien.pekerjaan',
                                 'dokter.nm_dokter',
-                                'kamar_inap.tgl_masuk as tgl_masuk_pasien',
                                 'resume_pasien_ranap.no_rawat',
                                 'resume_pasien_ranap.kd_dokter',
                                 'resume_pasien_ranap.diagnosa_awal',
@@ -179,6 +180,8 @@ class CesmikController extends Controller
                         ->join('kamar_inap','kamar_inap.no_rawat','=','reg_periksa.no_rawat')
                         ->join('dokter','resume_pasien_ranap.kd_dokter','=','dokter.kd_dokter')
                         ->where('resume_pasien_ranap.no_rawat','=', $noRawat)
+                        ->orderBy('reg_periksa.tgl_registrasi','asc')
+                        ->orderBy('reg_periksa.status_lanjut','asc')
                         ->first();
                         $getKamarInap = DB::table('kamar_inap')
                             ->select([

@@ -123,12 +123,14 @@ class PrintCesmikController extends Controller
                     ->join('dokter','reg_periksa.kd_dokter','=','dokter.kd_dokter')
                     ->where('pemeriksaan_ralan.no_rawat','=', $noRawat)
                     ->first();
+                    $getKamarInap = '';
             }else{
                 if ($statusLanjut->status_lanjut === 'Ranap') {
                     $getResume = DB::table('resume_pasien_ranap')
                         ->select('reg_periksa.no_rkm_medis',
                                 'reg_periksa.umurdaftar',
                                 'reg_periksa.almt_pj',
+                                'reg_periksa.tgl_registrasi',
                                 'pasien.nm_pasien',
                                 'pasien.tgl_lahir',
                                 'pasien.jk as jenis_kelamin',
@@ -186,7 +188,23 @@ class PrintCesmikController extends Controller
                         ->join('bangsal','kamar.kd_bangsal','=','bangsal.kd_bangsal')
                         ->join('dokter','resume_pasien_ranap.kd_dokter','=','dokter.kd_dokter')
                         ->where('resume_pasien_ranap.no_rawat','=', $noRawat)
+                        ->orderBy('reg_periksa.tgl_registrasi','asc')
+                        ->orderBy('reg_periksa.status_lanjut','asc')
                         ->first();
+                        $getKamarInap = DB::table('kamar_inap')
+                            ->select([
+                                'kamar_inap.tgl_keluar',
+                                'kamar_inap.jam_keluar',
+                                'kamar_inap.kd_kamar',
+                                'bangsal.nm_bangsal'
+                            ])
+                            ->join('kamar', 'kamar_inap.kd_kamar', '=', 'kamar.kd_kamar')
+                            ->join('bangsal', 'kamar.kd_bangsal', '=', 'bangsal.kd_bangsal')
+                            ->whereIn('kamar_inap.no_rawat', [$getResume->no_rawat])
+                            ->orderByDesc('tgl_keluar')
+                            ->orderByDesc('jam_keluar')
+                            ->limit(1)
+                            ->first();
                 } else {
                     $getResume = DB::table('resume_pasien')
                         ->select('reg_periksa.tgl_registrasi',
@@ -240,6 +258,7 @@ class PrintCesmikController extends Controller
                         ->join('poliklinik','reg_periksa.kd_poli','=','poliklinik.kd_poli')
                         ->where('resume_pasien.no_rawat','=', $noRawat)
                         ->first();
+                        $getKamarInap = '';
                 }
             }
 
@@ -405,6 +424,7 @@ class PrintCesmikController extends Controller
             $getSEP = '';
             $statusLanjut = '';
             $getResume = '';
+            $$getKamarInap= '';
             $bilingRalan = '';
             $getLaborat = '';
             $getRadiologi = '';
@@ -418,6 +438,7 @@ class PrintCesmikController extends Controller
             'getSEP'=>$getSEP,
             'statusLanjut'=>$statusLanjut,
             'getResume'=>$getResume,
+            'getKamarInap'=>$getKamarInap,
             'bilingRalan'=>$bilingRalan,
             'getLaborat'=>$getLaborat,
             'getRadiologi'=>$getRadiologi,

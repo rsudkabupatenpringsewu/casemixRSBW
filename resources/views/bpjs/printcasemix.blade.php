@@ -15,11 +15,13 @@
             font-size: 8px;
             /* Adjust font size for paragraphs */
         }
-        .h3{
+
+        .h3 {
             font-size: 18px;
             font-weight: 700;
         }
-        .h4{
+
+        .h4 {
             font-size: 14px;
         }
 
@@ -42,13 +44,15 @@
             margin-top: 10px;
         }
 
-        .mt-0{
+        .mt-0 {
             margin-top: 0px;
         }
-        .mb-0{
+
+        .mb-0 {
             margin-bottom: 0px;
         }
-        .mx-1{
+
+        .mx-1 {
             margin: 5px 8px;
         }
 
@@ -355,8 +359,11 @@
                                     <td>Umur</td>
                                     <td>: {{ $getResume->umurdaftar }} Th</td>
                                     <td>Ruang</td>
-                                    <td>: {{ $getResume->kd_kamar }} |
-                                        {{ $getResume->nm_bangsal }}
+                                    <td>:
+                                        @if ($getKamarInap)
+                                            {{ $getKamarInap->kd_kamar }} |
+                                            {{ $getKamarInap->nm_bangsal }}
+                                        @endif
                                     </td>
                                 </tr>
                                 <tr style="vertical-align: top;">
@@ -375,7 +382,7 @@
                                     <td>: {{ $getResume->pekerjaan }}</td>
                                     <td>Tanggal Masuk</td>
                                     <td>:
-                                        {{ date('d-m-Y', strtotime($getResume->tgl_masuk)) }}
+                                        {{ date('d-m-Y', strtotime($getResume->tgl_registrasi)) }}
                                     </td>
                                 </tr>
                                 <tr style="vertical-align: top;">
@@ -383,7 +390,9 @@
                                     <td>: {{ $getResume->almt_pj }}</td>
                                     <td>Tanggak Keluar</td>
                                     <td>:
-                                        {{ date('d-m-Y', strtotime($getResume->tgl_keluar)) }}
+                                        @if ($getKamarInap)
+                                            {{ date('d-m-Y', strtotime($getKamarInap->tgl_keluar)) }}
+                                        @endif
                                     </td>
                                 </tr>
                             </table>
@@ -391,7 +400,8 @@
                                 <tr>
                                     <td width="200px" style="vertical-align: top;">Diagnosa Awal Masuk
                                     </td>
-                                    <td width="350px" style="vertical-align: top;"> : {{ $getResume->diagnosa_awal }}
+                                    <td width="350px" style="vertical-align: top;"> :
+                                        {{ $getResume->diagnosa_awal }}
                                     </td>
                                     <td width="130px"></td>
                                 </tr>
@@ -466,7 +476,8 @@
                                     <td width="250px" style="vertical-align: top;">Obat-obatan Selama
                                         Perawatan
                                     </td>
-                                    <td witdth="364px" style="vertical-align: top;"> : {{ $getResume->obat_di_rs }}</td>
+                                    <td witdth="364px" style="vertical-align: top;"> : {{ $getResume->obat_di_rs }}
+                                    </td>
                                     <td width="86px"></td>
                                 </tr>
                             </table>
@@ -578,7 +589,8 @@
                                         Selesai
                                         (Pending)
                                     </td>
-                                    <td witdth="364px" style="vertical-align: top;">: {{ $getResume->lab_belum }}</td>
+                                    <td witdth="364px" style="vertical-align: top;">: {{ $getResume->lab_belum }}
+                                    </td>
                                     <td width="86px"></td>
                                 </tr>
                             </table>
@@ -614,7 +626,8 @@
                                     <td width="250px" style="vertical-align: top;">Obat-obatan waktu
                                         pulang
                                     </td>
-                                    <td witdth="364px" style="vertical-align: top;">: {{ $getResume->obat_pulang }}</td>
+                                    <td witdth="364px" style="vertical-align: top;">: {{ $getResume->obat_pulang }}
+                                    </td>
                                     <td width="86px"></td>
                                 </tr>
                             </table>
@@ -714,7 +727,8 @@
                                         riwayat
                                         penyakit
                                         yang positif</td>
-                                    <td width="350px" style="vertical-align: top;"> : {{ $getResume->keluhan_utama }}
+                                    <td width="350px" style="vertical-align: top;"> :
+                                        {{ $getResume->keluhan_utama }}
                                     </td>
                                     <td width="86px"></td>
                                 </tr>
@@ -749,7 +763,8 @@
                                         yang
                                         positif
                                     </td>
-                                    <td width="350px" style="vertical-align: top;"> : {{ $getResume->hasil_laborat }}
+                                    <td width="350px" style="vertical-align: top;"> :
+                                        {{ $getResume->hasil_laborat }}
                                     </td>
                                     <td width="86px"></td>
                                 </tr>
@@ -847,7 +862,8 @@
                                 <tr>
                                     <td width="250px" style="vertical-align: top;">Kondisi pasien pulang
                                     </td>
-                                    <td width="350px" style="vertical-align: top;"> : {{ $getResume->kondisi_pulang }}
+                                    <td width="350px" style="vertical-align: top;"> :
+                                        {{ $getResume->kondisi_pulang }}
                                     </td>
                                     <td width="86px"></td>
                                 </tr>

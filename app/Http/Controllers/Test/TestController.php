@@ -23,7 +23,13 @@ function Test(){
     $penjamin = '';
     // CORE QUERY
     $paymentRalan = DB::table('reg_periksa')
-        ->select('reg_periksa.no_rawat', 'reg_periksa.no_rkm_medis', 'pasien.nm_pasien', 'reg_periksa.tgl_registrasi', 'dokter.nm_dokter', 'poliklinik.nm_poli')
+        ->select('reg_periksa.no_rawat',
+            'reg_periksa.no_rkm_medis',
+            'reg_periksa.tgl_registrasi',
+            'reg_periksa.status_bayar',
+            'pasien.nm_pasien',
+            'dokter.nm_dokter',
+            'poliklinik.nm_poli')
         ->join('pasien', 'reg_periksa.no_rkm_medis', '=', 'pasien.no_rkm_medis')
         ->join('poliklinik', 'reg_periksa.kd_poli', '=', 'poliklinik.kd_poli')
         ->join('dokter', 'reg_periksa.kd_dokter', '=', 'dokter.kd_dokter')
@@ -62,6 +68,78 @@ function Test(){
                 ->get();
                 $obat->getObat = $getObat;
         }
+        // RALAN DOKTER
+        foreach ($paymentRalan as $ralandokter) {
+            $getRalanDokter = DB::table('billing')
+                ->select('nm_perawatan', 'totalbiaya', 'status')
+                ->where('no_rawat', $ralandokter->no_rawat)
+                ->where('status','=','Ralan Dokter')
+                ->get();
+                $ralandokter->getRalanDokter = $getRalanDokter;
+        }
+        // RALAN PARAMEDIS
+        foreach ($paymentRalan as $ralanparamedis) {
+            $getRalanParamedis = DB::table('billing')
+                ->select('nm_perawatan', 'totalbiaya', 'status')
+                ->where('no_rawat', $ralanparamedis->no_rawat)
+                ->where('status','=','Ralan Paramedis')
+                ->get();
+                $ralanparamedis->getRalanParamedis = $getRalanParamedis;
+        }
+        // RALAN DOKTER PARAMEDIS
+        foreach ($paymentRalan as $ralandokterparamedis) {
+            $getRalanDrParamedis = DB::table('billing')
+                ->select('nm_perawatan', 'totalbiaya', 'status')
+                ->where('no_rawat', $ralandokterparamedis->no_rawat)
+                ->where('status','=','Ralan Dokter Paramedis')
+                ->get();
+                $ralandokterparamedis->getRalanDrParamedis = $getRalanDrParamedis;
+        }
+        // OPRASI
+        foreach ($paymentRalan as $oprasi) {
+            $getOprasi = DB::table('billing')
+                ->select('nm_perawatan', 'totalbiaya', 'status')
+                ->where('no_rawat', $oprasi->no_rawat)
+                ->where('status','=','Operasi')
+                ->get();
+                $oprasi->getOprasi = $getOprasi;
+        }
+        // LABORAT
+        foreach ($paymentRalan as $laborat) {
+            $getLaborat = DB::table('billing')
+                ->select('nm_perawatan', 'totalbiaya', 'status')
+                ->where('no_rawat', $laborat->no_rawat)
+                ->where('status','=','Laborat')
+                ->get();
+                $laborat->getLaborat = $getLaborat;
+        }
+        // RADIOLOGI
+        foreach ($paymentRalan as $radiologi) {
+            $getRadiologi = DB::table('billing')
+                ->select('nm_perawatan', 'totalbiaya', 'status')
+                ->where('no_rawat', $radiologi->no_rawat)
+                ->where('status','=','Radiologi')
+                ->get();
+                $radiologi->getRadiologi = $getRadiologi;
+        }
+        // TAMBAHAN
+        foreach ($paymentRalan as $tambahan) {
+            $getTambahan = DB::table('billing')
+                ->select('nm_perawatan', 'totalbiaya', 'status')
+                ->where('no_rawat', $tambahan->no_rawat)
+                ->where('status','=','Tambahan')
+                ->get();
+                $tambahan->getTambahan = $getTambahan;
+        }
+        // POTONGAN
+        foreach ($paymentRalan as $potongan) {
+            $getPotongan = DB::table('billing')
+                ->select('nm_perawatan', 'totalbiaya', 'status')
+                ->where('no_rawat', $potongan->no_rawat)
+                ->where('status','=','Potongan')
+                ->get();
+                $potongan->getPotongan = $getPotongan;
+        }
 
     return view('test.test', [
         'penjab'=> $penjab,
@@ -69,7 +147,6 @@ function Test(){
         'paymentRalan'=>$paymentRalan,
     ]);
 }
-
 
 function TestCari(Request $request){
     $cariNomor = $request->cariNomor;

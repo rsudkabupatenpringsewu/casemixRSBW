@@ -123,6 +123,14 @@
                                     </a>
                                 </li>
                             </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('/pembayaran-ralan') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Pembayaran Ralan</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         {{-- MENU CASEMIX --}}
                         <li class="nav-item">{{-- menu-open --}}

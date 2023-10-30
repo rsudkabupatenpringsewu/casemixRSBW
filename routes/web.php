@@ -11,6 +11,7 @@ use App\Http\Controllers\Bpjs\ListPasienRalan;
 use App\Http\Controllers\Bpjs\ListPasienRanap;
 use App\Http\Controllers\Bpjs\CesmikController;
 use App\Http\Controllers\Farmasi\BundlingFarmasi;
+use App\Http\Controllers\Laporan\PembayaranRalan;
 use App\Http\Controllers\Laporan\PasienController;
 use App\Http\Controllers\Bpjs\PrintCesmikController;
 use App\Http\Controllers\Farmasi\SepResepController;
@@ -74,6 +75,10 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     Route::get('/download-hasilgabungberks', [ViewSepResepController::class, 'DonwloadHasilGabung']);
     Route::get('/print-sep-resep', [BundlingFarmasi::class, 'PrintBerkasSepResep']);
     Route::get('/gabung-berkas-farmasi', [BundlingFarmasi::class, 'GabungBergkas']);
+
+    // LAPORAN / KEUANGAN
+    Route::get('/pembayaran-ralan', [PembayaranRalan::class, 'PembayaranRanal']);
+    Route::get('/cari-pembayaran-ralan', [PembayaranRalan::class, 'CariPembayaranRanal']);
 });
 });
 

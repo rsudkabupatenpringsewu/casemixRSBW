@@ -121,7 +121,7 @@ class CesmikController extends Controller
                 ->where('pemeriksaan_ralan.no_rawat','=',$noRawat)
                 ->first();
                 $getKamarInap = '';
-                $$cekPasienKmrInap = '';
+                $cekPasienKmrInap = '';
             }else{
                 if ($statusLanjut->status_lanjut === 'Ranap') {
                     $getResume = DB::table('resume_pasien_ranap')

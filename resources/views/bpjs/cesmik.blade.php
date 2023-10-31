@@ -375,7 +375,11 @@
                                                     <td width="400px">: {{ $getResume->pekerjaan }}</td>
                                                     <td width="100px">Tanggal Masuk</td>
                                                     <td width="200px">:
+                                                        @if ($cekPasienKmrInap > 1)
                                                             {{ date('d-m-Y', strtotime($getResume->tgl_registrasi)) }}
+                                                        @else
+                                                            {{ date('d-m-Y', strtotime($getResume->tgl_masuk)) }}
+                                                        @endif
                                                     </td>
                                                 </tr>
                                                 <tr style="vertical-align: top;">

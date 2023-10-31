@@ -12,7 +12,8 @@
                     </button>
                 </div>
             </div>
-            <table class="table table-responsive text-xs" style="white-space: nowrap;" id="tableToCopy">
+            <table class="table table-sm table-bordered table-striped table-responsive text-xs" style="white-space: nowrap;"
+                id="tableToCopy">
                 <tbody>
                     <tr>
                         <th>Tanggal</th>
@@ -166,7 +167,6 @@
             window.getSelection().addRange(range);
 
             try {
-                // Salin isi yang dipilih ke clipboard
                 document.execCommand("copy");
                 window.getSelection().removeAllRanges();
                 alert("Tabel telah berhasil disalin ke clipboard.");

@@ -121,6 +121,7 @@ class CesmikController extends Controller
                 ->where('pemeriksaan_ralan.no_rawat','=',$noRawat)
                 ->first();
                 $getKamarInap = '';
+                $$cekPasienKmrInap = '';
             }else{
                 if ($statusLanjut->status_lanjut === 'Ranap') {
                     $getResume = DB::table('resume_pasien_ranap')
@@ -129,6 +130,7 @@ class CesmikController extends Controller
                                 'reg_periksa.almt_pj',
                                 'reg_periksa.tgl_registrasi',
                                 'reg_periksa.status_lanjut',
+                                'kamar_inap.tgl_masuk',
                                 'pasien.nm_pasien',
                                 'pasien.tgl_lahir',
                                 'pasien.jk as jenis_kelamin',
@@ -197,6 +199,9 @@ class CesmikController extends Controller
                             ->orderByDesc('jam_keluar')
                             ->limit(1)
                             ->first();
+                        $cekPasienKmrInap = DB::table('kamar_inap')
+                            ->whereIn('kamar_inap.no_rawat', [$getResume->no_rawat])
+                            ->count();
                 } else {
                     $getResume = DB::table('resume_pasien')
                         ->select('reg_periksa.tgl_registrasi',
@@ -251,6 +256,7 @@ class CesmikController extends Controller
                         ->where('resume_pasien.no_rawat','=', $noRawat)
                         ->first();
                         $getKamarInap = '';
+                        $cekPasienKmrInap = '';
                 }
             }
 
@@ -416,6 +422,7 @@ class CesmikController extends Controller
             $statusLanjut = '';
             $getResume = '';
             $getKamarInap= '';
+            $cekPasienKmrInap= '';
             $bilingRalan = '';
             $getLaborat = '';
             $getRadiologi = '';
@@ -429,6 +436,7 @@ class CesmikController extends Controller
             'statusLanjut'=>$statusLanjut,
             'getResume'=>$getResume,
             'getKamarInap'=>$getKamarInap,
+            'cekPasienKmrInap'=>$cekPasienKmrInap,
             'bilingRalan'=>$bilingRalan,
             'getLaborat'=>$getLaborat,
             'getRadiologi'=>$getRadiologi,

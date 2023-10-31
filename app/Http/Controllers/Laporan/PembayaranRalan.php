@@ -16,7 +16,6 @@ class PembayaranRalan extends Controller
             ->where('penjab.status','=','1')
             ->get();
         // CORE QUERY
-
         $paymentRalan = DB::table('reg_periksa')
             ->select('reg_periksa.no_rawat',
                 'reg_periksa.no_rkm_medis',
@@ -138,7 +137,7 @@ class PembayaranRalan extends Controller
 
         return view('Laporan.pembayaranRalan', [
             'penjab'=> $penjab,
-            'paymentRalan'=>$paymentRalan,
+            'paymentRalan'=> $paymentRalan,
         ]);
     }
 

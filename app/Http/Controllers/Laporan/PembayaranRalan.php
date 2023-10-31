@@ -135,7 +135,7 @@ class PembayaranRalan extends Controller
                     $potongan->getPotongan = $getPotongan;
             }
 
-        return view('Laporan.pembayaranRalan', [
+        return view('laporan.pembayaranRalan', [
             'penjab'=> $penjab,
             'paymentRalan'=> $paymentRalan,
         ]);
@@ -285,7 +285,7 @@ class PembayaranRalan extends Controller
                     $potongan->getPotongan = $getPotongan;
             }
 
-        return view('Laporan.pembayaranRalan', [
+        return view('laporan.pembayaranRalan', [
             'penjab'=> $penjab,
             'penjamin'=> $penjamin,
             'paymentRalan'=>$paymentRalan,

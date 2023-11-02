@@ -38,6 +38,13 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
+                    @if (session('successSaveINACBG'))
+                        <div class="alert alert-success">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <p><i class="icon fas fa-check"></i> Berhasil Simpan File {{session('successSaveINACBG')}}</p>
+                            <b>Note : Warna Pada Tombol Dihilangkan Untuk Mengoptimasi Program Agar Lebih Cepat</b>
+                        </div>
+                    @endif
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -66,7 +73,8 @@
                                         <td>
                                             <div class="btn-group">
                                                 @php
-                                                    $color = isset($cekBerkas[$item->no_rawat]) ? 'bg-success' : 'bg-primary';
+                                                    // $color = isset($cekBerkas[$item->no_rawat]) ? 'bg-success' : 'bg-primary';
+                                                    $color = 'bg-primary';
                                                 @endphp
                                                 <form action="{{ url('cariNorawat-ClaimBpjs') }}" method="">
                                                     @csrf
@@ -78,7 +86,8 @@
                                                 </form>
 
                                                 @php
-                                                    $color2 = isset($cekBerkasKhanza[$item->no_rawat]) ? 'bg-success' : 'bg-primary';
+                                                    // $color2 = isset($cekBerkasKhanza[$item->no_rawat]) ? 'bg-success' : 'bg-primary';
+                                                    $color2 = 'bg-primary';
                                                 @endphp
                                                 <form action="{{ url('carinorawat-casemix') }}" method=""
                                                     class="">
@@ -104,12 +113,12 @@
                                                         <i class="fas fa-save"> Gabung</i>
                                                     </button>
                                                 </form>
-                                                @if ($downloadFile)
-                                                    <a href="{{ url('hasil_pdf/' . $downloadFile->file) }}" download
-                                                        class="ml-2 text-success">
-                                                        <i class="fas fa-download"></i>
-                                                    </a>
-                                                @endif
+                                                {{-- @if ($downloadFile)
+                                                        <a href="{{ url('hasil_pdf/' . $downloadFile->file) }}" download
+                                                            class="ml-2 text-success">
+                                                            <i class="fas fa-download"></i>
+                                                        </a>
+                                                    @endif --}}
                                             </div>
                                         </td>
                                     </tr>

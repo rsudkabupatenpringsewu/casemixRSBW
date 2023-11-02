@@ -19,7 +19,6 @@ class CesmikController extends Controller
         $jumlahData = $cekNorawat->count();
         $statusLanjut = $cekNorawat->first();
 
-
         if ($jumlahData > 0) {
             // 1 BERKAS SEP
             $getSEP = DB::table('bridging_sep')

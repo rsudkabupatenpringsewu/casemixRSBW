@@ -69,7 +69,7 @@ class BpjsController extends Controller
                 ]);
             }
         }
-
+        Session::flash('successSaveINACBG', 'INACBG / SCAN');
         $redirectUrl = url('/casemix-home-cari');
         $csrfToken = Session::token();
         $cariNoSep = $request->no_sep;

@@ -46,51 +46,51 @@ class HomeCasemix extends Controller
             ->orWhere('bridging_sep.no_sep', '=', $norawat)
             ->orderBy('reg_periksa.tgl_registrasi', 'desc')
             ->get();
-            $cekBerkas = [];
-            foreach ($getPasien as $item) {
-                $berkas = DB::connection('db_con2')
-                    ->table('file_casemix')
-                    ->select('no_rawat')
-                    ->where('no_rawat', $item->no_rawat)
-                    ->where('jenis_berkas', 'INACBG')
-                    ->first();
-                $cekBerkas[$item->no_rawat] = $berkas;
-            }
-            $cekBerkasKhanza = [];
-            foreach ($getPasien as $item) {
-                $berkas = DB::connection('db_con2')
-                    ->table('file_casemix')
-                    ->select('no_rawat')
-                    ->where('no_rawat', $item->no_rawat)
-                    ->where('jenis_berkas', 'RESUMEDLL')
-                    ->first();
-                $cekBerkasKhanza[$item->no_rawat] = $berkas;
-            }
-            $cekBerkasHasil = [];
-            foreach ($getPasien as $item) {
-                $berkas = DB::connection('db_con2')
-                    ->table('file_casemix')
-                    ->select('no_rawat')
-                    ->where('no_rawat', $item->no_rawat)
-                    ->where('jenis_berkas', 'HASIL')
-                    ->first();
-                $cekBerkasHasil[$item->no_rawat] = $berkas;
-            }
-            foreach ($getPasien as $item) {
-                $noRawatPasien = $item->no_rawat;
-                $downloadFile = DB::connection('db_con2')->table('file_casemix')
-                ->select('file')
-                ->where('no_rawat', $noRawatPasien)
-                ->where('jenis_berkas', 'HASIL')
-                ->first();
-            }
+            // $cekBerkas = [];
+            // foreach ($getPasien as $item) {
+            //     $berkas = DB::connection('db_con2')
+            //         ->table('file_casemix')
+            //         ->select('no_rawat')
+            //         ->where('no_rawat', $item->no_rawat)
+            //         ->first();
+            //     $cekBerkas[$item->no_rawat] = $berkas;
+            // }
+            // dd($cekBerkas);
+            // $cekBerkasKhanza = [];
+            // foreach ($getPasien as $item) {
+            //     $berkas = DB::connection('db_con2')
+            //         ->table('file_casemix')
+            //         ->select('no_rawat')
+            //         ->where('no_rawat', $item->no_rawat)
+            //         ->where('jenis_berkas', 'RESUMEDLL')
+            //         ->first();
+            //     $cekBerkasKhanza[$item->no_rawat] = $berkas;
+            // }
+            // $cekBerkasHasil = [];
+            // foreach ($getPasien as $item) {
+            //     $berkas = DB::connection('db_con2')
+            //         ->table('file_casemix')
+            //         ->select('no_rawat')
+            //         ->where('no_rawat', $item->no_rawat)
+            //         ->where('jenis_berkas', 'HASIL')
+            //         ->first();
+            //     $cekBerkasHasil[$item->no_rawat] = $berkas;
+            // }
+            // foreach ($getPasien as $item) {
+            //     $noRawatPasien = $item->no_rawat;
+            //     $downloadFile = DB::connection('db_con2')->table('file_casemix')
+            //     ->select('file')
+            //     ->where('no_rawat', $noRawatPasien)
+            //     ->where('jenis_berkas', 'HASIL')
+            //     ->first();
+            // }
 
         return view('bpjs.homecasemix', [
             'getPasien'=>$getPasien,
-            'cekBerkas' => $cekBerkas,
-            'cekBerkasKhanza' => $cekBerkasKhanza,
-            'cekBerkasHasil' => $cekBerkasHasil,
-            'downloadFile'=>$downloadFile,
+            // 'cekBerkas' => $cekBerkas,
+            // 'cekBerkasKhanza' => $cekBerkasKhanza,
+            // 'cekBerkasHasil' => $cekBerkasHasil,
+            // 'downloadFile'=>$downloadFile,
         ]);
     }
 }

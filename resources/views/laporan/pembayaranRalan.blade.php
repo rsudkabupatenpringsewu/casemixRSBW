@@ -158,14 +158,12 @@
         document.getElementById("copyButton").addEventListener("click", function() {
             copyTableToClipboard("tableToCopy");
         });
-
         function copyTableToClipboard(tableId) {
             const table = document.getElementById(tableId);
             const range = document.createRange();
             range.selectNode(table);
             window.getSelection().removeAllRanges();
             window.getSelection().addRange(range);
-
             try {
                 document.execCommand("copy");
                 window.getSelection().removeAllRanges();

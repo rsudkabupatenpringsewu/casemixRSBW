@@ -460,7 +460,7 @@ class PrintCesmikController extends Controller
                 'file' => $pdfFilename,
             ]);
         }
-
+        Session::flash('successSaveINACBG', 'PDF');
         $redirectUrl = url('/casemix-home-cari');
         $csrfToken = Session::token();
         $redirectUrlWithToken = $redirectUrl . '?' . http_build_query(['_token' => $csrfToken, 'cariNorawat' => $cariNoSep, 'cariNorawat' => $noRawat,]);

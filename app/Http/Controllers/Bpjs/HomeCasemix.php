@@ -35,17 +35,18 @@ class HomeCasemix extends Controller
     }
 
     function casemixHomeCari(Request $request){
-        $norawat = $request->cariNorawat;
-        $getPasien = DB::table('reg_periksa')
-            ->select('reg_periksa.no_rawat', 'reg_periksa.no_rkm_medis', 'reg_periksa.tgl_registrasi', 'pasien.nm_pasien',
-                    'pasien.jk', 'bridging_sep.no_sep', 'bridging_sep.jnspelayanan')
-            ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
-            ->leftJoin('bridging_sep','bridging_sep.no_rawat','=','reg_periksa.no_rawat')
-            ->where('reg_periksa.no_rawat', '=', $norawat)
-            ->orWhere('reg_periksa.no_rkm_medis', '=', $norawat)
-            ->orWhere('bridging_sep.no_sep', '=', $norawat)
-            ->orderBy('reg_periksa.tgl_registrasi', 'desc')
-            ->get();
+        $getPasien = '';
+        // $norawat = $request->cariNorawat;
+        // $getPasien = DB::table('reg_periksa')
+        //     ->select('reg_periksa.no_rawat', 'reg_periksa.no_rkm_medis', 'reg_periksa.tgl_registrasi', 'pasien.nm_pasien',
+        //             'pasien.jk', 'bridging_sep.no_sep', 'bridging_sep.jnspelayanan')
+        //     ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
+        //     ->leftJoin('bridging_sep','bridging_sep.no_rawat','=','reg_periksa.no_rawat')
+        //     ->where('reg_periksa.no_rawat', '=', $norawat)
+        //     ->orWhere('reg_periksa.no_rkm_medis', '=', $norawat)
+        //     ->orWhere('bridging_sep.no_sep', '=', $norawat)
+        //     ->orderBy('reg_periksa.tgl_registrasi', 'desc')
+        //     ->get();
             // $cekBerkas = [];
             // foreach ($getPasien as $item) {
             //     $berkas = DB::connection('db_con2')

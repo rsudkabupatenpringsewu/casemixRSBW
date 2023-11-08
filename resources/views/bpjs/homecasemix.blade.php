@@ -1,10 +1,14 @@
 @extends('..layout.layoutDashboard')
 @section('title', 'Home BPJS')
+@push('styles')
+    @livewireStyles
+@endpush
 
 @section('konten')
     <div class="row">
         <div class="col-md-12">
-            <section class="content ">
+            @livewire('bpjs.home-cari-casemix')
+            {{-- <section class="content ">
                 <form action="{{ url('/casemix-home-cari') }}" action="POST">
                     @csrf
                     <div class="row">
@@ -36,12 +40,11 @@
                 <div class="card-header bg-primary">
                     <h3 class="card-title">Pasien</h3>
                 </div>
-                <!-- /.card-header -->
                 <div class="card-body">
                     @if (session('successSaveINACBG'))
                         <div class="alert alert-success">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <p><i class="icon fas fa-check"></i> Berhasil Simpan File {{session('successSaveINACBG')}}</p>
+                            <p><i class="icon fas fa-check"></i> Berhasil Simpan File {{ session('successSaveINACBG') }}</p>
                             <b>Note : Warna Pada Tombol Dihilangkan Untuk Mengoptimasi Program Agar Lebih Cepat</b>
                         </div>
                     @endif
@@ -89,8 +92,7 @@
                                                     // $color2 = isset($cekBerkasKhanza[$item->no_rawat]) ? 'bg-success' : 'bg-primary';
                                                     $color2 = 'bg-primary';
                                                 @endphp
-                                                <form action="{{ url('carinorawat-casemix') }}" method=""
-                                                    class="">
+                                                <form action="{{ url('carinorawat-casemix') }}" method="" class="">
                                                     @csrf
                                                     <input name="cariNorawat" value="{{ $item->no_rawat }}" hidden>
                                                     <input name="cariNoSep" value="{{ $item->no_sep }}" hidden>
@@ -107,18 +109,11 @@
                                                     <input name="cariNorawat" value="{{ $item->no_rawat }}" hidden>
                                                     <input name="tgl1" value="{{ session('tgl1') }}" hidden>
                                                     <input name="tgl2" value="{{ session('tgl2') }}" hidden>
-                                                    <input name="statusLanjut" value="{{ session('statusLanjut') }}"
-                                                        hidden>
+                                                    <input name="statusLanjut" value="{{ session('statusLanjut') }}" hidden>
                                                     <button class="badge {{ $color3 }}">
                                                         <i class="fas fa-save"> Gabung</i>
                                                     </button>
                                                 </form>
-                                                {{-- @if ($downloadFile)
-                                                        <a href="{{ url('hasil_pdf/' . $downloadFile->file) }}" download
-                                                            class="ml-2 text-success">
-                                                            <i class="fas fa-download"></i>
-                                                        </a>
-                                                    @endif --}}
                                             </div>
                                         </td>
                                     </tr>
@@ -132,8 +127,10 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
-
 @endsection
+@push('scripts')
+    @livewireScripts
+@endpush

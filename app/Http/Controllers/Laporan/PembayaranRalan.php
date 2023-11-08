@@ -5,16 +5,24 @@ namespace App\Http\Controllers\Laporan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 
 class PembayaranRalan extends Controller
 {
     function PembayaranRanal() {
         $tanggl1 = date('Y-m-d');
         $tanggl2 = date('Y-m-d');
-        $penjab = DB::table('penjab')
-            ->select('penjab.kd_pj', 'penjab.png_jawab')
-            ->where('penjab.status','=','1')
-            ->get();
+
+        $cacheKey = 'chache_penjamin';
+        if (Cache::has($cacheKey)) {
+                $penjab = Cache::get($cacheKey);
+        } else {
+            $penjab = DB::table('penjab')
+                ->select('penjab.kd_pj', 'penjab.png_jawab')
+                ->where('penjab.status','=','1')
+                ->get();
+            Cache::put($cacheKey, $penjab, 720);
+        }
         // CORE QUERY
         $paymentRalan = DB::table('reg_periksa')
             ->select('reg_periksa.no_rawat',
@@ -147,11 +155,17 @@ class PembayaranRalan extends Controller
         $tanggl1 = $request->tgl1;
         $tanggl2 = $request->tgl2;
         $kdPenjamin = explode(',', $request->input('kdPenjamin') ?? '');
+        $cacheKey = 'chache_penjamin';
+        if (Cache::has($cacheKey)) {
+                $penjab = Cache::get($cacheKey);
+        } else {
+            $penjab = DB::table('penjab')
+                ->select('penjab.kd_pj', 'penjab.png_jawab')
+                ->where('penjab.status','=','1')
+                ->get();
+            Cache::put($cacheKey, $penjab, 720);
+        }
 
-        $penjab = DB::table('penjab')
-            ->select('penjab.kd_pj', 'penjab.png_jawab')
-            ->where('penjab.status','=','1')
-            ->get();
         $penjamin = DB::table('penjab')
             ->select('penjab.kd_pj', 'penjab.png_jawab')
             ->where('penjab.status','=','1')

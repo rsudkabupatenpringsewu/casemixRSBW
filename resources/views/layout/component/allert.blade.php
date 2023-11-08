@@ -30,6 +30,12 @@
                 title: '{{ session('successGabungberkas') }}'
             });
         @endif
+        @if (session('successSaveINACBG'))
+            Toast.fire({
+                icon: 'success',
+                title: 'Berhasil Simpan File {{ session('successSaveINACBG') }}'
+            });
+        @endif
     });
 </script>
 

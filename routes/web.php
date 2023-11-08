@@ -1,12 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Test\TestController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Bpjs\DataInacbg;
 use App\Http\Controllers\Bpjs\HomeCasemix;
 use App\Http\Controllers\Bpjs\GabungBerkas;
 use App\Http\Controllers\Bpjs\BpjsController;
-use App\Http\Controllers\Test\TestController;
 use App\Http\Controllers\Bpjs\ListPasienRalan;
 use App\Http\Controllers\Bpjs\ListPasienRanap;
 use App\Http\Controllers\Bpjs\CesmikController;

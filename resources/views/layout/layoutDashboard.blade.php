@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
     <script src="/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
     {{-- TEST --}}
+    @stack('styles')
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -247,6 +248,7 @@
         </aside>
     </div>
 
+    @stack('scripts')
     <script src="/plugins/jquery-ui/jquery-ui.min.js"></script>
     <script>
         $.widget.bridge("uibutton", $.ui.button);

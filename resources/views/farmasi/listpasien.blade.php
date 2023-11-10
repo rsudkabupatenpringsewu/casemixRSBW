@@ -8,7 +8,7 @@
             <form action="{{ url('cari-list-pasien-farmasi') }}" action="POST">
                 @csrf
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <div class="input-group input-group-xs">
                                 <input type="text" name="cariNomor" class="form-control form-control-xs"
@@ -64,6 +64,7 @@
                             <th class="text-center">No.Sep</th>
                             <th class="text-center">Pasein | Status Bayar</th>
                             <th class="text-center">Asal</th>
+                            <th class="text-center">Jenis Jual</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -115,6 +116,7 @@
                                     @endif
                                 </td>
                                 <td>{{ $item->nm_poli }}</td>
+                                <td>{{ $item->jns_jual }}</td>
                             </tr>
                         @endforeach
                     </tbody>

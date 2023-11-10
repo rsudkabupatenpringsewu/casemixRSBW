@@ -29,7 +29,7 @@
     table {
         width: 100%;
         border-collapse: collapse;
-        font-size: 10px;
+        font-size: 12px;
         /* Adjust font size for tables */
     }
 
@@ -189,7 +189,7 @@
                                 Pasien/Keluarga Pasien <br>
                                 <div class="barcode mt-1">
                                     <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di ' . $getSEP->nmppkpelayanan . ',' . ' Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $getSEP->nama_pasien . ' ID ' . $getSEP->no_kartu . ' ' . $getSEP->tglsep, 'QRCODE') }}"
-                                        alt="barcode" width="55px" height="55px" />
+                                        alt="barcode" width="65px" height="65px" />
                                 </div>
                                 <b class="mt-1">{{ $getSEP->nama_pasien }}</b>
                             </td>
@@ -219,78 +219,175 @@
                                 </td>
                             </tr>
                             <tr class="text-center">
-                                <td class="pr-4">Jln. Wolter Monginsidi No. 235 , Bandar Lampung, Lampung</td>
+                                <td class="pr-4 h4">Jln. Wolter Monginsidi No. 235 , Bandar Lampung, Lampung</td>
                             </tr>
                             <tr class="text-center">
-                                <td class="pr-4">(0721)254589</td>
+                                <td class="pr-4 h4">(0721)254589</td>
                             </tr>
                             <tr class="text-center">
-                                <td class="pr-4">www.rsbumiwaras.co.id</td>
+                                <td class="pr-4 h4">www.rsbumiwaras.co.id</td>
                             </tr>
                         </table>
                         <hr width="700px"
                             style=" height:2px; border-top:1px solid black; border-bottom:2px solid black;">
                         <table width="700px">
-                            <tr style="vertical-align: top;">
-                                <td width="130px">Nama Pasien</td>
-                                <td width="530px">: {{ $itemresep->nm_pasien }}</td>
+                            <tr>
+                                <td width="126px">Faktur No</td>
+                                <td width="273px">: {{ $itemresep->nota_piutang }}</td>
+                                <td width="126px">Nama Pasien</td>
+                                <td width="169px">: {{ $itemresep->nm_pasien }}</td>
                             </tr>
-                            <tr style="vertical-align: top;">
-                                <td width="130px">No.RM</td>
-                                <td>: {{ $itemresep->no_rkm_medis }}</td>
+                            <tr>
+                                <td>Sales</td>
+                                <td>: {{ $itemresep->nama_petugas }}</td>
+                                <td>Tanggal Piutang</td>
+                                <td>: {{ $itemresep->tgl_piutang }}</td>
                             </tr>
-                            <tr style="vertical-align: top;">
-                                <td width="130px">No.Rawat</td>
-                                <td>: {{ $itemresep->no_rawat }}</td>
-                            </tr>
-                            <tr style="vertical-align: top;">
-                                <td width="130px">Penanggung</td>
-                                <td>: {{ $itemresep->png_jawab }}</td>
-                            </tr>
-                            <tr style="vertical-align: top;">
-                                <td width="130px">Pemberi Resep</td>
-                                <td>: -</td>
-                            </tr>
-                            <tr style="vertical-align: top;">
-                                <td width="130px">No. Resep</td>
-                                <td>: {{ $itemresep->no_resep }}</td>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>Jatuh Tempo</td>
+                                <td>: {{ $itemresep->tgltempo }}</td>
                             </tr>
                         </table>
-                        <table width="700px" class="mt-1">
+                        <table width="700px" class="mt-1" border="1px">
                             @php
                                 $no = 1;
                                 $totalResep = 0;
+                                $ongkir = $itemresep->ongkir;
+                                $uangmuka = $itemresep->uangmuka;
                             @endphp
+                            <tr class="text-center">
+                                <td width="21px">No</td>
+                                <td width="310px">Barang</td>
+                                <td width="104px">Harga</td>
+                                <td width="55px">Jml</td>
+                                <td width="97px">Diskon</td>
+                                <td width="105px">Total</td>
+                            </tr>
                             @foreach ($itemresep->detailberkasResep as $itemresep)
                                 <tr>
-                                    <td width="30px" class="text-center">{{ $no++ }}</td>
-                                    <td width="350px">{{ $itemresep->nama_brng }}</td>
-                                    <td width="50px" class="text-center">{{ $itemresep->jml }}</td>
-                                    <td width="80px">{{ $itemresep->kode_sat }}</td>
-                                    <td>Rp. {{ number_format($itemresep->total, 2, ',', '.') }}</td>
+                                    <td class="text-center">{{ $no++ }}</td>
+                                    <td>{{ $itemresep->nama_brng }}</td>
+                                    <td>{{ number_format($itemresep->h_jual, 0, ',', '.') }}</td>
+                                    <td>{{ $itemresep->jumlah }}</td>
+                                    <td>{{ $itemresep->dis }}</td>
+                                    <td>{{ number_format($itemresep->total, 0, ',', '.') }}</td>
                                 </tr>
                                 @php
                                     $totalResep += $itemresep->total; // Menambahkan nilai $itemresep->total ke dalam total
                                 @endphp
                             @endforeach
-                            <tr>
-                                <td></td>
-                                <td><b>TOTAL :</b></td>
-                                <td></td>
-                                <td></td>
-                                <td><b>Rp. {{ number_format($totalResep, 2, ',', '.') }}</b></td>
-                            </tr>
                         </table>
                         <table width="700px" class="mt-1">
                             <tr>
-                                <td width="250px" class="text-center">
-
+                                <td width="21px"></td>
+                                <td width="318px"></td>
+                                <td width="104px"></td>
+                                <td width="55px"></td>
+                                <td width="97px">Total Beli:</td>
+                                <td width="105px">{{ number_format($totalResep, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4"></td>
+                                <td>Ongkir :</td>
+                                <td>{{ number_format($ongkir, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4"></td>
+                                <td>Uang Muka :</td>
+                                <td>{{ number_format($uangmuka, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4"></td>
+                                <td><b>TOTAL :</b></td>
+                                <td><b>Rp. {{ number_format($totalResep, 0, ',', '.') }}</b></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            @endforeach
+            @foreach ($berkasResep as $itemresep)
+                <div class="card-body">
+                    <div class="card p-4 d-flex justify-content-center align-items-center">
+                        <table width="700px">
+                            <tr>
+                                <td rowspan="5"> <img src="{{ public_path('img/rs.png') }}" alt="Girl in a jacket"
+                                        width="90" height="75">
                                 </td>
-                                <td width="150px"></td>
-                                <td width="250px" class="text-center">
-                                    <p>Bandar Lampung, {{ date('Y-m-d') }}</p>
-                                    <br class="mt-4">
-                                    <p><b>PETUGAS</b></p>
+                                <td class="text-center">
+                                    <span class="h3">RS. BUMI WARAS </span>
+                                </td>
+                                <td class="text-center" width="100px">
+                                </td>
+                            </tr>
+                            <tr class="text-center">
+                                <td class="pr-4 h4">Jln. Wolter Monginsidi No. 235 , Bandar Lampung, Lampung</td>
+                            </tr>
+                            <tr class="text-center">
+                                <td class="pr-4 h4">(0721)254589</td>
+                            </tr>
+                            <tr class="text-center">
+                                <td class="pr-4 h4">www.rsbumiwaras.co.id</td>
+                            </tr>
+                        </table>
+                        <hr width="700px"
+                            style=" height:2px; border-top:1px solid black; border-bottom:2px solid black;">
+                        <table width="700px">
+                            <tr>
+                                <td width="126px">Nama Pasien</td>
+                                <td>: {{ $itemresep->nm_pasien }}</td>
+                            </tr>
+                            <tr>
+                                <td>No. R.M</td>
+                                <td>: {{ $itemresep->no_rkm_medis }}</td>
+                            </tr>
+                            <tr>
+                                <td>No. Rawat</td>
+                                <td>: {{ $itemresep->no_rawat }}</td>
+                            </tr>
+                            <tr>
+                                <td>Jenis Bayar</td>
+                                <td>: {{ $itemresep->catatan }}</td>
+                            </tr>
+                            <tr>
+                                <td>Pemberi Resep</td>
+                                <td>: {{ $itemresep->nm_dokter }}</td>
+                            </tr>
+                            <tr>
+                                <td>No. Resep</td>
+                                <td>: {{ $itemresep->no_resep }} </td>
+                            </tr>
+                        </table>
+                        <hr width="700px"
+                            style=" height:2px; border-top:1px solid black; border-bottom:2px solid black;">
+                        <table border="1px" width="700px">
+                            <tr>
+                                <td colspan="3" class="text-center"><b>Resep</b></td>
+                            </tr>
+                            @php
+                                $nm_dokter = $itemresep->nm_dokter;
+                                $kd_dokter = $itemresep->kd_dokter;
+                                $tgl_peresepan = $itemresep->tgl_peresepan;
+                            @endphp
+                            @foreach ($itemresep->detailberkasResep as $itemresep)
+                                <tr>
+                                    <td width="340px">R/ {{ $itemresep->nama_brng }}</td>
+                                    <td width="180px">{{ $itemresep->jumlah }} {{ $itemresep->satuan }}</td>
+                                    <td width="170px">S_ _ _ _ _ _{{ $itemresep->aturan_pakai }}</td>
+                                </tr>
+                            @endforeach
+                        </table>
+                        <table width="700px" class="mt-1">
+                            <tr>
+                                <td></td>
+                                <td class="text-center" width="220px">
+                                    Pasien/Keluarga Pasien <br>
+                                    <div class="barcode mt-1">
+                                        <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di RS. BUMI WARAS, Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $nm_dokter . ' ID ' . $kd_dokter . ' ' . $tgl_peresepan, 'QRCODE') }}"
+                                            alt="barcode" width="80px" height="75px" />
+                                    </div>
+                                    <b class="mt-1">{{ $nm_dokter }}</b>
                                 </td>
                             </tr>
                         </table>

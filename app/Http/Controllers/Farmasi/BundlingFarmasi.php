@@ -85,42 +85,58 @@ class BundlingFarmasi extends Controller
                 ->where('bridging_sep.no_sep', '=', $noSep)
                 ->first();
 
-            $berkasResep = DB::table('resep_obat')
-                ->select('resep_obat.no_resep',
-                    'resep_obat.tgl_perawatan',
-                    'resep_obat.jam',
+            $berkasResep = DB::table('piutang')
+                ->select('piutang.nota_piutang',
+                    'piutang.nm_pasien',
                     'resep_obat.no_rawat',
+                    'petugas.nama as nama_petugas',
+                    'piutang.tgltempo',
+                    'piutang.tgl_piutang',
+                    'resep_obat.no_resep',
+                    'piutang.nip',
+                    'piutang.no_rkm_medis',
+                    'piutang.catatan',
+                    'piutang.ongkir',
+                    'piutang.uangmuka',
+                    'piutang.sisapiutang',
+                    'bangsal.nm_bangsal',
                     'resep_obat.kd_dokter',
-                    'penjab.png_jawab',
-                    'pasien.no_rkm_medis',
-                    'pasien.nm_pasien',
-                    'dokter.nm_dokter')
-                ->join('reg_periksa','resep_obat.no_rawat','=','reg_periksa.no_rawat')
-                ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
+                    'dokter.nm_dokter',
+                    'resep_obat.tgl_peresepan')
+                ->join('petugas','piutang.nip','=','petugas.nip')
+                ->join('bangsal','piutang.kd_bangsal','=','bangsal.kd_bangsal')
+                ->join('detailpiutang','piutang.nota_piutang','=','detailpiutang.nota_piutang')
+                ->join('databarang','detailpiutang.kode_brng','=','databarang.kode_brng')
+                ->join('jenis','databarang.kdjns','=','jenis.kdjns')
+                ->join('kodesatuan','detailpiutang.kode_sat','=','kodesatuan.kode_sat')
+                ->leftJoin('resep_obat','resep_obat.no_rawat','=','piutang.nota_piutang')
                 ->join('dokter','resep_obat.kd_dokter','=','dokter.kd_dokter')
-                ->join('penjab','reg_periksa.kd_pj','=','penjab.kd_pj')
-                ->where('resep_obat.no_rawat','=', $noRawat)
-                ->orderBy('resep_obat.tgl_perawatan','asc')
-                ->orderBy('resep_obat.jam','asc')
+                ->where('piutang.nota_piutang','=', $noRawat)
+                ->groupBy('piutang.nota_piutang')
+                ->orderBy('piutang.tgl_piutang','asc')
+                ->orderBy('piutang.nota_piutang','asc')
                 ->get();
                 foreach( $berkasResep as $itemresep){
-                    $detailberkasResep = DB::table('detail_pemberian_obat')
-                        ->select('databarang.nama_brng',
-                            'detail_pemberian_obat.jml',
-                            'databarang.kode_sat',
-                            'detail_pemberian_obat.biaya_obat',
-                            'detail_pemberian_obat.total')
-                        ->join('databarang','detail_pemberian_obat.kode_brng','=','databarang.kode_brng')
-                        ->leftJoin('detail_obat_racikan',function($join) {
-                            $join->on('detail_pemberian_obat.kode_brng','=','detail_obat_racikan.kode_brng')
-                            ->on('detail_pemberian_obat.tgl_perawatan','=','detail_obat_racikan.tgl_perawatan')
-                            ->on('detail_pemberian_obat.jam','=','detail_obat_racikan.jam')
-                            ->on('detail_pemberian_obat.no_rawat','=','detail_obat_racikan.no_rawat');
-                        })
-                        ->where('detail_pemberian_obat.tgl_perawatan','=', $itemresep->tgl_perawatan)
-                        ->where('detail_pemberian_obat.jam','=', $itemresep->jam)
-                        ->where('detail_pemberian_obat.no_rawat','=', $itemresep->no_rawat)
-                        ->orderBy('databarang.kode_brng','asc')
+                    $detailberkasResep = DB::table('detailpiutang')
+                        ->select('detailpiutang.nota_piutang',
+                            'detailpiutang.kode_brng',
+                            'databarang.nama_brng',
+                            'detailpiutang.kode_sat',
+                            'kodesatuan.satuan',
+                            'detailpiutang.h_jual',
+                            'detailpiutang.jumlah',
+                            'detailpiutang.subtotal',
+                            'detailpiutang.dis',
+                            'detailpiutang.bsr_dis',
+                            'detailpiutang.total',
+                            'detailpiutang.no_batch',
+                            'detailpiutang.no_faktur',
+                            'detailpiutang.aturan_pakai')
+                        ->join('databarang','detailpiutang.kode_brng','=','databarang.kode_brng')
+                        ->join('kodesatuan','detailpiutang.kode_sat','=','kodesatuan.kode_sat')
+                        ->join('jenis','databarang.kdjns','=','jenis.kdjns')
+                        ->where('detailpiutang.nota_piutang','=', $itemresep->nota_piutang)
+                        ->orderBy('detailpiutang.kode_brng','asc')
                         ->get();
                     $itemresep->detailberkasResep = $detailberkasResep;
                 }
@@ -176,18 +192,18 @@ class BundlingFarmasi extends Controller
             ->first();
             $pdf = new Fpdi();
         if($cekFileScan){
-            $pdfPathSCAN = public_path('storage/file_scan_farmasi/'.$cekFileScan->file);
             $pdfSepResep = public_path('storage/file_sepresep_farmasi/'.$cekSepResep->file);
+            $pdfPathSCAN = public_path('storage/file_scan_farmasi/'.$cekFileScan->file);
 
-            $pageCountSCAN = $pdf->setSourceFile($pdfPathSCAN);
-            for ($pageNumber = 1; $pageNumber <= $pageCountSCAN; $pageNumber++) {
+            $pageCountSepResep = $pdf->setSourceFile($pdfSepResep);
+            for ($pageNumber = 1; $pageNumber <= $pageCountSepResep; $pageNumber++) {
                 $template = $pdf->importPage($pageNumber);
                 $size = $pdf->getTemplateSize($template);
                 $pdf->AddPage($size['orientation'], $size);
                 $pdf->useTemplate($template);
             }
-            $pageCountSepResep = $pdf->setSourceFile($pdfSepResep);
-            for ($pageNumber = 1; $pageNumber <= $pageCountSepResep; $pageNumber++) {
+            $pageCountSCAN = $pdf->setSourceFile($pdfPathSCAN);
+            for ($pageNumber = 1; $pageNumber <= $pageCountSCAN; $pageNumber++) {
                 $template = $pdf->importPage($pageNumber);
                 $size = $pdf->getTemplateSize($template);
                 $pdf->AddPage($size['orientation'], $size);

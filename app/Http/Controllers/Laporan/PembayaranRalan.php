@@ -166,11 +166,6 @@ class PembayaranRalan extends Controller
             Cache::put($cacheKey, $penjab, 720);
         }
 
-        $penjamin = DB::table('penjab')
-            ->select('penjab.kd_pj', 'penjab.png_jawab')
-            ->where('penjab.status','=','1')
-            ->whereIn('penjab.kd_pj', $kdPenjamin)
-            ->get();
         $CaripaymentRalan = DB::table('reg_periksa')
             ->select('reg_periksa.no_rawat',
                 'reg_periksa.no_rkm_medis',
@@ -301,7 +296,6 @@ class PembayaranRalan extends Controller
 
         return view('laporan.pembayaranRalan', [
             'penjab'=> $penjab,
-            'penjamin'=> $penjamin,
             'paymentRalan'=>$paymentRalan,
         ]);
 

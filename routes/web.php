@@ -1,14 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Test\TestController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Bpjs\DataInacbg;
 use App\Http\Controllers\Bpjs\HomeCasemix;
 use App\Http\Controllers\Bpjs\GabungBerkas;
 use App\Http\Controllers\Bpjs\BpjsController;
+use App\Http\Controllers\Test\TestController;
 use App\Http\Controllers\Bpjs\ListPasienRalan;
 use App\Http\Controllers\Bpjs\ListPasienRanap;
+use App\Http\Controllers\Laporan\PiutangRalan;
 use App\Http\Controllers\Bpjs\CesmikController;
 use App\Http\Controllers\Farmasi\BundlingFarmasi;
 use App\Http\Controllers\Laporan\PembayaranRalan;
@@ -79,6 +80,9 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     // LAPORAN / KEUANGAN
     Route::get('/pembayaran-ralan', [PembayaranRalan::class, 'PembayaranRanal']);
     Route::get('/cari-pembayaran-ralan', [PembayaranRalan::class, 'CariPembayaranRanal']);
+
+    Route::get('/piutang-ralan', [PiutangRalan::class, 'PiutangRalan']);
+    Route::get('/cari-piutang-ralan', [PiutangRalan::class, 'CariPiutangRalan']);
 });
 });
 

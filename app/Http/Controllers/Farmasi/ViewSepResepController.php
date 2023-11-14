@@ -208,6 +208,4 @@ class ViewSepResepController extends Controller
         return Response::download($filePath, $cekBerkas->file);
     }
 
-
-
 }

@@ -1,4 +1,4 @@
-<form action="{{ url('/cari-pembayaran-ralan') }}">
+<form action="{{ url('/cari-piutang-ralan') }}">
     @csrf
     <div class="row">
         <div class="col-md-2">
@@ -8,6 +8,17 @@
                         placeholder="Cari Nama/RM/No Rawat">
                     <div class="input-group-append">
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <div class="input-group input-group-xs">
+                    <select class="form-control" name="statusLunas" id="">
+                        <option value="">Status / Semua</option>
+                        <option value="Lunas">Lunas</option>
+                        <option value="Belum Lunas">Belum Lunas</option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -79,7 +90,7 @@
                 <div class="input-group input-group-xs">
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-md btn-primary">
-                            <i class="fa fa-search"></i>
+                            <i class="fa fa-search"></i> Cari
                         </button>
                     </div>
                 </div>

@@ -24,6 +24,14 @@
     <link rel="stylesheet" href="/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
     <script src="/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
     {{-- TEST --}}
+    <style>
+        u {
+          border-bottom: 2px solid black; /* Ketebalan garis bawah */
+          text-decoration: none; /* Menghilangkan garis bawah default */
+          display: inline-block; /* Membuat elemen menjadi blok inline */
+          position: relative;
+        }
+      </style>
     @stack('styles')
 </head>
 
@@ -130,6 +138,14 @@
                                     <a href="{{ url('/pembayaran-ralan') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Pembayaran Ralan</p>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('/piutang-ralan') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Piutang Ralan</p>
                                     </a>
                                 </li>
                             </ul>

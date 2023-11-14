@@ -17,7 +17,6 @@ function Test(){
     $tanggl1 = date('Y-m-d');
     $tanggl2 = date('Y-m-d');
 
-
     return view('test.test', [
     ]);
 }

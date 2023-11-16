@@ -418,6 +418,35 @@ class PrintCesmikController extends Controller
             ->where('penilaian_medis_igd.no_rawat','=', $noRawat)
             ->first();
 
+             // SURAT KEMATIAN
+             $getSudartKematian = DB::table('pasien_mati')
+             ->select('pasien_mati.tanggal',
+                 'pasien_mati.jam',
+                 'pasien_mati.no_rkm_medis',
+                 'pasien.nm_pasien',
+                 'pasien.jk',
+                 'pasien.tmp_lahir',
+                 'pasien.tgl_lahir',
+                 'pasien.gol_darah',
+                 'pasien.stts_nikah',
+                 'pasien.umur',
+                 'pasien.alamat',
+                 'pasien.agama',
+                 'pasien_mati.keterangan',
+                 'pasien_mati.temp_meninggal',
+                 'pasien_mati.icd1',
+                 'pasien_mati.icd2',
+                 'pasien_mati.icd3',
+                 'pasien_mati.icd4',
+                 'pasien_mati.kd_dokter',
+                 'dokter.nm_dokter',
+                 'reg_periksa.no_rawat')
+             ->join('pasien','pasien_mati.no_rkm_medis','=','pasien.no_rkm_medis')
+             ->join('dokter','pasien_mati.kd_dokter','=','dokter.kd_dokter')
+             ->join('reg_periksa','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
+             ->where('reg_periksa.no_rawat','=', $noRawat)
+             ->first();
+
 
         } else {
             $jumlahData = '';
@@ -429,6 +458,7 @@ class PrintCesmikController extends Controller
             $getLaborat = '';
             $getRadiologi = '';
             $awalMedis= '';
+            $getSudartKematian= '';
         }
 
 
@@ -443,6 +473,7 @@ class PrintCesmikController extends Controller
             'getLaborat'=>$getLaborat,
             'getRadiologi'=>$getRadiologi,
             'awalMedis'=>$awalMedis,
+            'getSudartKematian'=>$getSudartKematian,
         ]);
 
         $no_rawatSTR = str_replace('/', '', $noRawat);

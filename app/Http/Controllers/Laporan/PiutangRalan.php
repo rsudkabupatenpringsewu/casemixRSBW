@@ -207,6 +207,7 @@ class PiutangRalan extends Controller
             }else{
                 $piutangRalan = $CariPiutangRalan->whereIn('penjab.kd_pj', $kdPenjamin)->get();
             }
+
             // NOMOR NOTA
             foreach ($piutangRalan as $nomornota) {
                 $getNomorNota = DB::table('nota_jalan')

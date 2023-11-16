@@ -81,7 +81,7 @@
             <a href="{{ url('/') }}" class="brand-link">
                 <img src="/img/logo.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
                     style="opacity: 0.8" />
-                <span class="brand-text font-weight-light">RSBW 1.8</span>
+                <span class="brand-text font-weight-light">RSBW 2.0</span>
             </a>
 
             <!-- INI MENUUU SAMPING -->
@@ -146,6 +146,14 @@
                                     <a href="{{ url('/piutang-ralan') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Piutang Ralan</p>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('/cari-bayar-piutang') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Bayar Piutang</p>
                                     </a>
                                 </li>
                             </ul>

@@ -9,6 +9,7 @@ use App\Http\Controllers\Bpjs\BpjsController;
 use App\Http\Controllers\Test\TestController;
 use App\Http\Controllers\Bpjs\ListPasienRalan;
 use App\Http\Controllers\Bpjs\ListPasienRanap;
+use App\Http\Controllers\Laporan\BayarPiutang;
 use App\Http\Controllers\Laporan\PiutangRalan;
 use App\Http\Controllers\Bpjs\CesmikController;
 use App\Http\Controllers\Farmasi\BundlingFarmasi;
@@ -83,6 +84,8 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
 
     Route::get('/piutang-ralan', [PiutangRalan::class, 'PiutangRalan']);
     Route::get('/cari-piutang-ralan', [PiutangRalan::class, 'CariPiutangRalan']);
+
+    Route::get('/cari-bayar-piutang', [BayarPiutang::class, 'CariBayarPiutang']);
 });
 });
 

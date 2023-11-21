@@ -65,7 +65,10 @@
                             <td>
                                 {{ $item->getRalanDokter->sum('totalbiaya') +
                                     $item->getRalanParamedis->sum('totalbiaya') +
-                                    $item->getRalanDrParamedis->sum('totalbiaya') }}
+                                    $item->getRalanDrParamedis->sum('totalbiaya') +
+                                    $item->getRanapDokter->sum('totalbiaya')+
+                                    $item->getRanapDrParamedis->sum('totalbiaya')+
+                                    $item->getRanapParamedis->sum('totalbiaya')}}
                             </td>
                             <td>
                                 {{ $item->getOprasi->sum('totalbiaya') }}
@@ -112,7 +115,10 @@
                             {{ $bayarPiutang->sum(function ($item) {
                                 return $item->getRalanDokter->sum('totalbiaya') +
                                     $item->getRalanParamedis->sum('totalbiaya') +
-                                    $item->getRalanDrParamedis->sum('totalbiaya');
+                                    $item->getRalanDrParamedis->sum('totalbiaya')+
+                                    $item->getRanapDokter->sum('totalbiaya')+
+                                    $item->getRanapDrParamedis->sum('totalbiaya')+
+                                    $item->getRanapParamedis->sum('totalbiaya');
                             }) }}
                         </th>
                         <th>

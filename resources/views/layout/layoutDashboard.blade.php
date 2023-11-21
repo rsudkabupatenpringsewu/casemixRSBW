@@ -116,6 +116,8 @@
                             </a>
                         </li>
                         {{-- MENU KEUANGAN --}}
+                        <li class="nav-header user-panel"></li>
+                        <li class="nav-header">Transaksi</li>
                         <li class="nav-item">{{-- menu-open --}}
                             <a href="#" class="nav-link">{{-- active --}}
                                 <i class="nav-icon fas fa-credit-card"></i>
@@ -153,12 +155,31 @@
                                     <a href="{{ url('/cari-bayar-piutang') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Bayar Piutang</p>
-                                        <span class="right badge badge-danger">New</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        {{-- DETAIL TINDAKAN --}}
+                        <li class="nav-item">{{-- menu-open --}}
+                            <a href="#" class="nav-link">{{-- active --}}
+                                <i class="nav-icon fas fa-hospital-user"></i>
+                                <p>
+                                    Detail Tindakan
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('/ralan-dokter') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Ralan Dokter</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
                         {{-- MENU CASEMIX --}}
+                        <li class="nav-header user-panel"></li>
+                        <li class="nav-header">Gabung Berkas</li>
                         <li class="nav-item">{{-- menu-open --}}
                             <a href="#" class="nav-link">{{-- active --}}
                                 <i class="nav-icon fas fa-hospital"></i>

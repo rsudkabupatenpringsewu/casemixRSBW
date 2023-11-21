@@ -16,6 +16,7 @@ use App\Http\Controllers\Farmasi\BundlingFarmasi;
 use App\Http\Controllers\Laporan\PembayaranRalan;
 use App\Http\Controllers\Laporan\PasienController;
 use App\Http\Controllers\Bpjs\PrintCesmikController;
+use App\Http\Controllers\DetailTindakan\RalanDokter;
 use App\Http\Controllers\Farmasi\SepResepController;
 use App\Http\Controllers\Returobat\ReturObatController;
 use App\Http\Controllers\Farmasi\ViewSepResepController;
@@ -86,6 +87,10 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     Route::get('/cari-piutang-ralan', [PiutangRalan::class, 'CariPiutangRalan']);
 
     Route::get('/cari-bayar-piutang', [BayarPiutang::class, 'CariBayarPiutang']);
+
+    // DETAIL TINDAKAN
+    Route::get('/ralan-dokter', [RalanDokter::class, 'RalanDokter']);
+
 });
 });
 

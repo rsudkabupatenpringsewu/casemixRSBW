@@ -115,6 +115,33 @@ class BayarPiutang extends Controller
                 ->get();
                 $ralanparamedis->getRalanParamedis = $getRalanParamedis;
         }
+        // RANAP DOKTER / 4 Paket Tindakan
+        foreach ($bayarPiutang as $ranapdokter) {
+            $getRanapDokter = DB::table('billing')
+                ->select('nm_perawatan', 'totalbiaya', 'status')
+                ->where('no_rawat', $ranapdokter->no_rawat)
+                ->where('status','=','Ranap Dokter')
+                ->get();
+                $ranapdokter->getRanapDokter = $getRanapDokter;
+        }
+        // RANAP DOKTER PARAMEDIS / 5 Paket Tindakan
+        foreach ($bayarPiutang as $ranapdrparamedis) {
+            $getRanapDrParamedis = DB::table('billing')
+                ->select('nm_perawatan', 'totalbiaya', 'status')
+                ->where('no_rawat', $ranapdrparamedis->no_rawat)
+                ->where('status','=','Ranap Dokter Paramedis')
+                ->get();
+                $ranapdrparamedis->getRanapDrParamedis = $getRanapDrParamedis;
+        }
+        // RANAP PARAMEDIS / 6 Ranap Paramedis
+        foreach ($bayarPiutang as $ranapparamedis) {
+            $getRanapParamedis = DB::table('billing')
+                ->select('nm_perawatan', 'totalbiaya', 'status')
+                ->where('no_rawat', $ranapparamedis->no_rawat)
+                ->where('status','=','Ranap Paramedis')
+                ->get();
+                $ranapparamedis->getRanapParamedis = $getRanapParamedis;
+        }
         // OPRASI
         foreach ($bayarPiutang as $oprasi) {
             $getOprasi = DB::table('billing')

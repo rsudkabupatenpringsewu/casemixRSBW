@@ -11,34 +11,34 @@ class RalanDokter extends Controller
 {
     function RalanDokter(Request $request) {
         $actionCari = '/ralan-dokter';
-        $cacheKey = 'chache_penjamin';
-        if (Cache::has($cacheKey)) {
-                $penjab = Cache::get($cacheKey);
+        $cacheKeyPenjab = 'chache_penjamin';
+        if (Cache::has($cacheKeyPenjab)) {
+                $penjab = Cache::get($cacheKeyPenjab);
         } else {
             $penjab = DB::table('penjab')
                 ->select('penjab.kd_pj', 'penjab.png_jawab')
                 ->where('penjab.status','=','1')
                 ->get();
-            Cache::put($cacheKey, $penjab, 720);
+            Cache::put($cacheKeyPenjab, $penjab, 720);
         }
-        $dokter = DB::table('dokter')
-            ->select('dokter.kd_dokter', 'dokter.nm_dokter')
-            ->where('dokter.status','=','1')
-            ->get();
+        $cacheKeyDokter = 'cache_dokter';
+        if (Cache::has($cacheKeyDokter)) {
+            $dokter = Cache::get($cacheKeyDokter);
+        } else {
+            $dokter = DB::table('dokter')
+                ->select('dokter.kd_dokter', 'dokter.nm_dokter')
+                ->where('dokter.status', '=', '1')
+                ->get();
+            Cache::put($cacheKeyDokter, $dokter, 720);
+        }
 
         $cariNomor = $request->cariNomor;
         $tanggl1 = $request->tgl1;
         $tanggl2 = $request->tgl2;
-        if($request->input('kdPenjamin') == null){
-            $kdPenjamin = "";
-        } else {
-            $kdPenjamin = explode(',', $request->input('kdPenjamin') ?? '');
-        }
-        if($request->input('kdDokter') == null){
-            $kdDokter = "";
-        } else {
-            $kdDokter = explode(',', $request->input('kdDokter') ?? '');
-        }
+
+        $kdPenjamin = ($request->input('kdPenjamin') == null) ? "" : explode(',', $request->input('kdPenjamin'));
+        $kdDokter = ($request->input('kdDokter')  == null) ? "" : explode(',', $request->input('kdDokter'));
+
 
         $RalanDokter = DB::table('pasien')
             ->select('rawat_jl_dr.no_rawat',

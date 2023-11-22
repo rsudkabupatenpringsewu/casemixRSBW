@@ -16,8 +16,13 @@ class TestController extends Controller
 function Test(){
     $tanggl1 = date('Y-m-d');
     $tanggl2 = date('Y-m-d');
+    $test = DB::table('reg_periksa')
+    ->select('reg_periksa.no_reg', 'reg_periksa.no_rawat', 'reg_periksa.tgl_registrasi', 'reg_periksa.jam_reg')
+    ->where('reg_periksa.tgl_registrasi','=','2023-11-22')
+    ->get();
 
     return view('test.test', [
+        'test'=>$test
     ]);
 }
 

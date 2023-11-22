@@ -31,7 +31,7 @@ use App\Http\Controllers\Farmasi\ViewSepResepController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/miantance-laravel-update', [AuthController::class, 'Maintance']);
+Route::get('/update', [AuthController::class, 'Maintance']);
 Route::group(['middleware' => 'default'], function () {
     Route::get('/login', [AuthController::class, 'Login'])->name('login');
     Route::post('/mesinlogin', [AuthController::class, 'mesinLogin']);

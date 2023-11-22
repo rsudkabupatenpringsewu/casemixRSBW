@@ -51,7 +51,7 @@
                             <td>{{ $item->png_jawab }}</td>
                             <td>
                                 @foreach ($item->getNomorNota as $detail)
-                                {{ str_replace(':', '', $detail->nm_perawatan) }}
+                                    {{ str_replace(':', '', $detail->nm_perawatan) }}
                                 @endforeach
                             </td>
 
@@ -66,9 +66,27 @@
                                 {{ $item->getRalanDokter->sum('totalbiaya') +
                                     $item->getRalanParamedis->sum('totalbiaya') +
                                     $item->getRalanDrParamedis->sum('totalbiaya') +
-                                    $item->getRanapDokter->sum('totalbiaya')+
-                                    $item->getRanapDrParamedis->sum('totalbiaya')+
-                                    $item->getRanapParamedis->sum('totalbiaya')}}
+                                    $item->getRanapDokter->sum('totalbiaya') +
+                                    $item->getRanapDrParamedis->sum('totalbiaya') +
+                                    $item->getRanapParamedis->sum('totalbiaya') }}
+                                <div class="badge-group-sm float-right">
+                                    <a data-toggle="dropdown" href="#"><i
+                                            class="fas fa-eye"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                                        <div class="dropdown-item">
+                                            Dokter =
+                                            {{ $item->getRalanDokter->sum('totalbiaya') + $item->getRanapDokter->sum('totalbiaya') }}
+                                        </div>
+                                        <div class="dropdown-item">
+                                            Paramedis =
+                                            {{ $item->getRalanParamedis->sum('totalbiaya') + $item->getRanapParamedis->sum('totalbiaya') }}
+                                        </div>
+                                        <div class="dropdown-item">
+                                            Dokter Paramedis =
+                                            {{ $item->getRalanDrParamedis->sum('totalbiaya') + $item->getRanapDrParamedis->sum('totalbiaya') }}
+                                        </div>
+                                    </div>
+                                </div>
                             </td>
                             <td>
                                 {{ $item->getOprasi->sum('totalbiaya') }}
@@ -115,9 +133,9 @@
                             {{ $bayarPiutang->sum(function ($item) {
                                 return $item->getRalanDokter->sum('totalbiaya') +
                                     $item->getRalanParamedis->sum('totalbiaya') +
-                                    $item->getRalanDrParamedis->sum('totalbiaya')+
-                                    $item->getRanapDokter->sum('totalbiaya')+
-                                    $item->getRanapDrParamedis->sum('totalbiaya')+
+                                    $item->getRalanDrParamedis->sum('totalbiaya') +
+                                    $item->getRanapDokter->sum('totalbiaya') +
+                                    $item->getRanapDrParamedis->sum('totalbiaya') +
                                     $item->getRanapParamedis->sum('totalbiaya');
                             }) }}
                         </th>
@@ -179,6 +197,7 @@
         document.getElementById("copyButton").addEventListener("click", function() {
             copyTableToClipboard("tableToCopy");
         });
+
         function copyTableToClipboard(tableId) {
             const table = document.getElementById(tableId);
             const range = document.createRange();

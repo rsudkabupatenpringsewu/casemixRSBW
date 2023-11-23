@@ -176,6 +176,14 @@
                                     </a>
                                 </li>
                             </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('/ralan-paramedis') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Ralan Paramedis</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         {{-- MENU CASEMIX --}}
                         <li class="nav-header user-panel"></li>

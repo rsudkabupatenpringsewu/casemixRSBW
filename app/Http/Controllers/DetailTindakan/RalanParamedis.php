@@ -7,10 +7,9 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 
-class RalanDokter extends Controller
+class RalanParamedis extends Controller
 {
-    function RalanDokter(Request $request) {
-        $actionCari = '/ralan-dokter';
+    function RalanParamedis(Request $request) {
         $cacheKeyPenjab = 'chache_penjamin';
         if (Cache::has($cacheKeyPenjab)) {
                 $penjab = Cache::get($cacheKeyPenjab);
@@ -21,57 +20,55 @@ class RalanDokter extends Controller
                 ->get();
             Cache::put($cacheKeyPenjab, $penjab, 720);
         }
-        $cacheKeyDokter = 'cache_dokter';
-        if (Cache::has($cacheKeyDokter)) {
-            $dokter = Cache::get($cacheKeyDokter);
-        } else {
-            $dokter = DB::table('dokter')
-                ->select('dokter.kd_dokter', 'dokter.nm_dokter')
-                ->where('dokter.status', '=', '1')
+        // $cacheKeyPetugas = 'chache_petugas1';
+        // if (Cache::has($cacheKeyPenjab)) {
+        //         $petugas = Cache::get($cacheKeyPetugas);
+        // } else {
+            $petugas = DB::table('petugas')
+                ->select('petugas.nip', 'petugas.nama')
+                ->where('petugas.status','=','1')
                 ->get();
-            Cache::put($cacheKeyDokter, $dokter, 720);
-        }
-
+        //     Cache::put($cacheKeyPetugas, $petugas, 720);
+        // }
         $cariNomor = $request->cariNomor;
         $tanggl1 = $request->tgl1;
         $tanggl2 = $request->tgl2;
         $kdPenjamin = ($request->input('kdPenjamin') == null) ? "" : explode(',', $request->input('kdPenjamin'));
-        $kdDokter = ($request->input('kdDokter')  == null) ? "" : explode(',', $request->input('kdDokter'));
+        $kdPetugas = ($request->input('kdPetugas') == null) ? "" : explode(',', $request->input('kdPetugas'));
 
-
-        $RalanDokter = DB::table('pasien')
-            ->select('rawat_jl_dr.no_rawat',
+        $RalanParamedis = DB::table('pasien')
+            ->select('rawat_jl_pr.no_rawat',
                 'reg_periksa.no_rkm_medis',
                 'pasien.nm_pasien',
-                'rawat_jl_dr.kd_jenis_prw',
+                'rawat_jl_pr.kd_jenis_prw',
                 'jns_perawatan.nm_perawatan',
-                'rawat_jl_dr.kd_dokter',
-                'dokter.nm_dokter',
-                'rawat_jl_dr.tgl_perawatan',
-                'rawat_jl_dr.jam_rawat',
+                'rawat_jl_pr.nip',
+                'petugas.nama',
+                'rawat_jl_pr.tgl_perawatan',
+                'rawat_jl_pr.jam_rawat',
                 'penjab.png_jawab',
                 'poliklinik.nm_poli',
-                'rawat_jl_dr.material',
-                'rawat_jl_dr.bhp',
-                'rawat_jl_dr.tarif_tindakandr',
-                'rawat_jl_dr.kso',
-                'rawat_jl_dr.menejemen',
-                'rawat_jl_dr.biaya_rawat',
+                'rawat_jl_pr.material',
+                'rawat_jl_pr.bhp',
+                'rawat_jl_pr.tarif_tindakanpr',
+                'rawat_jl_pr.kso',
+                'rawat_jl_pr.menejemen',
+                'rawat_jl_pr.biaya_rawat',
                 'bayar_piutang.tgl_bayar')
             ->join('reg_periksa','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
-            ->join('rawat_jl_dr','reg_periksa.no_rawat','=','rawat_jl_dr.no_rawat')
-            ->join('dokter','rawat_jl_dr.kd_dokter','=','dokter.kd_dokter')
-            ->join('jns_perawatan','rawat_jl_dr.kd_jenis_prw','=','jns_perawatan.kd_jenis_prw')
+            ->join('rawat_jl_pr','rawat_jl_pr.no_rawat','=','reg_periksa.no_rawat')
+            ->join('jns_perawatan','rawat_jl_pr.kd_jenis_prw','=','jns_perawatan.kd_jenis_prw')
+            ->join('petugas','rawat_jl_pr.nip','=','petugas.nip')
             ->join('poliklinik','reg_periksa.kd_poli','=','poliklinik.kd_poli')
             ->join('penjab','reg_periksa.kd_pj','=','penjab.kd_pj')
             ->join('bayar_piutang','reg_periksa.no_rawat','=','bayar_piutang.no_rawat')
             ->whereBetween('bayar_piutang.tgl_bayar',[$tanggl1, $tanggl2])
-            ->where(function ($query) use ($kdPenjamin, $kdDokter) {
+            ->where(function ($query) use ($kdPenjamin, $kdPetugas) {
                 if ($kdPenjamin) {
                     $query->whereIn('penjab.kd_pj', $kdPenjamin);
                 }
-                if ($kdDokter) {
-                    $query->whereIn('rawat_jl_dr.kd_dokter', $kdDokter);
+                if ($kdPetugas) {
+                    $query->whereIn('petugas.nip', $kdPetugas);
                 }
             })
             ->where(function($query) use ($cariNomor) {
@@ -79,14 +76,12 @@ class RalanDokter extends Controller
                 $query->orWhere('reg_periksa.no_rkm_medis', 'like', '%' . $cariNomor . '%');
                 $query->orWhere('pasien.nm_pasien', 'like', '%' . $cariNomor . '%');
             })
-            ->orderBy('rawat_jl_dr.no_rawat','desc')
+            ->orderBy('rawat_jl_pr.no_rawat','desc')
             ->get();
-
-        return view('detail-tindakan.ralan-dokter',[
-            'actionCari'=> $actionCari,
+        return view('detail-tindakan.ralan-paramedis',[
             'penjab'=> $penjab,
-            'dokter'=> $dokter,
-            'RalanDokter'=> $RalanDokter,
+            'petugas'=> $petugas,
+            'RalanParamedis'=> $RalanParamedis,
         ]);
     }
 }

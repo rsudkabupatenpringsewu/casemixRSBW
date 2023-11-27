@@ -21,6 +21,7 @@ use App\Http\Controllers\Farmasi\SepResepController;
 use App\Http\Controllers\DetailTindakan\RalanParamedis;
 use App\Http\Controllers\Returobat\ReturObatController;
 use App\Http\Controllers\Farmasi\ViewSepResepController;
+use App\Http\Controllers\DetailTindakan\RalanDokterParamedis;
 
 /*
 |--------------------------------------------------------------------------
@@ -92,6 +93,7 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     // DETAIL TINDAKAN
     Route::get('/ralan-dokter', [RalanDokter::class, 'RalanDokter']);
     Route::get('/ralan-paramedis', [RalanParamedis::class, 'RalanParamedis']);
+    Route::get('/ralan-dokter-paramedis', [RalanDokterParamedis::class, 'RalanDokterParamedis']);
 
 });
 });

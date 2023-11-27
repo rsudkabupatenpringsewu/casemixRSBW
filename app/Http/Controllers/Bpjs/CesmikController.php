@@ -83,7 +83,7 @@ class CesmikController extends Controller
                 ->first();
 
             // 2 BERKAS RESUME
-            if($statusLanjut->kd_poli === 'U0061'){ // U0061 = FisoTerapi
+            if($statusLanjut->kd_poli === 'U0061' || $statusLanjut->kd_poli === 'FIS'){ // U0061 = FisoTerapi
                 $getResume = DB::table('pemeriksaan_ralan')
                 ->select('pemeriksaan_ralan.no_rawat',
                     'pemeriksaan_ralan.tgl_perawatan',

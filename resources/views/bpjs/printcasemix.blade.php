@@ -202,7 +202,7 @@
 
         {{-- RESUME PASIEN ============================================================= --}}
         @if ($getResume && $statusLanjut)
-            @if ($statusLanjut->kd_poli === 'U0061')
+            @if ($statusLanjut->kd_poli === 'U0061' || $statusLanjut->kd_poli === 'FIS')
                 <div class="card-body">
                     <div class="card p-4 d-flex justify-content-center align-items-center">
                         <table width="700px">

@@ -3,26 +3,23 @@
 namespace App\Http\Controllers\Laporan;
 
 use Illuminate\Http\Request;
+use App\Services\CacheService;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 
 class PiutangRalan extends Controller
 {
+    protected $cacheService;
+    public function __construct(CacheService $cacheService)
+    {
+        $this->cacheService = $cacheService;
+    }
     function PiutangRalan(){
         $tanggl1 = date('Y-m-d');
         $tanggl2 = date('Y-m-d');
+        $penjab = $this->cacheService->getPenjab();
 
-        $cacheKey = 'chache_penjamin';
-        if (Cache::has($cacheKey)) {
-                $penjab = Cache::get($cacheKey);
-        } else {
-            $penjab = DB::table('penjab')
-                ->select('penjab.kd_pj', 'penjab.png_jawab')
-                ->where('penjab.status','=','1')
-                ->get();
-            Cache::put($cacheKey, $penjab, 720);
-        }
         $piutangRalan = DB::table('reg_periksa')
             ->select('reg_periksa.no_rawat',
                 'reg_periksa.no_rkm_medis',
@@ -121,16 +118,7 @@ class PiutangRalan extends Controller
         ]);
     }
     function CariPiutangRalan(Request $request) {
-        $cacheKey = 'chache_penjamin';
-        if (Cache::has($cacheKey)) {
-                $penjab = Cache::get($cacheKey);
-        } else {
-            $penjab = DB::table('penjab')
-                ->select('penjab.kd_pj', 'penjab.png_jawab')
-                ->where('penjab.status','=','1')
-                ->get();
-            Cache::put($cacheKey, $penjab, 720);
-        }
+        $penjab = $this->cacheService->getPenjab();
 
         $cariNomor = $request->cariNomor;
         $tanggl1 = $request->tgl1;

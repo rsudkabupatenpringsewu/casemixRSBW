@@ -3,23 +3,23 @@
 namespace App\Http\Controllers\Laporan;
 
 use Illuminate\Http\Request;
+use App\Services\CacheService;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 
 class BayarPiutang extends Controller
 {
+    protected $cacheService;
+    public function __construct(CacheService $cacheService)
+    {
+        $this->cacheService = $cacheService;
+    }
+
     function CariBayarPiutang(Request $request) {
         $cacheKey = 'chache_penjamin';
-        if (Cache::has($cacheKey)) {
-                $penjab = Cache::get($cacheKey);
-        } else {
-            $penjab = DB::table('penjab')
-                ->select('penjab.kd_pj', 'penjab.png_jawab')
-                ->where('penjab.status','=','1')
-                ->get();
-            Cache::put($cacheKey, $penjab, 720);
-        }
+        $penjab = $this->cacheService->getPenjab();
+
         $tanggl1 = $request->tgl1;
         $tanggl2 = $request->tgl2;
         $kdPenjamin = explode(',', $request->input('kdPenjamin') ?? '');

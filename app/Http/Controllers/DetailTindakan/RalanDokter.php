@@ -3,34 +3,24 @@
 namespace App\Http\Controllers\DetailTindakan;
 
 use Illuminate\Http\Request;
+use App\Services\CacheService;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 
 class RalanDokter extends Controller
 {
+    protected $cacheService;
+    public function __construct(CacheService $cacheService)
+    {
+        $this->cacheService = $cacheService;
+    }
+
     function RalanDokter(Request $request) {
         $actionCari = '/ralan-dokter';
-        $cacheKeyPenjab = 'chache_penjamin';
-        if (Cache::has($cacheKeyPenjab)) {
-                $penjab = Cache::get($cacheKeyPenjab);
-        } else {
-            $penjab = DB::table('penjab')
-                ->select('penjab.kd_pj', 'penjab.png_jawab')
-                ->where('penjab.status','=','1')
-                ->get();
-            Cache::put($cacheKeyPenjab, $penjab, 720);
-        }
-        $cacheKeyDokter = 'cache_dokter';
-        if (Cache::has($cacheKeyDokter)) {
-            $dokter = Cache::get($cacheKeyDokter);
-        } else {
-            $dokter = DB::table('dokter')
-                ->select('dokter.kd_dokter', 'dokter.nm_dokter')
-                ->where('dokter.status', '=', '1')
-                ->get();
-            Cache::put($cacheKeyDokter, $dokter, 720);
-        }
+        $penjab = $this->cacheService->getPenjab();
+        $dokter = $this->cacheService->getDokter();
+
 
         $cariNomor = $request->cariNomor;
         $tanggl1 = $request->tgl1;

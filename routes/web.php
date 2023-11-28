@@ -17,7 +17,9 @@ use App\Http\Controllers\Laporan\PembayaranRalan;
 use App\Http\Controllers\Laporan\PasienController;
 use App\Http\Controllers\Bpjs\PrintCesmikController;
 use App\Http\Controllers\DetailTindakan\RalanDokter;
+use App\Http\Controllers\DetailTindakan\RanapDokter;
 use App\Http\Controllers\Farmasi\SepResepController;
+use App\Http\Controllers\DetailTindakan\OperasiAndVK;
 use App\Http\Controllers\DetailTindakan\RalanParamedis;
 use App\Http\Controllers\Returobat\ReturObatController;
 use App\Http\Controllers\Farmasi\ViewSepResepController;
@@ -94,6 +96,8 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     Route::get('/ralan-dokter', [RalanDokter::class, 'RalanDokter']);
     Route::get('/ralan-paramedis', [RalanParamedis::class, 'RalanParamedis']);
     Route::get('/ralan-dokter-paramedis', [RalanDokterParamedis::class, 'RalanDokterParamedis']);
+    Route::get('/operasi-and-vk', [OperasiAndVK::class, 'OperasiAndVK']);
+    Route::get('/ranap-dokter', [RanapDokter::class, 'RanapDokter']);
 
 });
 });

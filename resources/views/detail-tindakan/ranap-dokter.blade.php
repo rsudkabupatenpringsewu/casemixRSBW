@@ -1,5 +1,5 @@
 @extends('..layout.layoutDashboard')
-@section('title', 'Ralan Dokter')
+@section('title', 'Ranap Dokter')
 
 @section('konten')
     <div class="card">
@@ -14,35 +14,31 @@
             </div>
             <table class="table table-sm table-bordered table-striped table-responsive text-xs" style="white-space: nowrap;"
                 id="tableToCopy">
-                <tbody>
+                <thead>
                     <tr>
-                        <th>No.</th>
-                        <th>Tgl Bayar</th>
-                        <th>No.Rawat</th>
-                        <th>No.RM</th>
+                        <th>No. Rawat</th>
+                        <th>No. Rekam Medis</th>
                         <th>Nama Pasien</th>
-                        <th>Kd.Tnd</th>
-                        <th>Perawatan/Tindakan</th>
-                        <th>Kd.Dokter</th>
-                        <th>Dokter</th>
-                        <th>Tanggal Perawatan</th>
-                        <th>Jam Perawatan</th>
+                        <th>Kode Jenis Perawatan</th>
+                        <th>Nama Perawatan</th>
+                        <th>Kode Dokter</th>
+                        <th>Dokter Yg Menangani</th>
+                        <th>Tanggal</th>
+                        <th>Jam</th>
                         <th>Cara Bayar</th>
-                        <th>Ruangan</th>
+                        <th>Ruang</th>
                         <th>Jasa Sarana</th>
                         <th>Paket BHP</th>
                         <th>JM Dokter</th>
                         <th>KSO</th>
-                        <th>Menejemen</th>
+                        <th>Manajemen</th>
                         <th>Total</th>
                     </tr>
-                    @php
-                        $no = 1;
-                    @endphp
-                    @foreach ($RalanDokter as $item)
+                </thead>
+
+                <tbody>
+                    @foreach ($ranapDokter as $item)
                         <tr>
-                            <td>{{ $no++ }}</td>
-                            <td>{{ $item->tgl_bayar }}</td>
                             <td>{{ $item->no_rawat }}</td>
                             <td>{{ $item->no_rkm_medis }}</td>
                             <td>{{ $item->nm_pasien }}</td>
@@ -53,7 +49,7 @@
                             <td>{{ $item->tgl_perawatan }}</td>
                             <td>{{ $item->jam_rawat }}</td>
                             <td>{{ $item->png_jawab }}</td>
-                            <td>{{ $item->nm_poli }}</td>
+                            <td>{{ $item->ruang }}</td>
                             <td>{{ $item->material }}</td>
                             <td>{{ $item->bhp }}</td>
                             <td>{{ $item->tarif_tindakandr }}</td>
@@ -62,6 +58,7 @@
                             <td>{{ $item->biaya_rawat }}</td>
                         </tr>
                     @endforeach
+
                 </tbody>
             </table>
         </div>

@@ -4,6 +4,16 @@
         <div class="col-md-2">
             <div class="form-group">
                 <div class="input-group input-group-xs">
+                    <input type="text" name="cariNomor" class="form-control form-control-xs"
+                        placeholder="Cari Nama/RM/No Rawat">
+                    <div class="input-group-append">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <div class="input-group input-group-xs">
                     <select class="form-control" name="statusLunas" id="">
                         <option value="">Status / Semua</option>
                         <option value="Lunas">Lunas</option>

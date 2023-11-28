@@ -20,6 +20,7 @@ class BayarPiutang extends Controller
         $cacheKey = 'chache_penjamin';
         $penjab = $this->cacheService->getPenjab();
 
+        $cariNomor = $request->cariNomor;
         $tanggl1 = $request->tgl1;
         $tanggl2 = $request->tgl2;
         $kdPenjamin = explode(',', $request->input('kdPenjamin') ?? '');
@@ -45,15 +46,18 @@ class BayarPiutang extends Controller
             ->leftJoin('penjab','reg_periksa.kd_pj','=','penjab.kd_pj')
             ->leftJoin('piutang_pasien','piutang_pasien.no_rawat','=','bayar_piutang.no_rawat')
             ->whereBetween('bayar_piutang.tgl_bayar', [$tanggl1 , $tanggl2])
-            ->where(function ($query) use ($status) {
+            ->where(function ($query) use ($status, $kdPenjamin) {
                 if ($status) {
                     $query->where('piutang_pasien.status', $status);
                 }
-            })
-            ->where(function ($query) use ($kdPenjamin) {
                 if ($kdPenjamin) {
                     $query->whereIn('penjab.kd_pj', $kdPenjamin);
                 }
+            })
+            ->where(function($query) use ($cariNomor) {
+                $query->orWhere('reg_periksa.no_rawat', 'like', '%' . $cariNomor . '%');
+                $query->orWhere('reg_periksa.no_rkm_medis', 'like', '%' . $cariNomor . '%');
+                $query->orWhere('pasien.nm_pasien', 'like', '%' . $cariNomor . '%');
             })
             ->orderBy('bayar_piutang.tgl_bayar','asc')
             ->orderBy('bayar_piutang.no_rkm_medis','asc')

@@ -4,7 +4,14 @@
 @section('konten')
     <div class="card">
         <div class="card-body">
-            @include('detail-tindakan.component.cari-ralan-dokter-paramedis')
+            @include('detail-tindakan.component.cari-dokter-paramedis')
+            <div class="row no-print">
+                <div class="col-12">
+                    <button type="button" class="btn btn-default float-right" id="copyButton">
+                        <i class="fas fa-copy"></i> Copy table
+                    </button>
+                </div>
+            </div>
             <table class="table table-sm table-bordered table-striped table-responsive text-xs" style="white-space: nowrap;"
                 id="tableToCopy">
                 <tbody>
@@ -63,4 +70,24 @@
             </table>
         </div>
     </div>
+    <script>
+        document.getElementById("copyButton").addEventListener("click", function() {
+            copyTableToClipboard("tableToCopy");
+        });
+
+        function copyTableToClipboard(tableId) {
+            const table = document.getElementById(tableId);
+            const range = document.createRange();
+            range.selectNode(table);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            try {
+                document.execCommand("copy");
+                window.getSelection().removeAllRanges();
+                alert("Tabel telah berhasil disalin ke clipboard.");
+            } catch (err) {
+                console.error("Tidak dapat menyalin tabel:", err);
+            }
+        }
+    </script>
 @endsection

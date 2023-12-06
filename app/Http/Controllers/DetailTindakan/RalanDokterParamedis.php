@@ -16,6 +16,7 @@ class RalanDokterParamedis extends Controller
     }
 
     function RalanDokterParamedis(Request $request) {
+        $action = '/ralan-dokter-paramedis';
         $penjab = $this->cacheService->getPenjab();
         $petugas = $this->cacheService->getPetugas();
         $dokter = $this->cacheService->getDokter();
@@ -78,6 +79,7 @@ class RalanDokterParamedis extends Controller
             ->get();
 
         return view('detail-tindakan.ralan-dokter-paramedis',[
+            'action'=>$action,
             'penjab'=>$penjab,
             'petugas'=>$petugas,
             'dokter'=>$dokter,

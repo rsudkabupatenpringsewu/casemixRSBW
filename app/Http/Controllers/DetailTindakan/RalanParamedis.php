@@ -17,6 +17,7 @@ class RalanParamedis extends Controller
     }
 
     function RalanParamedis(Request $request) {
+        $action = '/ralan-paramedis';
         $penjab = $this->cacheService->getPenjab();
         $petugas = $this->cacheService->getPetugas();
         $kdPenjamin = ($request->input('kdPenjamin') == null) ? "" : explode(',', $request->input('kdPenjamin'));
@@ -70,6 +71,7 @@ class RalanParamedis extends Controller
             ->orderBy('rawat_jl_pr.no_rawat','desc')
             ->get();
         return view('detail-tindakan.ralan-paramedis',[
+            'action'=> $action,
             'penjab'=> $penjab,
             'petugas'=> $petugas,
             'RalanParamedis'=> $RalanParamedis,

@@ -21,6 +21,7 @@ use App\Http\Controllers\DetailTindakan\RanapDokter;
 use App\Http\Controllers\Farmasi\SepResepController;
 use App\Http\Controllers\DetailTindakan\OperasiAndVK;
 use App\Http\Controllers\DetailTindakan\RalanParamedis;
+use App\Http\Controllers\DetailTindakan\RanapParamedis;
 use App\Http\Controllers\Returobat\ReturObatController;
 use App\Http\Controllers\Farmasi\ViewSepResepController;
 use App\Http\Controllers\DetailTindakan\RalanDokterParamedis;
@@ -98,6 +99,7 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     Route::get('/ralan-dokter-paramedis', [RalanDokterParamedis::class, 'RalanDokterParamedis']);
     Route::get('/operasi-and-vk', [OperasiAndVK::class, 'OperasiAndVK']);
     Route::get('/ranap-dokter', [RanapDokter::class, 'RanapDokter']);
+    Route::get('/ranap-paramedis', [RanapParamedis::class, 'RanapParamedis']);
 
 });
 });

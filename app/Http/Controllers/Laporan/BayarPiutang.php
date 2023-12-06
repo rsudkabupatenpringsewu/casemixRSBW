@@ -81,6 +81,18 @@ class BayarPiutang extends Controller
                     ->where('no_rawat', $item->no_rawat)
                     ->where('status', '=', 'Obat')
                     ->get();
+                // Retur Obat
+                $item->getReturObat = DB::table('billing')
+                    ->select('totalbiaya')
+                    ->where('no_rawat', $item->no_rawat)
+                    ->where('status', '=', 'Retur Obat')
+                    ->get();
+                // Resep Pulang
+                $item->getResepPulang = DB::table('billing')
+                    ->select('totalbiaya')
+                    ->where('no_rawat', $item->no_rawat)
+                    ->where('status', '=', 'Resep Pulang')
+                    ->get();
                 // RALAN DOKTER / 1 Paket Tindakan
                 $item->getRalanDokter = DB::table('billing')
                     ->select('totalbiaya')

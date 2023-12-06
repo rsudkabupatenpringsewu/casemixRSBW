@@ -1,5 +1,5 @@
 @extends('..layout.layoutDashboard')
-@section('title', 'Ralan Pamedis')
+@section('title', 'Ranap Paramedis')
 
 @section('konten')
     <div class="card">
@@ -14,50 +14,54 @@
             </div>
             <table class="table table-sm table-bordered table-striped table-responsive text-xs" style="white-space: nowrap;"
                 id="tableToCopy">
-                <tbody>
+                <thead>
                     <tr>
                         <th>No.</th>
                         <th>No.Rawat</th>
-                        <th>No.R.M.</th>
+                        <th>No.RM</th>
                         <th>Nama Pasien</th>
-                        <th>Kd.Tnd</th>
-                        <th>Perawatan/Tindakan</th>
+                        <th>Kd.Tindakan</th>
+                        <th>Nama Perawatan</th>
                         <th>NIP</th>
-                        <th>Paramedis Yang Menangani</th>
+                        <th>Paramedis Yg Menangani</th>
                         <th>Tanggal</th>
                         <th>Jam</th>
                         <th>Cara Bayar</th>
-                        <th>Ruangan</th>
+                        <th>Ruang</th>
                         <th>Jasa Sarana</th>
                         <th>Paket BHP</th>
-                        <th>JM</th>
+                        <th>JM Paramedis</th>
                         <th>KSO</th>
-                        <th>Menejemen</th>
+                        <th>Manajemen</th>
                         <th>Total</th>
+                        <th>Tgl Bayar Piutang</th>
                     </tr>
+                </thead>
+                <tbody>
                     @php
                         $no = 1;
                     @endphp
-                    @foreach ($RalanParamedis as $item)
+                    @foreach ($getRanapParamedis as $item)
                         <tr>
-                            <td>{{$no++}}</td>
-                            <td>{{$item->no_rawat}}</td>
-                            <td>{{$item->no_rkm_medis}}</td>
-                            <td>{{$item->nm_pasien}}</td>
-                            <td>{{$item->kd_jenis_prw}}</td>
-                            <td>{{$item->nm_perawatan}}</td>
-                            <td>{{$item->nip}}</td>
-                            <td>{{$item->nama}}</td>
-                            <td>{{$item->tgl_perawatan}}</td>
-                            <td>{{$item->jam_rawat}}</td>
-                            <td>{{$item->png_jawab}}</td>
-                            <td>{{$item->nm_poli}}</td>
-                            <td>{{$item->material}}</td>
-                            <td>{{$item->bhp}}</td>
-                            <td>{{$item->tarif_tindakanpr}}</td>
-                            <td>{{$item->kso}}</td>
-                            <td>{{$item->menejemen}}</td>
-                            <td>{{$item->biaya_rawat}}</td>
+                            <td>{{ $no++ }}</td>
+                            <td>{{ $item->no_rawat }}</td>
+                            <td>{{ $item->no_rkm_medis }}</td>
+                            <td>{{ $item->nm_pasien }}</td>
+                            <td>{{ $item->kd_jenis_prw }}</td>
+                            <td>{{ $item->nm_perawatan }}</td>
+                            <td>{{ $item->nip }}</td>
+                            <td>{{ $item->nama }}</td>
+                            <td>{{ $item->tgl_perawatan }}</td>
+                            <td>{{ $item->jam_rawat }}</td>
+                            <td>{{ $item->png_jawab }}</td>
+                            <td>{{ $item->ruang }}</td>
+                            <td>{{ $item->material }}</td>
+                            <td>{{ $item->bhp }}</td>
+                            <td>{{ $item->tarif_tindakanpr }}</td>
+                            <td>{{ $item->kso }}</td>
+                            <td>{{ $item->menejemen }}</td>
+                            <td>{{ $item->biaya_rawat }}</td>
+                            <td>{{ $item->tgl_bayar }}</td>
                         </tr>
                     @endforeach
                 </tbody>

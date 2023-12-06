@@ -21,7 +21,7 @@
                                         <i class="fa fa-search"></i>
                                     </span>
                                     <span wire:loading>
-                                        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Searching...
+                                        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Mencari...
                                     </span>
                                 </span>
                             </button>

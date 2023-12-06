@@ -25,6 +25,8 @@
                         <th>No. Nota</th>
                         <th>Registrasi</th>
                         <th>Obat+Emb+Tsl</th>
+                        <th>Retur Oabt</th>
+                        <th>Resep Pulang</th>
                         <th>Paket Tindakan</th>
                         <th>Operasi</th>
                         <th>Laborat</th>
@@ -61,6 +63,12 @@
                             </td>
                             <td>
                                 {{ $item->getObat->sum('totalbiaya') }}
+                            </td>
+                            <td>
+                                {{ $item->getReturObat->sum('totalbiaya') }}
+                            </td>
+                            <td>
+                                {{ $item->getResepPulang->sum('totalbiaya') }}
                             </td>
                             <td>
                                 {{ $item->getRalanDokter->sum('totalbiaya') +
@@ -127,6 +135,16 @@
                         <th>
                             {{ $bayarPiutang->sum(function ($item) {
                                 return $item->getObat->sum('totalbiaya');
+                            }) }}
+                        </th>
+                        <th>
+                            {{ $bayarPiutang->sum(function ($item) {
+                                return $item->getReturObat->sum('totalbiaya');
+                            }) }}
+                        </th>
+                        <th>
+                            {{ $bayarPiutang->sum(function ($item) {
+                                return $item->getResepPulang->sum('totalbiaya');
                             }) }}
                         </th>
                         <th>

@@ -22,10 +22,12 @@ use App\Http\Controllers\Farmasi\SepResepController;
 use App\Http\Controllers\DetailTindakan\OperasiAndVK;
 use App\Http\Controllers\DetailTindakan\RalanParamedis;
 use App\Http\Controllers\DetailTindakan\RanapParamedis;
+use App\Http\Controllers\Farmasi\MinimalStokController;
 use App\Http\Controllers\Returobat\ReturObatController;
 use App\Http\Controllers\Farmasi\ViewSepResepController;
 use App\Http\Controllers\DetailTindakan\RalanDokterParamedis;
 use App\Http\Controllers\DetailTindakan\RanapDokterParamedis;
+use App\Http\Controllers\AntrianPendaftaran\AntrianPendaftaran;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,6 +87,8 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     Route::get('/print-sep-resep', [BundlingFarmasi::class, 'PrintBerkasSepResep']);
     Route::get('/gabung-berkas-farmasi', [BundlingFarmasi::class, 'GabungBergkas']);
 
+    Route::get('/minimal-stok-obat', [MinimalStokController::class, 'MinimalStokObat']);
+
     // LAPORAN / KEUANGAN
     Route::get('/pembayaran-ralan', [PembayaranRalan::class, 'PembayaranRanal']);
     Route::get('/cari-pembayaran-ralan', [PembayaranRalan::class, 'CariPembayaranRanal']);
@@ -102,6 +106,10 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     Route::get('/ranap-dokter', [RanapDokter::class, 'RanapDokter']);
     Route::get('/ranap-paramedis', [RanapParamedis::class, 'RanapParamedis']);
     Route::get('/ranap-dokter-paramedis', [RanapDokterParamedis::class, 'RanapDokterParamedis']);
+
+    // ANTRIAN PENDAFTARAN
+    Route::get('/antrian-pendaftaran', [AntrianPendaftaran::class, 'AntrianPendaftaran']);
+    Route::get('/cari-loket', [AntrianPendaftaran::class, 'AntrianLoket']);
 
 });
 });

@@ -26,12 +26,15 @@
     {{-- TEST --}}
     <style>
         u {
-          border-bottom: 2px solid black; /* Ketebalan garis bawah */
-          text-decoration: none; /* Menghilangkan garis bawah default */
-          display: inline-block; /* Membuat elemen menjadi blok inline */
-          position: relative;
+            border-bottom: 2px solid black;
+            /* Ketebalan garis bawah */
+            text-decoration: none;
+            /* Menghilangkan garis bawah default */
+            display: inline-block;
+            /* Membuat elemen menjadi blok inline */
+            position: relative;
         }
-      </style>
+    </style>
     @stack('styles')
 </head>
 
@@ -227,7 +230,7 @@
                         </li>
                         {{-- MENU CASEMIX --}}
                         <li class="nav-header user-panel"></li>
-                        <li class="nav-header">Gabung Berkas</li>
+                        <li class="nav-header">Gabung Berkas - Tools</li>
                         <li class="nav-item">{{-- menu-open --}}
                             <a href="#" class="nav-link">{{-- active --}}
                                 <i class="nav-icon fas fa-hospital"></i>
@@ -270,15 +273,15 @@
                             </ul>
                         </li>
                         {{-- MENU FARMASI --}}
-                        @if (session('obat') === 'true')
-                            <li class="nav-item">{{-- menu-open --}}
-                                <a href="#" class="nav-link">{{-- active --}}
-                                    <i class="nav-icon fas fa-mortar-pestle"></i>
-                                    <p>
-                                        Farmasi
-                                        <i class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
+                        <li class="nav-item">{{-- menu-open --}}
+                            <a href="#" class="nav-link">{{-- active --}}
+                                <i class="nav-icon fas fa-mortar-pestle"></i>
+                                <p>
+                                    Farmasi
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            @if (session('obat') === 'true')
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
                                         <a href="{{ url('list-pasien-farmasi') }}" class="nav-link">
@@ -287,8 +290,35 @@
                                         </a>
                                     </li>
                                 </ul>
-                            </li>
-                        @endif
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('minimal-stok-obat') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Stok Minimal Obat</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            @endif
+                        </li>
+                        <li class="nav-header user-panel"></li>
+                        <li class="nav-header">Pelayanan</li>
+                        <li class="nav-item">{{-- menu-open --}}
+                            <a href="#" class="nav-link">{{-- active --}}
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>
+                                    Antrian Loket
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('antrian-pendaftaran') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>List Pendaftaran</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </nav>
             </div>

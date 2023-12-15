@@ -32,6 +32,7 @@
                         <th>Laborat</th>
                         <th>Radiologi</th>
                         <th>Tambahan</th>
+                        <th>Kamar+Service</th>
                         <th>Potongan</th>
                         <th>Ekses / Uang Muka</th>
                         <th>Cicilan(Rp)</th>
@@ -109,6 +110,9 @@
                                 {{ $item->getTambahan->sum('totalbiaya') }}
                             </td>
                             <td>
+                                {{ $item->getKamarInap->sum('totalbiaya') }}
+                            </td>
+                            <td>
                                 {{ $item->getPotongan->sum('totalbiaya') }}
                             </td>
                             <td>{{ $item->uangmuka }}</td>
@@ -175,6 +179,11 @@
                         <th>
                             {{ $bayarPiutang->sum(function ($item) {
                                 return $item->getTambahan->sum('totalbiaya');
+                            }) }}
+                        </th>
+                        <th>
+                            {{ $bayarPiutang->sum(function ($item) {
+                                return $item->getKamarInap->sum('totalbiaya');
                             }) }}
                         </th>
                         <td>

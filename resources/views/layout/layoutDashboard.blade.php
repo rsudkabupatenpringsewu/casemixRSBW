@@ -302,23 +302,25 @@
                         </li>
                         <li class="nav-header user-panel"></li>
                         <li class="nav-header">Pelayanan</li>
-                        <li class="nav-item">{{-- menu-open --}}
-                            <a href="#" class="nav-link">{{-- active --}}
-                                <i class="nav-icon fas fa-user"></i>
-                                <p>
-                                    Antrian Loket
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ url('antrian-pendaftaran') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>List Pendaftaran</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                        @if (session('registrasi') === 'true')
+                            <li class="nav-item">{{-- menu-open --}}
+                                <a href="#" class="nav-link">{{-- active --}}
+                                    <i class="nav-icon fas fa-user"></i>
+                                    <p>
+                                        Antrian Loket
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('antrian-pendaftaran') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>List Pendaftaran</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endif
                     </ul>
                 </nav>
             </div>

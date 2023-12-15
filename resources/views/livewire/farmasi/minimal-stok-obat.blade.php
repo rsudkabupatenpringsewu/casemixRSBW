@@ -46,12 +46,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($getListObat as $key => $item)
+                    @php
+                        $listObat = $getListObat->sortByDesc(function($item) {
+                            return $item->stok < $item->stok_minimal_medis;
+                        });
+                        $counter = 1;
+                    @endphp
+                    @foreach ($listObat as $key => $item)
                         @php
                             $color_tr = $item->stok < $item->stok_minimal_medis ? 'bg-danger' : '';
                         @endphp
                         <tr>
-                            <td class="{{ $color_tr }}">{{ $key + 1 }}</td>
+                            <td class="{{ $color_tr }}">{{$counter++}}</td>
                             <td>{{ $item->kode_brng }}</td>
                             <td>{{ $item->nama_brng }}</td>
                             <td>{{ $item->stok }}</td>

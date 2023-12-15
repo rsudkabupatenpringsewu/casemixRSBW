@@ -159,6 +159,12 @@ class BayarPiutang extends Controller
                     ->where('no_rawat', $item->no_rawat)
                     ->where('status', '=', 'Potongan')
                     ->get();
+                // KAMAR INAP
+                $item->getKamarInap = DB::table('billing')
+                    ->select('totalbiaya')
+                    ->where('no_rawat', $item->no_rawat)
+                    ->where('status', '=', 'Kamar')
+                    ->get();
                 return $item;
             });
 

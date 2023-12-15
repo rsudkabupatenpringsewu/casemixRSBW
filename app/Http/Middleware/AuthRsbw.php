@@ -29,23 +29,12 @@ class AuthRsbw
         }
 
         // // UNTUK AUTHORIZE USER
-        // $permissionValue  = DB::table('user')
-        //     ->select('penyakit', 'obat', 'pasien', 'inacbg_klaim_baru_otomatis')
-        //     ->whereRaw("aes_decrypt(user.id_user, 'nur') = ? ", [$idUser])
-        //     ->first();
-        //     session([
-        //         'penyakit' => $permissionValue->penyakit,
-        //         'obat' => $permissionValue->obat,
-        //         'pasien' => $permissionValue->pasien,
-        //         'inacbg_klaim_baru_otomatis' => $permissionValue->inacbg_klaim_baru_otomatis,
-        //     ]);
-
         $cacheKey = 'user_permissions_' . $idUser;
         if (Cache::has($cacheKey)) {
             $permissionValue = Cache::get($cacheKey);
         } else {
             $permissionValue = DB::table('user')
-                ->select('penyakit', 'obat', 'pasien', 'inacbg_klaim_baru_otomatis')
+                ->select('penyakit', 'obat', 'pasien', 'inacbg_klaim_baru_otomatis', 'edit_registrasi', 'registrasi')
                 ->whereRaw("aes_decrypt(user.id_user, 'nur') = ? ", [$idUser])
                 ->first();
             Cache::put($cacheKey, $permissionValue, 720);
@@ -56,6 +45,8 @@ class AuthRsbw
             'obat' => $permissionValue->obat,
             'pasien' => $permissionValue->pasien,
             'inacbg_klaim_baru_otomatis' => $permissionValue->inacbg_klaim_baru_otomatis,
+            'edit_registrasi' => $permissionValue->edit_registrasi,
+            'registrasi' => $permissionValue->registrasi,
         ]);
 
         $result = DB::table('user')

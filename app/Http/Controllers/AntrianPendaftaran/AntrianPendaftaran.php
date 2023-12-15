@@ -11,7 +11,7 @@ class AntrianPendaftaran extends Controller
 {
     // LIST PENDAFTARAN
     function AntrianPendaftaran()  {
-        $Pendaftaran = DB::connection('db_con2')->table('pendaftaran')
+        $Pendaftaran = DB::table('pendaftaran')
             ->select('kd_pendaftaran', 'nama_pendaftaran')
             ->get();
             $Pendaftaran->map(function ($item){

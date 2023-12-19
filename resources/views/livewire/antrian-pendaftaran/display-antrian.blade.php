@@ -1,5 +1,5 @@
 <div>
-    <div class="mt-4">
+    <div class="mt-4 container-fluid">
         <div class="row justify-content-center" wire:poll.1000ms>
             @php
                 $md = count($getLoket) > 2 ? 4 : 6;

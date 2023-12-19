@@ -32,6 +32,7 @@ class AuthController extends Controller
         }
         // dd(Cache::get($cacheKey));
 
+
         if(!$result){
             Session::flash('errorLogin', 'Cek kembali akun anda');
             return redirect('/login');

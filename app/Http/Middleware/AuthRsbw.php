@@ -20,6 +20,7 @@ class AuthRsbw
      */
     public function handle(Request $request, Closure $next)
     {
+
         if (session()->has('auth')) {
             $idUser = session('auth')['id_user'];
             $paswdUser = session('auth')['password'];
@@ -34,9 +35,9 @@ class AuthRsbw
             $permissionValue = Cache::get($cacheKey);
         } else {
             $permissionValue = DB::table('user')
-                ->select('penyakit', 'obat', 'pasien', 'inacbg_klaim_baru_otomatis', 'edit_registrasi', 'registrasi')
-                ->whereRaw("aes_decrypt(user.id_user, 'nur') = ? ", [$idUser])
-                ->first();
+            ->select('penyakit', 'obat', 'pasien', 'inacbg_klaim_baru_otomatis', 'edit_registrasi', 'registrasi')
+            ->whereRaw("aes_decrypt(user.id_user, 'nur') = ? ", [$idUser])
+            ->first();
             Cache::put($cacheKey, $permissionValue, 720);
         }
         // dd(Cache::get($cacheKey));

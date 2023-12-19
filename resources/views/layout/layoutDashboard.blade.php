@@ -96,12 +96,13 @@
                     </div>
                     <div class="info">
                         <a href="#" class="d-block">
-                            @if (session()->has('user'))
+                            {{-- @if (session()->has('user'))
                                 @php
                                     $auth = session('user');
                                 @endphp
                                 {{ $auth->nama }}
-                            @endif
+                            @endif --}}
+                            Programer
                         </a>
                     </div>
                 </div>
@@ -302,25 +303,34 @@
                         </li>
                         <li class="nav-header user-panel"></li>
                         <li class="nav-header">Pelayanan</li>
-                        @if (session('registrasi') === 'true')
-                            <li class="nav-item">{{-- menu-open --}}
-                                <a href="#" class="nav-link">{{-- active --}}
-                                    <i class="nav-icon fas fa-user"></i>
-                                    <p>
-                                        Antrian Loket
-                                        <i class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
+
+                        <li class="nav-item">{{-- menu-open --}}
+                            <a href="#" class="nav-link">{{-- active --}}
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>
+                                    Antrian Loket
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('antrian-pendaftaran') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>List Pendaftaran</p>
+                                    </a>
+                                </li>
+                            </ul>
+                            @if (session('edit_registrasi') === 'true')
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="{{ url('antrian-pendaftaran') }}" class="nav-link">
+                                        <a href="{{ url('setting-antrian') }}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>List Pendaftaran</p>
+                                            <p>Setting Antrian</p>
                                         </a>
                                     </li>
                                 </ul>
-                            </li>
-                        @endif
+                            @endif
+                        </li>
                     </ul>
                 </nav>
             </div>

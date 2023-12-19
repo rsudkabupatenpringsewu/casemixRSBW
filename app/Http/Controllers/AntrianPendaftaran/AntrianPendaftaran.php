@@ -34,4 +34,9 @@ class AntrianPendaftaran extends Controller
     function DisplayPetugas() {
             return view('antrian.display-petugas');
     }
+
+    // SETING ANTRIAN
+    function SetingAntrian() {
+        return view('antrian.setting-antrian');
+    }
 }

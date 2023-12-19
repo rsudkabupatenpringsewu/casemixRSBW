@@ -110,8 +110,8 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     // ANTRIAN PENDAFTARAN
     Route::get('/antrian-pendaftaran', [AntrianPendaftaran::class, 'AntrianPendaftaran'])->middleware('permision-rsbw:registrasi');
     Route::get('/cari-loket', [AntrianPendaftaran::class, 'DisplayAntrian'])->middleware('permision-rsbw:edit_registrasi');
-    Route::get('/display-petugas', [AntrianPendaftaran::class, 'DisplayPetugas'])->middleware('permision-rsbw:edit_registrasi');
-
+    Route::get('/setting-antrian', [AntrianPendaftaran::class, 'SetingAntrian'])->middleware('permision-rsbw:edit_registrasi');
 });
+    Route::get('/display-petugas', [AntrianPendaftaran::class, 'DisplayPetugas']);
 });
 

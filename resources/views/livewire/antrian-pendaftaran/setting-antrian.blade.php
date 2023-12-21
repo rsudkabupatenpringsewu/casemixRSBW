@@ -19,14 +19,14 @@
                     <div class="row mb-2">
                         <div class="col-3">
                             <input type="text" class="form-control" placeholder="Kode Pendaftaran"
-                                wire:model="KdPendaftaran">
+                                wire:model.lazy="KdPendaftaran">
                             @error('KdPendaftaran')
                                 <span class="text-danger text-xs">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="col-3">
                             <input type="text" class="form-control" placeholder="Nama Pendaftaran"
-                                wire:model="NamaPendaftaran">
+                                wire:model.lazy="NamaPendaftaran">
                             @error('NamaPendaftaran')
                                 <span class="text-danger text-xs">{{ $message }}</span>
                             @enderror

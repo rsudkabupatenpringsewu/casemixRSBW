@@ -10,6 +10,8 @@ class SettingPosisiDokter extends Component
 {
     public $getListDokter;
     public $getLoket;
+    protected $listeners = ['mout'];  // Menerima Triger Dari SettingAntrianLoket
+
     public function mout() {
         $this->getListDokter();
         $this->getLoket();

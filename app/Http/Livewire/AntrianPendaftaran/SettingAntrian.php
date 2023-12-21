@@ -46,6 +46,7 @@ class SettingAntrian extends Component
             ]);
             $this->reset(['KdPendaftaran', 'NamaPendaftaran']);
             $this->flashMessage('Pendaftaran berhasil ditambahkan!', 'success', 'check');
+            $this->emit('hydrate');
         } catch (\Exception $e) {
             $this->flashMessage('Terjadi kesalahan saat menambahkan pendaftaran.', 'danger', 'ban');
         }
@@ -58,6 +59,7 @@ class SettingAntrian extends Component
             ->where('kd_pendaftaran', $KdPendaftaran)
             ->update($this->Pendaftaran[$key]);
             $this->flashMessage('Pendaftaran berhasil diupdate!', 'success', 'check');
+            $this->emit('hydrate');
         } catch (\Exception $e) {
             $this->flashMessage('Terjadi kesalahan saat update pendaftaran.', 'danger', 'ban');
         }
@@ -70,6 +72,7 @@ class SettingAntrian extends Component
                 ->where('kd_pendaftaran', $KdPendaftaran)
                 ->delete();
             $this->flashMessage('Pendaftaran berhasil dihapus!', 'warning', 'check');
+            $this->emit('hydrate');
         } catch (\Exception $e) {
             $this->flashMessage('Terjadi kesalahan saat menghapus pendaftaran.', 'danger', 'ban');
         }

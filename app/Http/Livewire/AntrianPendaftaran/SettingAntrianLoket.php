@@ -12,8 +12,15 @@ class SettingAntrianLoket extends Component
     // DEVINISI
     public $Loket;
     public $Pendaftaran;
+    protected $listeners = ['hydrate'];
+
+    // LIFESYCLE
     public function mount(Request $request){
         $this->getLoket();
+        $this->getPendaftaran();
+    }
+    public function hydrate()
+    {
         $this->getPendaftaran();
     }
     public function render()
@@ -63,6 +70,7 @@ class SettingAntrianLoket extends Component
             ]);
             $this->reset(['kdLoket', 'NmLoket', 'kdPendaftaran']);
             $this->flashMessage('Loket berhasil ditambahkan!', 'success', 'check');
+            $this->emit('mout'); // Triger ke komponen SettingPosisiDokter
         } catch (\Exception $e) {
             $this->flashMessage('Terjadi kesalahan saat menambahkan loket.', 'danger', 'ban');
         }
@@ -79,6 +87,7 @@ class SettingAntrianLoket extends Component
                     'kd_pendaftaran' => $this->Loket[$key]['kd_pendaftaran'],
                 ]);
             $this->flashMessage('Loket berhasil diupdate!', 'success', 'check');
+            $this->emit('mout');
         } catch (\Exception $e) {
             $this->flashMessage('Terjadi kesalahan saat update Loket.', 'danger', 'ban');
         }
@@ -91,6 +100,7 @@ class SettingAntrianLoket extends Component
                 ->where('kd_loket', $kdloket)
                 ->delete();
             $this->flashMessage('Loket berhasil dihapus!', 'warning', 'check');
+            $this->emit('mout');
         } catch (\Exception $e) {
             $this->flashMessage('Terjadi kesalahan saat menghapus Loket.', 'danger', 'ban');
         }

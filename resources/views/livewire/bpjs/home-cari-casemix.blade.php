@@ -4,7 +4,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <div class="input-group input-group-xs">
-                        <input type="search" wire:model="cariNorawat" class="form-control form-control-xs"
+                        <input type="search" wire:model.lazy="cariNorawat" class="form-control form-control-xs"
                             placeholder="Cari RM, No.Rawat, No.SEP">
                         <div class="input-group-append">
                         </div>
@@ -15,7 +15,7 @@
                 <div class="form-group">
                     <div class="input-group input-group-xs">
                         <div class="input-group-append">
-                            <button wire:click="render" class="btn btn-md btn-primary">
+                            <button wire:click="getPasien()" class="btn btn-md btn-primary">
                                 <span>
                                     <span wire:loading.remove>
                                         <i class="fa fa-search"></i>

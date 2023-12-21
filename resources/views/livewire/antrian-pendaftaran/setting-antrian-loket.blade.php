@@ -18,19 +18,19 @@
                 <form wire:submit.prevent="addLoket">
                     <div class="row mb-2">
                         <div class="col-3">
-                            <input type="text" class="form-control" placeholder="Kode Loket" wire:model="kdLoket">
+                            <input type="text" class="form-control" placeholder="Kode Loket" wire:model.lazy="kdLoket">
                             @error('kdLoket')
                                 <span class="text-danger text-xs">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="col-3">
-                            <input type="text" class="form-control" placeholder="Nama Loket" wire:model="NmLoket">
+                            <input type="text" class="form-control" placeholder="Nama Loket" wire:model.lazy="NmLoket">
                             @error('NmLoket')
                                 <span class="text-danger text-xs">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="col-3">
-                            <select class="form-control" wire:model="kdPendaftaran" placeholder="Lokasi">
+                            <select class="form-control" wire:model.lazy="kdPendaftaran" placeholder="Lokasi">
                                 <option>Pilih Lokasi Pendaftaran</option>
                                 @foreach ($Pendaftaran as $item)
                                     <option value="{{ $item->kd_pendaftaran }}">{{ $item->nama_pendaftaran }}</option>

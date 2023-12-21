@@ -184,23 +184,28 @@ class CesmikController extends Controller
                         ->orderBy('reg_periksa.tgl_registrasi','asc')
                         ->orderBy('reg_periksa.status_lanjut','asc')
                         ->first();
-                        $getKamarInap = DB::table('kamar_inap')
-                            ->select([
-                                'kamar_inap.tgl_keluar',
-                                'kamar_inap.jam_keluar',
-                                'kamar_inap.kd_kamar',
-                                'bangsal.nm_bangsal'
-                            ])
-                            ->join('kamar', 'kamar_inap.kd_kamar', '=', 'kamar.kd_kamar')
-                            ->join('bangsal', 'kamar.kd_bangsal', '=', 'bangsal.kd_bangsal')
-                            ->whereIn('kamar_inap.no_rawat', [$getResume->no_rawat])
-                            ->orderByDesc('tgl_keluar')
-                            ->orderByDesc('jam_keluar')
-                            ->limit(1)
-                            ->first();
-                        $cekPasienKmrInap = DB::table('kamar_inap')
-                            ->whereIn('kamar_inap.no_rawat', [$getResume->no_rawat])
-                            ->count();
+                        if($getResume){
+                            $getKamarInap = DB::table('kamar_inap')
+                                ->select([
+                                    'kamar_inap.tgl_keluar',
+                                    'kamar_inap.jam_keluar',
+                                    'kamar_inap.kd_kamar',
+                                    'bangsal.nm_bangsal'
+                                ])
+                                ->join('kamar', 'kamar_inap.kd_kamar', '=', 'kamar.kd_kamar')
+                                ->join('bangsal', 'kamar.kd_bangsal', '=', 'bangsal.kd_bangsal')
+                                ->whereIn('kamar_inap.no_rawat', [$getResume->no_rawat])
+                                ->orderByDesc('tgl_keluar')
+                                ->orderByDesc('jam_keluar')
+                                ->limit(1)
+                                ->first();
+                            $cekPasienKmrInap = DB::table('kamar_inap')
+                                ->whereIn('kamar_inap.no_rawat', [$getResume->no_rawat])
+                                ->count();
+                        }else{
+                            $getKamarInap = '';
+                            $cekPasienKmrInap = '';
+                        }
                 } else {
                     $getResume = DB::table('resume_pasien')
                         ->select('reg_periksa.tgl_registrasi',
@@ -277,26 +282,26 @@ class CesmikController extends Controller
 
             // BERKAS LABORAT
             $getLaborat = DB::table('periksa_lab')
-            ->select('periksa_lab.no_rawat', 'reg_periksa.no_rkm_medis', 'pasien.nm_pasien', 'pasien.jk', 'pasien.alamat',
-                    'pasien.umur', 'petugas.nama as nama_petugas','petugas.nip', 'periksa_lab.tgl_periksa', 'periksa_lab.jam',
-                    'periksa_lab.dokter_perujuk', 'periksa_lab.kd_dokter', 'dokter.nm_dokter', 'dokter_pj.nm_dokter as nm_dokter_pj', 'penjab.png_jawab', 'kamar_inap.kd_kamar',
-                    'kamar.kd_bangsal', 'poliklinik.nm_poli', 'bangsal.nm_bangsal')
-            ->join('reg_periksa','periksa_lab.no_rawat','=','reg_periksa.no_rawat')
-            ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
-            ->join('petugas','periksa_lab.nip','=','petugas.nip')
-            ->join('penjab','reg_periksa.kd_pj','=','penjab.kd_pj')
-            ->join('dokter','periksa_lab.kd_dokter','=','dokter.kd_dokter')
-            ->join('dokter as dokter_pj','periksa_lab.dokter_perujuk','=','dokter_pj.kd_dokter')
-            ->leftJoin('kamar_inap','kamar_inap.no_rawat','=','reg_periksa.no_rawat')
-            ->leftJoin('kamar','kamar_inap.kd_kamar','=','kamar.kd_kamar')
-            ->leftJoin('bangsal','kamar.kd_bangsal','=','bangsal.kd_bangsal')
-            ->leftJoin('poliklinik','reg_periksa.kd_poli','=','poliklinik.kd_poli')
-            ->where('periksa_lab.kategori','=','PK')
-            ->where('periksa_lab.no_rawat','=', $noRawat)
-            ->groupBy('periksa_lab.no_rawat','periksa_lab.tgl_periksa','periksa_lab.jam')
-            ->orderBy('periksa_lab.tgl_periksa','desc')
-            ->orderBy('periksa_lab.jam','desc')
-            ->get();
+                ->select('periksa_lab.no_rawat', 'reg_periksa.no_rkm_medis', 'pasien.nm_pasien', 'pasien.jk', 'pasien.alamat',
+                        'pasien.umur', 'petugas.nama as nama_petugas','petugas.nip', 'periksa_lab.tgl_periksa', 'periksa_lab.jam',
+                        'periksa_lab.dokter_perujuk', 'periksa_lab.kd_dokter', 'dokter.nm_dokter', 'dokter_pj.nm_dokter as nm_dokter_pj', 'penjab.png_jawab', 'kamar_inap.kd_kamar',
+                        'kamar.kd_bangsal', 'poliklinik.nm_poli', 'bangsal.nm_bangsal')
+                ->join('reg_periksa','periksa_lab.no_rawat','=','reg_periksa.no_rawat')
+                ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
+                ->join('petugas','periksa_lab.nip','=','petugas.nip')
+                ->join('penjab','reg_periksa.kd_pj','=','penjab.kd_pj')
+                ->join('dokter','periksa_lab.kd_dokter','=','dokter.kd_dokter')
+                ->join('dokter as dokter_pj','periksa_lab.dokter_perujuk','=','dokter_pj.kd_dokter')
+                ->leftJoin('kamar_inap','kamar_inap.no_rawat','=','reg_periksa.no_rawat')
+                ->leftJoin('kamar','kamar_inap.kd_kamar','=','kamar.kd_kamar')
+                ->leftJoin('bangsal','kamar.kd_bangsal','=','bangsal.kd_bangsal')
+                ->leftJoin('poliklinik','reg_periksa.kd_poli','=','poliklinik.kd_poli')
+                ->where('periksa_lab.kategori','=','PK')
+                ->where('periksa_lab.no_rawat','=', $noRawat)
+                ->groupBy('periksa_lab.no_rawat','periksa_lab.tgl_periksa','periksa_lab.jam')
+                ->orderBy('periksa_lab.tgl_periksa','desc')
+                ->orderBy('periksa_lab.jam','desc')
+                ->get();
             foreach ($getLaborat as $periksa) {
                 $getPeriksaLab = DB::table('periksa_lab')
                 ->select('jns_perawatan_lab.kd_jenis_prw', 'jns_perawatan_lab.nm_perawatan', 'periksa_lab.biaya')

@@ -25,6 +25,7 @@ use App\Http\Controllers\DetailTindakan\RanapParamedis;
 use App\Http\Controllers\Farmasi\MinimalStokController;
 use App\Http\Controllers\Returobat\ReturObatController;
 use App\Http\Controllers\Farmasi\ViewSepResepController;
+use App\Http\Controllers\DetailTindakan\PeriksaRadiologi;
 use App\Http\Controllers\DetailTindakan\RalanDokterParamedis;
 use App\Http\Controllers\DetailTindakan\RanapDokterParamedis;
 use App\Http\Controllers\AntrianPendaftaran\AntrianPendaftaran;
@@ -106,6 +107,7 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     Route::get('/ranap-dokter', [RanapDokter::class, 'RanapDokter']);
     Route::get('/ranap-paramedis', [RanapParamedis::class, 'RanapParamedis']);
     Route::get('/ranap-dokter-paramedis', [RanapDokterParamedis::class, 'RanapDokterParamedis']);
+    Route::get('/periksa-radiologi', [PeriksaRadiologi::class, 'PeriksaRadiologi']);
 
     // ANTRIAN PENDAFTARAN
     Route::get('/antrian-pendaftaran', [AntrianPendaftaran::class, 'AntrianPendaftaran'])->middleware('permision-rsbw:registrasi');

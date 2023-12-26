@@ -102,7 +102,7 @@
                                 @endphp
                                 {{ $auth->nama }}
                             @endif --}}
-                            Programer
+                           RS.Bumi Waras
                         </a>
                     </div>
                 </div>
@@ -225,6 +225,14 @@
                                     <a href="{{ url('/ranap-dokter-paramedis') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Ranap Dokter Paramedis</p>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('/periksa-radiologi') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Periksa Radiologi</p>
                                     </a>
                                 </li>
                             </ul>

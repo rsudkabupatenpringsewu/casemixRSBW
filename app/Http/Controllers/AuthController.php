@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\DefaultService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -12,6 +13,7 @@ class AuthController extends Controller
 {
     function Login(){
         // Session::flush();
+        DefaultService::authService();
         return view('auth.login');
     }
     function mesinLogin(Request $request){

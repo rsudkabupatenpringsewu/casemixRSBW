@@ -4,12 +4,19 @@ namespace App\Http\Controllers\Bpjs;
 
 use Spatie\PdfToImage\Pdf;
 use Illuminate\Http\Request;
+use App\Services\CacheService;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class CesmikController extends Controller
 {
+    protected $cacheService;
+    public function __construct(CacheService $cacheService)
+    {
+        $this->cacheService = $cacheService;
+    }
     function Casemix(Request $request) {
+        $getSetting = $this->cacheService->getSetting();
         $noRawat = $request->cariNorawat;
         $noSep = $request->cariNoSep;
 
@@ -449,6 +456,7 @@ class CesmikController extends Controller
             ->first();
 
         } else {
+            $getSetting = '';
             $jumlahData = '';
             $getSEP = '';
             $statusLanjut = '';
@@ -464,6 +472,7 @@ class CesmikController extends Controller
 
         // VIEW
         return view('bpjs.cesmik', [
+            'getSetting'=>$getSetting,
             'jumlahData'=>$jumlahData,
             'getSEP'=>$getSEP,
             'statusLanjut'=>$statusLanjut,

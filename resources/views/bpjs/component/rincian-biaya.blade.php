@@ -3,17 +3,17 @@
         <div class="card py-3  d-flex justify-content-center align-items-center">
             <table width="1000px" border="0px">
                 <tr>
-                    <td rowspan="4"> <img src="../img/rs.png" alt="Girl in a jacket" width="90" height="75"></td>
+                    <td rowspan="4"> <img src="data:image/png;base64,{{ base64_encode($getSetting->logo) }}" alt="Girl in a jacket" width="80" height="80"></td>
                     <td class="text-center">
-                        <h4>RS. BUMI WARAS </h4>
+                        <h4>{{$getSetting->nama_instansi}} </h4>
                     </td>
                 </tr>
                 <tr class="text-center">
-                    <td>Jln. Wolter Monginsidi No. 235 , Bandar Lampung, Lampung
-                        (0721) 254589</td>
+                    <td>{{$getSetting->alamat_instansi}} , {{$getSetting->kabupaten}}, {{$getSetting->propinsi}}
+                        {{$getSetting->kontak}}</td>
                 </tr>
                 <tr class="text-center">
-                    <td> E-mail : www.rsbumiwaras.co.id</td>
+                    <td> E-mail : {{$getSetting->email}}</td>
                 </tr>
                 <tr class="text-center">
                     @php

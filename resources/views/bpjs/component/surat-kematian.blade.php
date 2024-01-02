@@ -3,19 +3,19 @@
         <div class="card p-4 d-flex justify-content-center align-items-center">
             <table border="0px" width="1000px">
                 <tr>
-                    <td rowspan="3"> <img src="../img/rs.png" alt="Girl in a jacket" width="90" height="75"></td>
+                    <td rowspan="3"> <img src="data:image/png;base64,{{ base64_encode($getSetting->logo) }}" alt="Girl in a jacket" width="80" height="80"></td>
                     <td class="text-center">
-                        <h4>RS. BUMI WARAS </h4>
+                        <h4>{{$getSetting->nama_instansi}} </h4>
                     </td>
                     <td class="text-center" width="100px">
                     </td>
                 </tr>
                 <tr class="text-center">
-                    <td>Jln. Wolter Monginsidi No. 235 , Bandar Lampung, Lampung
-                        (0721) 254589</td>
+                    <td>{{$getSetting->alamat_instansi}} , {{$getSetting->kabupaten}}, {{$getSetting->propinsi}}
+                        {{$getSetting->kontak}}</td>
                 </tr>
                 <tr class="text-center">
-                    <td> E-mail : www.rsbumiwaras.co.id</td>
+                    <td> E-mail : {{$getSetting->email}}</td>
                 </tr>
             </table>
             <hr width="1000px" class="mt-1 mb-0"
@@ -70,7 +70,7 @@
                 </tr>
                 <tr>
                     <td>
-                        di RS. BUMI WARAS dikarenakan {{ $getSudartKematian->keterangan }}
+                        di {{$getSetting->nama_instansi}} dikarenakan {{ $getSudartKematian->keterangan }}
                     </td>
                 </tr>
                 <tr>
@@ -89,10 +89,10 @@
                     <td>
                     </td>
                     <td class="text-center" width="350px">
-                        Bandar Lampung, {{ date('d-m-Y', strtotime($getSudartKematian->tanggal)) }}<br>
+                        {{$getSetting->kabupaten}}, {{ date('d-m-Y', strtotime($getSudartKematian->tanggal)) }}<br>
                         Dokter Pemeriksa <br>
                         <div class="barcode mt-1">
-                            <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di RS. Bumi Waras, Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $getSudartKematian->nm_dokter . ' ID ' . $getSudartKematian->kd_dokter . ' ' . $getSudartKematian->tanggal, 'QRCODE') }}"
+                            <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di '.$getSetting->nama_instansi.', Kabupaten/Kota '.$getSetting->kabupaten.' Ditandatangani secara elektronik oleh ' . $getSudartKematian->nm_dokter . ' ID ' . $getSudartKematian->kd_dokter . ' ' . $getSudartKematian->tanggal, 'QRCODE') }}"
                                 alt="barcode" width="80px" height="75px" />
                         </div>
                         {{ $getSudartKematian->nm_dokter }}

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Bpjs;
 
 use PDF;
 use Illuminate\Http\Request;
+use App\Services\CacheService;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
@@ -11,7 +12,13 @@ use Illuminate\Support\Facades\Storage;
 
 class PrintCesmikController extends Controller
 {
+    protected $cacheService;
+    public function __construct(CacheService $cacheService)
+    {
+        $this->cacheService = $cacheService;
+    }
     function printCasemix(Request $request){
+        $getSetting = $this->cacheService->getSetting();
         $cariNoSep = $request->cariNoSep;
         $noRawat = $request->cariNorawat;
         $cekNorawat = DB::table('reg_periksa')
@@ -449,6 +456,7 @@ class PrintCesmikController extends Controller
 
 
         } else {
+            $getSetting = '';
             $jumlahData = '';
             $getSEP = '';
             $statusLanjut = '';
@@ -464,6 +472,7 @@ class PrintCesmikController extends Controller
 
         // VIEW
         $pdf = PDF::loadView('bpjs.printcasemix', [
+            'getSetting'=>$getSetting,
             'jumlahData'=>$jumlahData,
             'getSEP'=>$getSEP,
             'statusLanjut'=>$statusLanjut,

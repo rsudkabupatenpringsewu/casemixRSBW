@@ -13,7 +13,7 @@
                     </button>
                 </div>
             </div>
-            <table class="table table-sm table-bordered table-striped table-responsive text-xs" style="white-space: nowrap;"
+            <table class="table table-sm table-bordered table-striped table-responsive text-xs mb-3" style="white-space: nowrap;"
                 id="tableToCopy">
                 <tbody>
                     <tr>
@@ -79,8 +79,7 @@
                                     $item->getRanapDrParamedis->sum('totalbiaya') +
                                     $item->getRanapParamedis->sum('totalbiaya') }}
                                 <div class="badge-group-sm float-right">
-                                    <a data-toggle="dropdown" href="#"><i
-                                            class="fas fa-eye"></i></a>
+                                    <a data-toggle="dropdown" href="#"><i class="fas fa-eye"></i></a>
                                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                                         <div class="dropdown-item">
                                             Dokter =
@@ -218,6 +217,9 @@
                     </tr>
                 </tbody>
             </table>
+            <nav aria-label="Page navigation example">
+                {{ $bayarPiutang->appends(request()->input())->links('pagination::bootstrap-4') }}
+            </nav>
         </div>
     </div>
     <script>

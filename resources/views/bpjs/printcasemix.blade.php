@@ -83,7 +83,7 @@
                             </tr>
                             <tr>
                                 <th class="text-center">
-                                    <span class="h3">RS.BUMI WARAS</span>
+                                    <span class="h3">{{$getSetting->nama_instansi}}</span>
                                 </th>
                             </tr>
                             <tr>
@@ -186,7 +186,7 @@
                             <td class="text-center" width="220px">
                                 <p>Pasien/Keluarga Pasien </p>
                                 <div class="barcode">
-                                    <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di ' . $getSEP->nmppkpelayanan . ',' . ' Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $getSEP->nama_pasien . ' ID ' . $getSEP->no_kartu . ' ' . $getSEP->tglsep, 'QRCODE') }}"
+                                    <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di ' . $getSEP->nmppkpelayanan . ',' . ' Kabupaten/Kota '.$getSetting->kabupaten.' Ditandatangani secara elektronik oleh ' . $getSEP->nama_pasien . ' ID ' . $getSEP->no_kartu . ' ' . $getSEP->tglsep, 'QRCODE') }}"
                                         alt="barcode" width="55px" height="55px" />
                                 </div>
                                 <p><b>{{ $getSEP->nama_pasien }}</b></p>
@@ -207,20 +207,20 @@
                     <div class="card p-4 d-flex justify-content-center align-items-center">
                         <table width="700px">
                             <tr>
-                                <td rowspan="3"> <img src="{{ public_path('img/rs.png') }}" alt="Girl in a jacket"
-                                        width="90" height="75"></td>
+                                <td rowspan="3"> <img src="data:image/png;base64,{{ base64_encode($getSetting->logo) }}" alt="Girl in a jacket"
+                                        width="80" height="80"></td>
                                 <td class="text-center">
-                                    <span class="h3">RS. BUMI WARAS </span>
+                                    <span class="h3">{{$getSetting->nama_instansi}}</span>
                                 </td>
                                 <td class="text-center" width="100px">
                                 </td>
                             </tr>
                             <tr class="text-center mr-5">
-                                <td>Jln. Wolter Monginsidi No. 235 , Bandar Lampung, Lampung
-                                    (0721) 254589</td>
+                                <td>{{$getSetting->alamat_instansi}} , {{$getSetting->kabupaten}}, {{$getSetting->propinsi}}
+                                    {{$getSetting->kontak}}</td>
                             </tr>
                             <tr class="text-center">
-                                <td> E-mail : www.rsbumiwaras.co.id</td>
+                                <td> E-mail : {{$getSetting->email}}</td>
                             </tr>
                         </table>
                         <hr width="700px" class="mt-0"
@@ -313,7 +313,7 @@
                                 <td width="250px" class="text-center">
                                     Dokter Penanggung Jawab
                                     <div class="barcode mt-1">
-                                        <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di RS. BUMI WARAS, Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh dr. Sanjoto Santibudi, Sp.KFR ID ' . $getResume->kd_dokter . ' ' . $getResume->tgl_registrasi, 'QRCODE') }}"
+                                        <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di '.$getSetting->nama_instansi.', Kabupaten/Kota '.$getSetting->kabupaten.' Ditandatangani secara elektronik oleh dr. Sanjoto Santibudi, Sp.KFR ID ' . $getResume->kd_dokter . ' ' . $getResume->tgl_registrasi, 'QRCODE') }}"
                                             alt="barcode" width="55px" height="55px" />
                                     </div>
                                     dr. Sanjoto Santibudi, Sp.KFR
@@ -329,18 +329,18 @@
                         <div class="">
                             <table width="700px">
                                 <tr>
-                                    <td rowspan="3" width="90"> <img src="{{ public_path('img/rs.png') }}"
-                                            width="90" height="75"></td>
+                                    <td rowspan="3" width="90"> <img src="data:image/png;base64,{{ base64_encode($getSetting->logo) }}"
+                                            width="80" height="80"></td>
                                     <td class="text-center">
-                                        <h2>RS. BUMI WARAS </h2>
+                                        <h2>{{$getSetting->nama_instansi}} </h2>
                                     </td>
                                 </tr>
                                 <tr class="text-center">
-                                    <td>Jln. Wolter Monginsidi No. 235 , Bandar Lampung, Lampung
-                                        (0721) 254589</td>
+                                    <td>{{$getSetting->alamat_instansi}} , {{$getSetting->kabupaten}}, {{$getSetting->propinsi}}
+                                        {{$getSetting->kontak}}</td>
                                 </tr>
                                 <tr class="text-center">
-                                    <td> E-mail : www.rsbumiwaras.co.id</td>
+                                    <td> E-mail : {{$getSetting->email}}</td>
                                 </tr>
                                 <tr class="text-center">
                                     <td colspan="2">
@@ -640,7 +640,7 @@
                                     <td width="250px" class="text-center">
                                         Dokter Penanggung Jawab
                                         <div class="barcode mt-1">
-                                            <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di RS. BUMI WARAS, Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $getResume->nm_dokter . ' ID ' . $getResume->kd_dokter . ' ' . $getResume->tgl_keluar, 'QRCODE') }}"
+                                            <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di '.$getSetting->nama_instansi.', Kabupaten/Kota '.$getSetting->kabupaten.' Ditandatangani secara elektronik oleh ' . $getResume->nm_dokter . ' ID ' . $getResume->kd_dokter . ' ' . $getResume->tgl_keluar, 'QRCODE') }}"
                                                 alt="barcode" width="55px" height="55px" />
                                         </div>
                                         {{ $getResume->nm_dokter }}
@@ -649,7 +649,7 @@
                                     <td width="250px" class="text-center">
                                         Dokter Penanggung Jawab2
                                         <div class="barcode mt-1">
-                                            <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di RS. BUMI WARAS, Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $getResume->nm_dokter . ' ID ' . $getResume->kd_dokter . ' ' . $getResume->tgl_keluar, 'QRCODE') }}"
+                                            <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di '.$getSetting->nama_instansi.', Kabupaten/Kota '.$getSetting->kabupaten.' Ditandatangani secara elektronik oleh ' . $getResume->nm_dokter . ' ID ' . $getResume->kd_dokter . ' ' . $getResume->tgl_keluar, 'QRCODE') }}"
                                                 alt="barcode" width="60px" height="60px" />
                                         </div>
                                         {{ $getResume->nm_dokter }}
@@ -664,18 +664,18 @@
                         <div class=""">
                             <table width="700px">
                                 <tr>
-                                    <td rowspan="3" width="90"> <img src="{{ public_path('img/rs.png') }}"
-                                            width="90" height="75"></td>
+                                    <td rowspan="3" width="90"> <img src="data:image/png;base64,{{ base64_encode($getSetting->logo) }}"
+                                            width="80" height="80"></td>
                                     <td class="text-center">
-                                        <h2>RS. BUMI WARAS </h2>
+                                        <h2>{{$getSetting->nama_instansi}}</h2>
                                     </td>
                                 </tr>
                                 <tr class="text-center">
-                                    <td>Jln. Wolter Monginsidi No. 235 , Bandar Lampung, Lampung
-                                        (0721) 254589</td>
+                                    <td>{{$getSetting->alamat_instansi}} , {{$getSetting->kabupaten}}, {{$getSetting->propinsi}}
+                                        {{$getSetting->kontak}}</td>
                                 </tr>
                                 <tr class="text-center">
-                                    <td> E-mail : www.rsbumiwaras.co.id</td>
+                                    <td> E-mail : {{$getSetting->email}}</td>
                                 </tr>
                                 <tr class="text-center">
                                     <td colspan="2">
@@ -889,7 +889,7 @@
                                     <td width="250px" class="text-center">
                                         Dokter Penanggung Jawab2
                                         <div class="barcode mt-1">
-                                            <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di RS. BUMI WARAS, Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $getResume->nm_dokter . ' ID ' . $getResume->kd_dokter . ' ' . $getResume->tgl_registrasi, 'QRCODE') }}"
+                                            <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di '.$getSetting->nama_instansi.', Kabupaten/Kota '.$getSetting->kabupaten.' Ditandatangani secara elektronik oleh ' . $getResume->nm_dokter . ' ID ' . $getResume->kd_dokter . ' ' . $getResume->tgl_registrasi, 'QRCODE') }}"
                                                 alt="barcode" width="60px" height="60px" />
                                         </div>
                                         {{ $getResume->nm_dokter }}
@@ -910,18 +910,18 @@
                 <div class="">
                     <table width="700px">
                         <tr>
-                            <td rowspan="4"> <img src="{{ public_path('img/rs.png') }}" width="90"
-                                    height="75"></td>
+                            <td rowspan="4"> <img src="data:image/png;base64,{{ base64_encode($getSetting->logo) }}" width="80"
+                                    height="80"></td>
                             <td class="text-center">
-                                <h2>RS. BUMI WARAS </h2>
+                                <h2>{{$getSetting->nama_instansi}}</h2>
                             </td>
                         </tr>
                         <tr class="text-center">
-                            <td>Jln. Wolter Monginsidi No. 235 , Bandar Lampung, Lampung
-                                (0721) 254589</td>
+                            <td>{{$getSetting->alamat_instansi}} , {{$getSetting->kabupaten}}, {{$getSetting->propinsi}}
+                                {{$getSetting->kontak}}</td>
                         </tr>
                         <tr class="text-center">
-                            <td> E-mail : www.rsbumiwaras.co.id</td>
+                            <td> E-mail : {{$getSetting->email}}</td>
                         </tr>
                         <tr class="text-center">
                             @php
@@ -1021,20 +1021,19 @@
                     <div class="">
                         <table width="700px">
                             <tr>
-                                <td rowspan="4"> <img src="{{ public_path('img/rs.png') }}" width="90"
-                                        height="75">
+                                <td rowspan="4"> <img src="data:image/png;base64,{{ base64_encode($getSetting->logo) }}" width="80"
+                                        height="80">
                                 </td>
                                 <td class="text-center">
-                                    <h2>RS. BUMI WARAS </h2>
+                                    <h2>{{$getSetting->nama_instansi}} </h2>
                                 </td>
                             </tr>
                             <tr class="text-center">
-                                <td>Jln. Wolter Monginsidi No. 235 , Bandar Lampung, Lampung
-                                    (0721)
-                                    254589</td>
+                                <td>{{$getSetting->alamat_instansi}} , {{$getSetting->kabupaten}}, {{$getSetting->propinsi}}
+                                    {{$getSetting->kontak}}</td>
                             </tr>
                             <tr class="text-center">
-                                <td> E-mail : www.rsbumiwaras.co.id</td>
+                                <td> {{$getSetting->email}}</td>
                             </tr>
                             <tr class="text-center">
                                 <td colspan="">
@@ -1130,7 +1129,7 @@
                                 <td width="250px" class="text-center">
                                     Penanggung Jawab
                                     <div class="barcode mt-1">
-                                        <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di RS. BUMI WARAS, Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $periksa->nm_dokter . ' ID ' . $periksa->kd_dokter . ' ' . $periksa->tgl_periksa, 'QRCODE') }}"
+                                        <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di '.$getSetting->nama_instansi.', Kabupaten/Kota '.$getSetting->kabupaten.' Ditandatangani secara elektronik oleh ' . $periksa->nm_dokter . ' ID ' . $periksa->kd_dokter . ' ' . $periksa->tgl_periksa, 'QRCODE') }}"
                                             alt="barcode" width="60px" height="60px" />
                                     </div>
                                     {{ $periksa->nm_dokter }}
@@ -1141,7 +1140,7 @@
                                     <br>
                                     Petugas Laboratorium
                                     <div class="barcode mt-1">
-                                        <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di RS. BUMI WARAS, Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $periksa->nama_petugas . ' ID ' . $periksa->nip . ' ' . $periksa->tgl_periksa, 'QRCODE') }}"
+                                        <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di '.$getSetting->nama_instansi.', Kabupaten/Kota '.$getSetting->kabupaten.' Ditandatangani secara elektronik oleh ' . $periksa->nama_petugas . ' ID ' . $periksa->nip . ' ' . $periksa->tgl_periksa, 'QRCODE') }}"
                                             alt="barcode" width="60px" height="60px" />
                                     </div>
                                     {{ $periksa->nama_petugas }}
@@ -1161,20 +1160,19 @@
                 <div class="card-body">
                     <table width="700px">
                         <tr>
-                            <td rowspan="4"> <img src="{{ public_path('img/rs.png') }}" width="90"
-                                    height="75">
+                            <td rowspan="4"> <img src="data:image/png;base64,{{ base64_encode($getSetting->logo) }}" width="80"
+                                    height="80">
                             </td>
                             <td class="text-center">
-                                <h2>RS. BUMI WARAS </h2>
+                                <h2>{{$getSetting->nama_instansi}}</h2>
                             </td>
                         </tr>
                         <tr class="text-center">
-                            <td>Jln. Wolter Monginsidi No. 235 , Bandar Lampung, Lampung
-                                (0721)
-                                254589</td>
+                            <td>{{$getSetting->alamat_instansi}} , {{$getSetting->kabupaten}}, {{$getSetting->propinsi}}
+                                {{$getSetting->kontak}}</td>
                         </tr>
                         <tr class="text-center">
-                            <td> E-mail : www.rsbumiwaras.co.id</td>
+                            <td> E-mail : {{$getSetting->email}}</td>
                         </tr>
                         <tr class="text-center">
                             <td colspan="">
@@ -1243,7 +1241,7 @@
                             <td width="250px" class="text-center">
                                 Penanggung Jawab
                                 <div class="barcode mt-1">
-                                    <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di RS. BUMI WARAS, Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $item->nm_dokter_pj . ' ID ' . $item->kd_dokter_pj . ' ' . $item->tgl_periksa, 'QRCODE') }}"
+                                    <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di '.$getSetting->nama_instansi.', Kabupaten/Kota '.$getSetting->kabupaten.' Ditandatangani secara elektronik oleh ' . $item->nm_dokter_pj . ' ID ' . $item->kd_dokter_pj . ' ' . $item->tgl_periksa, 'QRCODE') }}"
                                         alt="barcode" width="60px" height="60px" />
                                 </div>
                                 {{ $item->nm_dokter_pj }}
@@ -1253,7 +1251,7 @@
                                 Periksa : {{ date('d-m-Y', strtotime($item->tgl_periksa)) }} <br>
                                 Petugas Laboratorium
                                 <div class="barcode mt-1">
-                                    <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di RS. BUMI WARAS, Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $item->nama_pegawai . ' ID ' . $item->nip . ' ' . $item->tgl_periksa, 'QRCODE') }}"
+                                    <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di '.$getSetting->nama_instansi.', Kabupaten/Kota '.$getSetting->kabupaten.' Ditandatangani secara elektronik oleh ' . $item->nama_pegawai . ' ID ' . $item->nip . ' ' . $item->tgl_periksa, 'QRCODE') }}"
                                         alt="barcode" width="60px" height="60px" />
                                 </div>
                                 {{ $item->nama_pegawai }}
@@ -1271,20 +1269,20 @@
             <div class="card-body">
                 <table width="700px">
                     <tr>
-                        <td rowspan="3"> <img src="{{ public_path('img/rs.png') }}" alt="Girl in a jacket"
-                                width="90" height="75"></td>
+                        <td rowspan="3"> <img src="data:image/png;base64,{{ base64_encode($getSetting->logo) }}" alt="Girl in a jacket"
+                                width="80" height="80"></td>
                         <td class="text-center">
-                            <h3>RS. BUMI WARAS </h3>
+                            <h3>{{$getSetting->nama_instansi}} </h3>
                         </td>
                         <td width="150px"></td>
                     </tr>
                     <tr class="text-center">
-                        <td>Jln. Wolter Monginsidi No. 235 , Bandar Lampung, Lampung
-                            (0721) 254589</td>
+                        <td>{{$getSetting->alamat_instansi}} , {{$getSetting->kabupaten}}, {{$getSetting->propinsi}}
+                            {{$getSetting->kontak}}</td>
                         <td width="150px"></td>
                     </tr>
                     <tr class="text-center">
-                        <td> E-mail : www.rsbumiwaras.co.id</td>
+                        <td> E-mail : {{$getSetting->email}}</td>
                         <td width="150px"></td>
                     </tr>
                 </table>
@@ -1466,7 +1464,7 @@
                         <tr class="text-center">
                             <td width="345px">{{ date('d/m/Y h:i:s', strtotime($awalMedis->tanggal)) }} WIB</td>
                             <td width="345px">
-                                <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di ' . 'RS. BUMI WARAS,' . ' Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $awalMedis->nm_dokter . ' ID ' . $awalMedis->kd_dokter . ' ', 'QRCODE') }}"
+                                <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di '.$getSetting->nama_instansi.', Kabupaten/Kota '.$getSetting->kabupaten.' Ditandatangani secara elektronik oleh ' . $awalMedis->nm_dokter . ' ID ' . $awalMedis->kd_dokter . ' ', 'QRCODE') }}"
                                     alt="barcode" width="70px" height="60px" />
                                 <br>
                                 {{ $awalMedis->nm_dokter }}
@@ -1484,20 +1482,20 @@
             <div class="">
                 <table width="700px">
                     <tr>
-                        <td rowspan="3"> <img src="{{ public_path('img/rs.png') }}" alt="Girl in a jacket"
-                                width="90" height="75"></td>
+                        <td rowspan="3"> <img src="data:image/png;base64,{{ base64_encode($getSetting->logo) }}" alt="Girl in a jacket"
+                                width="80" height="80"></td>
                         <td class="text-center">
-                            <h2>RS. BUMI WARAS </h2>
+                            <h2>{{$getSetting->nama_instansi}} </h2>
                         </td>
                         <td width="50px"></td>
                     </tr>
                     <tr class="text-center">
-                        <td>Jln. Wolter Monginsidi No. 235 , Bandar Lampung, Lampung
-                            (0721) 254589</td>
+                        <td>{{$getSetting->alamat_instansi}} , {{$getSetting->kabupaten}}, {{$getSetting->propinsi}}
+                            {{$getSetting->kontak}}</td>
                         <td width="50px"></td>
                     </tr>
                     <tr class="text-center">
-                        <td> E-mail : www.rsbumiwaras.co.id</td>
+                        <td> E-mail : {{$getSetting->email}}</td>
                         <td width="50px"></td>
                     </tr>
                 </table>
@@ -1548,7 +1546,7 @@
                     <tr>
                         <td>Telah meninggal dunia pada &emsp;
                             <u>{{ date('d-m-Y', strtotime($getSudartKematian->tanggal)) }}</u> &emsp; Jam
-                            &emsp; <u>{{ $getSudartKematian->jam }}</u> di RS. BUMI WARAS dikarenakan
+                            &emsp; <u>{{ $getSudartKematian->jam }}</u> di {{$getSetting->nama_instansi}} dikarenakan
                             {{ $getSudartKematian->keterangan }}
                         </td>
                     </tr>
@@ -1565,10 +1563,10 @@
                         </td>
                         <td width="150px"></td>
                         <td class="text-center" width="250px">
-                            Bandar Lampung, {{ date('d-m-Y', strtotime($getSudartKematian->tanggal)) }}<br>
+                            {{$getSetting->kabupaten}}, {{ date('d-m-Y', strtotime($getSudartKematian->tanggal)) }}<br>
                             Dokter Pemeriksa <br>
                             <div class="barcode mt-1">
-                                <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di RS. Bumi Waras, Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $getSudartKematian->nm_dokter . ' ID ' . $getSudartKematian->kd_dokter . ' ' . $getSudartKematian->tanggal, 'QRCODE') }}"
+                                <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di '.$getSetting->nama_instansi.', Kabupaten/Kota '.$getSetting->kabupaten.' Ditandatangani secara elektronik oleh ' . $getSudartKematian->nm_dokter . ' ID ' . $getSudartKematian->kd_dokter . ' ' . $getSudartKematian->tanggal, 'QRCODE') }}"
                                     alt="barcode" width="60px" height="60px" />
                             </div>
                             {{ $getSudartKematian->nm_dokter }}

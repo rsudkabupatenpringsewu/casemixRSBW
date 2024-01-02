@@ -15,12 +15,13 @@ class TestController extends Controller
 {
 
     function Test(){
-        $tanggl1 = date('Y-m-d');
-        $tanggl2 = date('Y-m-d');
+        // $tanggl1 = date('Y-m-d');
+        // $tanggl2 = date('Y-m-d');
+        // $getSeting = DB::table('setting')
+        //     ->select('setting.nama_instansi', 'setting.alamat_instansi', 'setting.kabupaten', 'setting.propinsi', 'setting.kontak', 'setting.email', 'setting.aktifkan', 'setting.kode_ppk', 'setting.kode_ppkinhealth', 'setting.kode_ppkkemenkes', 'setting.wallpaper', 'setting.logo')
+        //     ->get();
 
-
-        return view('test.test', [
-        ]);
+        return view('test.test');
     }
 
     function TestCari(Request $request){

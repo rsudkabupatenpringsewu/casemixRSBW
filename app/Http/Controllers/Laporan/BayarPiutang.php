@@ -61,7 +61,7 @@ class BayarPiutang extends Controller
             })
             ->orderBy('bayar_piutang.tgl_bayar','asc')
             ->orderBy('bayar_piutang.no_rkm_medis','asc')
-            ->get();
+            ->paginate(1000);
             $bayarPiutang->map(function ($item) {
                 // NOMOR NOTA
                 $item->getNomorNota = DB::table('billing')
@@ -167,8 +167,6 @@ class BayarPiutang extends Controller
                     ->get();
                 return $item;
             });
-
-
         return view('laporan.bayarPiutang', [
             'penjab'=> $penjab,
             'bayarPiutang'=> $bayarPiutang,

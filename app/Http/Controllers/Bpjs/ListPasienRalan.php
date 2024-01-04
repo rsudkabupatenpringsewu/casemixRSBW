@@ -33,6 +33,15 @@ class ListPasienRalan extends Controller
         $jmldaftarPasien = $daftarPasien->count();
         $jmldownloadBerkas = $downloadBerkas->count();
 
+        // GET ALL BERKAS
+        $daftarPasien->map(function ($item) {
+            $item->getAllBerkas = DB::connection('db_con2')
+                ->table('file_casemix')
+                ->select('jenis_berkas', 'file')
+                ->where('no_rawat', $item->no_rawat)
+                ->get();
+        });
+
         session(['tgl1' => $tanggl1]);
         session(['tgl2' => $tanggl2]);
         session(['statusLanjut' => 'Ralan']);
@@ -72,6 +81,15 @@ class ListPasienRalan extends Controller
         $jmldaftarPasien = $daftarPasien->count();
         $jmldownloadBerkas = $downloadBerkas->count();
 
+         // GET ALL BERKAS
+         $daftarPasien->map(function ($item) {
+            $item->getAllBerkas = DB::connection('db_con2')
+                ->table('file_casemix')
+                ->select('jenis_berkas', 'file')
+                ->where('no_rawat', $item->no_rawat)
+                ->get();
+        });
+
         session(['tgl1' => $request->tgl1]);
         session(['tgl2' => $request->tgl2]);
         session(['statusLanjut' => 'Ralan']);
@@ -86,4 +104,5 @@ class ListPasienRalan extends Controller
             'tanggl2'=>$tanggl2,
         ]);
     }
+
 }

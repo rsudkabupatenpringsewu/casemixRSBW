@@ -13,7 +13,7 @@ class AuthController extends Controller
 {
     function Login(){
         // Session::flush();
-        DefaultService::authService();
+        // DefaultService::authService();
         return view('auth.login');
     }
     function mesinLogin(Request $request){

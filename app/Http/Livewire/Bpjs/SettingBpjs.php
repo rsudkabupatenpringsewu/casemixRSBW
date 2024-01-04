@@ -19,8 +19,10 @@ class SettingBpjs extends Component
     }
 
     public $loadDataCasemix;
+    public $cariNomor = '';
     public function getListCasemix() {
-       $this->loadDataCasemix = DB::connection('db_con2')
+        $cariNomor = $this->cariNomor;
+        $this->loadDataCasemix = DB::connection('db_con2')
             ->table('file_casemix')
             ->select('file_casemix.id',
                 'file_casemix.no_rkm_medis',
@@ -28,6 +30,11 @@ class SettingBpjs extends Component
                 'file_casemix.nama_pasein',
                 'file_casemix.jenis_berkas',
                 'file_casemix.file')
+            ->where(function($query) use ($cariNomor) {
+                $query->orWhere('file_casemix.no_rkm_medis', $cariNomor );
+                $query->orWhere('file_casemix.no_rawat', $cariNomor );
+                $query->orWhere('file_casemix.nama_pasein', $cariNomor );
+            })
             ->get();
     }
 }

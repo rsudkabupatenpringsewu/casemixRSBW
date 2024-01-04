@@ -1,5 +1,5 @@
 @extends('..layout.layoutDashboard')
-@section('title', 'Bayar Piutang')
+@section('title', 'List File Bundling')
 @push('styles')
     @livewireStyles
 @endpush

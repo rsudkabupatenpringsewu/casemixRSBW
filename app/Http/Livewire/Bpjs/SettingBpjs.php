@@ -4,6 +4,8 @@ namespace App\Http\Livewire\Bpjs;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class SettingBpjs extends Component
 {
@@ -36,5 +38,43 @@ class SettingBpjs extends Component
                 $query->orWhere('file_casemix.nama_pasein', $cariNomor );
             })
             ->get();
+    }
+
+    // UPDATE
+    public function deleteDataFile($id, $jenis_berkas, $file) {
+        try {
+            DB::connection('db_con2')
+                ->table('file_casemix')
+                ->where('id', $id)
+                ->delete();
+                $this->flashMessage('Data berhasil dihapus!', 'warning', 'check');
+                switch ($jenis_berkas) {
+                    case 'INACBG':
+                        Storage::disk('public')->delete('file_inacbg/' . $file);
+                        break;
+                    case 'SCAN':
+                        Storage::disk('public')->delete('file_scan/' . $file);
+                        break;
+                    case 'RESUMEDLL':
+                        Storage::disk('public')->delete('resume_dll/' . $file);
+                        break;
+                    case 'HASIL':
+                        unlink(public_path('hasil_pdf/'.$file));
+                        break;
+                    default:
+                        break;
+                }
+        } catch (\Exception $e) {
+            $this->flashMessage('Terjadi kesalahan saat menghapus data.', 'danger', 'ban');
+        }
+
+    }
+
+    // ALLERT
+    // ALLERT FUNTION
+    private function flashMessage($message, $color, $icon){
+        Session::flash('message', $message);
+        Session::flash('color', $color);
+        Session::flash('icon', $icon);
     }
 }

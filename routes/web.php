@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Bpjs\DataInacbg;
 use App\Http\Controllers\Bpjs\HomeCasemix;
+use App\Http\Controllers\Bpjs\SettingBpjs;
 use App\Http\Controllers\Bpjs\GabungBerkas;
 use App\Http\Controllers\Bpjs\BpjsController;
 use App\Http\Controllers\Test\TestController;
@@ -47,6 +48,7 @@ Route::group(['middleware' => 'default'], function () {
 
 Route::group(['middleware' => 'auth-rsbw'], function () {
     Route::get('/test', [TestController::class, 'Test']);
+    Route::get('/test-delte', [TestController::class, 'TestDelete']);
     Route::get('/test-cari', [TestController::class, 'TestCari']);
 
     Route::get('/logout', [AuthController::class, 'Logout'])->name('logout');
@@ -76,6 +78,8 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     Route::get('/gabung-berkas-casemix', [GabungBerkas::class, 'gabungBerkas']);
 
     Route::get('/data-inacbg', [DataInacbg::class, 'Inacbg']);
+
+    Route::get('/setting-bpjs-casemix', [SettingBpjs::class, 'settingBpjsCasemix']);
 
     // FARMASI
     Route::get('/list-pasien-farmasi', [SepResepController::class, 'ListPasienFarmasi']);

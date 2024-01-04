@@ -15,14 +15,24 @@ class TestController extends Controller
 {
 
     function Test(){
-        // $tanggl1 = date('Y-m-d');
-        // $tanggl2 = date('Y-m-d');
-        // $getSeting = DB::table('setting')
-        //     ->select('setting.nama_instansi', 'setting.alamat_instansi', 'setting.kabupaten', 'setting.propinsi', 'setting.kontak', 'setting.email', 'setting.aktifkan', 'setting.kode_ppk', 'setting.kode_ppkinhealth', 'setting.kode_ppkkemenkes', 'setting.wallpaper', 'setting.logo')
-        //     ->get();
 
-        return view('test.test');
+       $result = DB::connection('db_con2')
+       ->table('file_casemix')
+       ->select('file_casemix.id', 'file_casemix.no_rkm_medis', 'file_casemix.no_rawat', 'file_casemix.nama_pasein', 'file_casemix.jenis_berkas', 'file_casemix.file')
+       ->paginate(500);
+        return view('test.test', [
+            'result' => $result,
+        ]);
     }
+
+    function TestDelete(Request $request) {
+        DB::connection('db_con2')
+        ->table('file_casemix')
+        ->where('no_rawat', $yourNoRawatValue) // Replace $yourNoRawatValue with the actual value you want to match
+        ->delete();
+
+    }
+
 
     function TestCari(Request $request){
         $cariNomor = $request->cariNomor;

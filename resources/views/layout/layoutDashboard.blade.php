@@ -42,8 +42,8 @@
     <div class="wrapper">
         @php
             $getSeting = DB::table('setting')
-            ->select('setting.nama_instansi', 'setting.logo')
-            ->first();
+                ->select('setting.nama_instansi', 'setting.logo')
+                ->first();
         @endphp
         <!-- Preloader -->
         {{-- <div class="preloader flex-column justify-content-center align-items-center">
@@ -87,9 +87,9 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="{{ url('/') }}" class="brand-link">
-                <img src="data:image/png;base64,{{ base64_encode($getSeting->logo) }}" alt="Logo" class="brand-image img-circle elevation-3"
-                    style="opacity: 0.8" />
-                <span class="brand-text font-weight-light">{{($getSeting->nama_instansi) }}</span>
+                <img src="data:image/png;base64,{{ base64_encode($getSeting->logo) }}" alt="Logo"
+                    class="brand-image img-circle elevation-3" style="opacity: 0.8" />
+                <span class="brand-text font-weight-light">{{ $getSeting->nama_instansi }}</span>
             </a>
 
             <!-- INI MENUUU SAMPING -->
@@ -284,6 +284,16 @@
                                     </a>
                                 </li>
                             </ul>
+                            @if (session('obat') === 'true')
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ url('/setting-bpjs-casemix') }}" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Setting Casemix</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            @endif
                         </li>
                         {{-- MENU FARMASI --}}
                         <li class="nav-item">{{-- menu-open --}}

@@ -36,6 +36,7 @@ class ListPasienRalan extends Controller
 
         session(['tgl1' => $tanggl1]);
         session(['tgl2' => $tanggl2]);
+        // session(['page' => $request->page]);
         session(['statusLanjut' => 'Ralan']);
 
         return view('bpjs.listpasien-ralan', [
@@ -73,6 +74,7 @@ class ListPasienRalan extends Controller
 
         session(['tgl1' => $request->tgl1]);
         session(['tgl2' => $request->tgl2]);
+        // session(['page' => $request->page]);
         session(['statusLanjut' => 'Ralan']);
 
         return view('bpjs.listpasien-ralan', [

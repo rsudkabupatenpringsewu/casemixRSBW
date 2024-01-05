@@ -77,6 +77,9 @@
                     </div>
                 </div>
             </form>
+            {{-- <nav aria-label="Page navigation example">
+                {{ $daftarPasien->appends(request()->input())->links('pagination::bootstrap-4') }}
+            </nav> --}}
             <div class="card">
                 <div class="card-header">
                     @php

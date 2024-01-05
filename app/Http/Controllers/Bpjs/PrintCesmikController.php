@@ -198,6 +198,7 @@ class PrintCesmikController extends Controller
                         ->orderBy('reg_periksa.tgl_registrasi','asc')
                         ->orderBy('reg_periksa.status_lanjut','asc')
                         ->first();
+                        if($getResume){
                         $getKamarInap = DB::table('kamar_inap')
                             ->select([
                                 'kamar_inap.tgl_keluar',
@@ -212,6 +213,9 @@ class PrintCesmikController extends Controller
                             ->orderByDesc('jam_keluar')
                             ->limit(1)
                             ->first();
+                    }else{
+                        $getKamarInap = '';
+                    }
                 } else {
                     $getResume = DB::table('resume_pasien')
                         ->select('reg_periksa.tgl_registrasi',

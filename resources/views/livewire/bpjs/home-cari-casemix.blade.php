@@ -21,7 +21,8 @@
                                         <i class="fa fa-search"></i>
                                     </span>
                                     <span wire:loading>
-                                        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Mencari...
+                                        <span class="spinner-grow spinner-grow-sm" role="status"
+                                            aria-hidden="true"></span> Mencari...
                                     </span>
                                 </span>
                             </button>
@@ -37,6 +38,12 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body">
+            @if (Session::has('errorBundling'))
+                <div class="alert alert-warning alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <i class="icon fas fa-ban"></i> {{ Session::get('errorBundling') }}!
+                </div>
+            @endif
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -99,6 +106,7 @@
                                             <input name="cariNorawat" value="{{ $item->no_rawat }}" hidden>
                                             <input name="tgl1" value="{{ session('tgl1') }}" hidden>
                                             <input name="tgl2" value="{{ session('tgl2') }}" hidden>
+                                            {{-- <input name="page" value="{{ session('page') }}" hidden> --}}
                                             <input name="statusLanjut" value="{{ session('statusLanjut') }}" hidden>
                                             <button class="badge {{ $color3 }}">
                                                 <i class="fas fa-save"> Gabung</i>

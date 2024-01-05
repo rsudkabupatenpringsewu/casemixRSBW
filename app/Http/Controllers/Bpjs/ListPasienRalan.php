@@ -31,6 +31,7 @@ class ListPasienRalan extends Controller
                 ->table('file_casemix')
                 ->select('jenis_berkas', 'file')
                 ->where('no_rawat', $item->no_rawat)
+                ->where('jenis_berkas', 'HASIL')
                 ->get();
         });
 
@@ -69,6 +70,7 @@ class ListPasienRalan extends Controller
                 ->table('file_casemix')
                 ->select('jenis_berkas', 'file')
                 ->where('no_rawat', $item->no_rawat)
+                ->where('jenis_berkas', 'HASIL')
                 ->get();
         });
 

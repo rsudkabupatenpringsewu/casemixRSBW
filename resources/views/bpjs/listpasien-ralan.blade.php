@@ -21,7 +21,7 @@
                     <span class="info-box-text"><b>Total Yang Sudah Terbundling</b></span>
                     <span class="info-box-number">
                         <h4>
-                            {{ $daftarPasien->flatMap->getAllBerkas->where('jenis_berkas', 'HASIL')->count() }}
+                            {{ $daftarPasien->flatMap->getAllBerkas->count() }}
                         </h4>
                     </span>
                 </div>
@@ -34,7 +34,7 @@
                     <span class="info-box-text"><b>Total Yang Belum Terbundling</b></span>
                     <span class="info-box-number">
                         <h4>
-                            {{ abs($daftarPasien->flatMap->getAllBerkas->where('jenis_berkas', 'HASIL')->count() - $daftarPasien->count()) }}
+                            {{ abs($daftarPasien->flatMap->getAllBerkas->count() - $daftarPasien->count()) }}
                         </h4>
                     </span>
                 </div>
@@ -99,14 +99,14 @@
                             <th>Bayar</th>
                             <th>Poli</th>
                             <th>Tgl.Sep</th>
-                            <th>Act</th>
+                            {{-- <th>Act</th> --}}
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($daftarPasien as $key => $item)
                             <tr>
                                 <td class="text-center">
-                                    @forelse ($item->getAllBerkas->where('jenis_berkas', 'HASIL') as $berkas)
+                                    @forelse ($item->getAllBerkas as $berkas)
                                         <a href="{{ url('hasil_pdf/' . $berkas->file) }}" download class="text-success">
                                             <i class="fas fa-download"></i>
                                         </a>
@@ -140,7 +140,7 @@
                                 </td>
                                 <td>{{ $item->nm_poli }}</td>
                                 <td>{{ $item->tglsep }}</td>
-                                <td>
+                                {{-- <td>
                                     <div class="badge-group d-flex justify-content-around text-default">
                                         <a data-toggle="modal" data-target="#updateModal{{ $key }}"
                                             href="#"><i class="fas fa-folder"></i></a>
@@ -212,7 +212,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </td>
+                                </td> --}}
                             </tr>
                         @endforeach
                     </tbody>

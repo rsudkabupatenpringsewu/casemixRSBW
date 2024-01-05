@@ -30,14 +30,6 @@ class ListPasienRanap extends Controller
             ->where('reg_periksa.status_lanjut','=','Ranap')
             ->where('reg_periksa.kd_pj','=', $penjamnin)
             ->get();
-            $downloadBerkas = DB::connection('db_con2')
-                ->table('file_casemix')
-                ->select('no_rawat', 'file')
-                ->whereIn('no_rawat', $daftarPasien->pluck('no_rawat')->toArray())
-                ->where('jenis_berkas', 'HASIL')
-                ->get();
-        $jmldaftarPasien = $daftarPasien->count();
-        $jmldownloadBerkas = $downloadBerkas->count();
 
         // GET ALL BERKAS
         $daftarPasien->map(function ($item) {
@@ -54,9 +46,6 @@ class ListPasienRanap extends Controller
 
         return view('bpjs.listpasien-ranap', [
             'daftarPasien'=>$daftarPasien,
-            'downloadBerkas'=>$downloadBerkas,
-            'jmldaftarPasien'=>$jmldaftarPasien,
-            'jmldownloadBerkas'=>$jmldownloadBerkas,
             'penjamnin'=>$penjamnin,
             'tanggl1'=>$tanggl1,
             'tanggl2'=>$tanggl2,
@@ -85,14 +74,6 @@ class ListPasienRanap extends Controller
             ->where('reg_periksa.status_lanjut','=','Ranap')
             ->where('reg_periksa.kd_pj','=', $penjamnin)
             ->get();
-            $downloadBerkas = DB::connection('db_con2')
-                ->table('file_casemix')
-                ->select('no_rawat', 'file')
-                ->whereIn('no_rawat', $daftarPasien->pluck('no_rawat')->toArray())
-                ->where('jenis_berkas', 'HASIL')
-                ->get();
-        $jmldaftarPasien = $daftarPasien->count();
-        $jmldownloadBerkas = $downloadBerkas->count();
 
         // GET ALL BERKAS
         $daftarPasien->map(function ($item) {
@@ -109,9 +90,6 @@ class ListPasienRanap extends Controller
 
         return view('bpjs.listpasien-ranap', [
             'daftarPasien'=>$daftarPasien,
-            'downloadBerkas'=>$downloadBerkas,
-            'jmldaftarPasien'=>$jmldaftarPasien,
-            'jmldownloadBerkas'=>$jmldownloadBerkas,
             'penjamnin'=>$penjamnin,
             'tanggl1'=>$tanggl1,
             'tanggl2'=>$tanggl2,

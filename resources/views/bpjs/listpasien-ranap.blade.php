@@ -9,7 +9,7 @@
                 <div class="info-box-content">
                     <span class="info-box-text"><b>Total List Pasien</b></span>
                     <span class="info-box-number">
-                        <h4>{{ $jmldaftarPasien }}</h4>
+                        <h4>{{ $daftarPasien->count() }}</h4>
                     </span>
                 </div>
             </div>
@@ -20,7 +20,9 @@
                 <div class="info-box-content">
                     <span class="info-box-text"><b>Total Yang Sudah Terbundling</b></span>
                     <span class="info-box-number">
-                        <h4>{{ $jmldownloadBerkas }}</h4>
+                        <h4>
+                            {{ $daftarPasien->flatMap->getAllBerkas->where('jenis_berkas', 'HASIL')->count()}}
+                        </h4>
                     </span>
                 </div>
             </div>
@@ -32,7 +34,9 @@
                 <div class="info-box-content">
                     <span class="info-box-text"><b>Total Yang Belum Terbundling</b></span>
                     <span class="info-box-number">
-                        <h4>{{ $jmldaftarPasien - $jmldownloadBerkas }}</h4>
+                        <h4>
+                            {{ abs($daftarPasien->flatMap->getAllBerkas->where('jenis_berkas', 'HASIL')->count() - $daftarPasien->count()) }}
+                        </h4>
                     </span>
                 </div>
             </div>
@@ -105,26 +109,21 @@
                                $colortr = $item->jnspelayanan == '1' ? '' : 'text-danger';
                            @endphp
                             <tr class="{{$colortr}} color-palette">
-                                @php
-                                    $matchingBerks = $downloadBerkas->where('no_rawat', $item->no_rawat);
-                                @endphp
                                 <td class="text-center">
-                                    @if ($matchingBerks->isNotEmpty())
-                                        @foreach ($matchingBerks as $berks)
-                                            <a href="{{ url('hasil_pdf/' . $berks->file) }}" download class="text-success">
-                                                <i class="fas fa-download"></i>
-                                            </a>
-                                        @endforeach
-                                    @else
+                                    @forelse ($item->getAllBerkas->where('jenis_berkas', 'HASIL') as $berkas)
+                                        <a href="{{ url('hasil_pdf/' . $berkas->file) }}" download class="text-success">
+                                            <i class="fas fa-download"></i>
+                                        </a>
+                                    @empty
                                         <form action="{{ url('casemix-home-cari') }}" method="">
                                             @csrf
                                             <input name="cariNorawat" value="{{ $item->no_sep }}" hidden>
                                             <input name="cariNorawat" value="{{ $item->no_rawat }}" hidden>
-                                            <button class="" style="background: none; border: none;">
+                                            <button type="submit" style="background: none; border: none;">
                                                 <i class="nav-icon fas fa-receipt"></i>
                                             </button>
                                         </form>
-                                    @endif
+                                    @endforelse
                                 </td>
                                 <td>{{ $item->no_rkm_medis }}</td>
                                 <td>{{ $item->no_rawat }}</td>

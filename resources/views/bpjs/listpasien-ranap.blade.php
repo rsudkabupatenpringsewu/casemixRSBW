@@ -110,7 +110,7 @@
                            @endphp
                             <tr class="{{$colortr}} color-palette">
                                 <td class="text-center">
-                                    @forelse ($item->getAllBerkas->where('jenis_berkas', 'HASIL') as $berkas)
+                                    @forelse ($item->getAllBerkas as $berkas)
                                         <a href="{{ url('hasil_pdf/' . $berkas->file) }}" download class="text-success">
                                             <i class="fas fa-download"></i>
                                         </a>

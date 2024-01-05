@@ -35,8 +35,9 @@ class ListPasienRanap extends Controller
         $daftarPasien->map(function ($item) {
             $item->getAllBerkas = DB::connection('db_con2')
                 ->table('file_casemix')
-                ->select('jenis_berkas', 'file')
+                ->select('file')
                 ->where('no_rawat', $item->no_rawat)
+                ->where('jenis_berkas', 'HASIL')
                 ->get();
         });
 
@@ -79,8 +80,9 @@ class ListPasienRanap extends Controller
         $daftarPasien->map(function ($item) {
             $item->getAllBerkas = DB::connection('db_con2')
                 ->table('file_casemix')
-                ->select('jenis_berkas', 'file')
+                ->select('file')
                 ->where('no_rawat', $item->no_rawat)
+                ->where('jenis_berkas', 'HASIL')
                 ->get();
         });
 

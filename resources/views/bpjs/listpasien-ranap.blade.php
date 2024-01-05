@@ -21,7 +21,7 @@
                     <span class="info-box-text"><b>Total Yang Sudah Terbundling</b></span>
                     <span class="info-box-number">
                         <h4>
-                            {{ $daftarPasien->flatMap->getAllBerkas->where('jenis_berkas', 'HASIL')->count()}}
+                            {{ $daftarPasien->flatMap->getAllBerkas->count()}}
                         </h4>
                     </span>
                 </div>
@@ -35,7 +35,7 @@
                     <span class="info-box-text"><b>Total Yang Belum Terbundling</b></span>
                     <span class="info-box-number">
                         <h4>
-                            {{ abs($daftarPasien->flatMap->getAllBerkas->where('jenis_berkas', 'HASIL')->count() - $daftarPasien->count()) }}
+                            {{ abs($daftarPasien->flatMap->getAllBerkas->count() - $daftarPasien->count()) }}
                         </h4>
                     </span>
                 </div>
@@ -144,7 +144,7 @@
                                 </td>
                                 <td>{{ $item->nm_poli }}</td>
                                 <td>{{ date('d/m/Y', strtotime($item->tgl_masuk)) }}</td>
-                                <td>
+                                {{-- <td>
                                     <div class="badge-group d-flex justify-content-around text-default">
                                         <a data-toggle="modal" data-target="#updateModal{{ $key }}"
                                             href="#"><i class="fas fa-folder"></i></a>
@@ -216,7 +216,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </td>
+                                </td> --}}
                             </tr>
                         @endforeach
                     </tbody>

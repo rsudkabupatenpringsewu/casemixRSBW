@@ -158,11 +158,11 @@ class BundlingFarmasi extends Controller
         $no_rawatSTR = str_replace('/', '', $noRawat);
         $pdfFilename = 'SEP-RESEP-'.$no_rawatSTR.'.pdf';
         Storage::disk('public')->put('file_sepresep_farmasi/' . $pdfFilename, $pdf->output());
-        $cekBerkas = DB::connection('db_con2')->table('file_farmasi')->where('no_rawat', $noRawat)
+        $cekBerkas = DB::table('file_farmasi')->where('no_rawat', $noRawat)
             ->where('jenis_berkas', 'SEP-RESEP')
             ->exists();
         if (!$cekBerkas){
-            DB::connection('db_con2')->table('file_farmasi')->insert([
+            DB::table('file_farmasi')->insert([
                 'no_rkm_medis' => $getpasien->no_rkm_medis,
                 'no_rawat' => $noRawat,
                 'nama_pasein' => $getpasien->nm_pasien,
@@ -184,10 +184,10 @@ class BundlingFarmasi extends Controller
             ->where('no_rawat', '=', $request->no_rawat);
         $getpasien = $cekNorawat->first();
 
-        $cekFileScan = DB::connection('db_con2')->table('file_farmasi')->where('no_rawat', $request->no_rawat)
+        $cekFileScan = DB::table('file_farmasi')->where('no_rawat', $request->no_rawat)
             ->where('jenis_berkas', 'FILE-SCAN-FARMASI')
             ->first();
-        $cekSepResep = DB::connection('db_con2')->table('file_farmasi')->where('no_rawat', $request->no_rawat)
+        $cekSepResep = DB::table('file_farmasi')->where('no_rawat', $request->no_rawat)
             ->where('jenis_berkas', 'SEP-RESEP')
             ->first();
             $pdf = new Fpdi();
@@ -215,11 +215,11 @@ class BundlingFarmasi extends Controller
             $outputPath = public_path('hasil_farmasi_pdf/'.$path_file);
             $pdf->Output($outputPath, 'F');
 
-            $cekBerkas = DB::connection('db_con2')->table('file_farmasi')->where('no_rawat', $request->no_rawat)
+            $cekBerkas = DB::table('file_farmasi')->where('no_rawat', $request->no_rawat)
                 ->where('jenis_berkas', 'HASIL-FARMASI')
                 ->exists();
             if (!$cekBerkas){
-                DB::connection('db_con2')->table('file_farmasi')->insert([
+                DB::table('file_farmasi')->insert([
                     'no_rkm_medis' => $getpasien->no_rkm_medis,
                     'no_rawat' => $request->no_rawat,
                     'nama_pasein' => $getpasien->nm_pasien,

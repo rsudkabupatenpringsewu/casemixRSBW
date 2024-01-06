@@ -104,6 +104,8 @@
                                         <form action="{{ url('gabung-berkas-casemix') }}" method="">
                                             @csrf
                                             <input name="cariNorawat" value="{{ $item->no_rawat }}" hidden>
+                                            <input name="no_rkm_medis" value="{{ $item->no_rkm_medis }}" hidden>
+                                            <input name="nm_pasien" value="{{ $item->nm_pasien }}" hidden>
                                             <input name="tgl1" value="{{ session('tgl1') }}" hidden>
                                             <input name="tgl2" value="{{ session('tgl2') }}" hidden>
                                             {{-- <input name="page" value="{{ session('page') }}" hidden> --}}

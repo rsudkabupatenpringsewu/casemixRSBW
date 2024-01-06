@@ -35,8 +35,7 @@ class SepResepController extends Controller
             ->whereBetween('piutang.tgl_piutang',[$tanggl1, $tanggl2])
             ->orderBy('reg_periksa.no_rawat','asc')
             ->get();
-            $downloadBerkas = DB::connection('db_con2')
-                ->table('file_casemix')
+            $downloadBerkas = DB::table('file_farmasi')
                 ->select('no_rawat')
                 ->whereIn('no_rawat', $daftarPasien->pluck('no_rawat')->toArray())
                 ->where('jenis_berkas', 'SEP-RESEP')
@@ -82,8 +81,7 @@ class SepResepController extends Controller
             })
             ->orderBy('reg_periksa.no_rawat','asc')
             ->get();
-            $downloadBerkas = DB::connection('db_con2')
-                ->table('file_farmasi')
+            $downloadBerkas = DB::table('file_farmasi')
                 ->select('no_rawat')
                 ->whereIn('no_rawat', $daftarPasien->pluck('no_rawat')->toArray())
                 ->where('jenis_berkas', 'SEP-RESEP')

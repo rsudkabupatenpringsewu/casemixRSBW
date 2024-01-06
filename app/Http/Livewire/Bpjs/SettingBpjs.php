@@ -24,8 +24,7 @@ class SettingBpjs extends Component
     public $cariNomor = '';
     public function getListCasemix() {
         $cariNomor = $this->cariNomor;
-        $this->loadDataCasemix = DB::connection('db_con2')
-            ->table('file_casemix')
+        $this->loadDataCasemix = DB::table('file_casemix')
             ->select('file_casemix.id',
                 'file_casemix.no_rkm_medis',
                 'file_casemix.no_rawat',
@@ -43,8 +42,7 @@ class SettingBpjs extends Component
     // UPDATE
     public function deleteDataFile($id, $jenis_berkas, $file) {
         try {
-            DB::connection('db_con2')
-                ->table('file_casemix')
+            DB::table('file_casemix')
                 ->where('id', $id)
                 ->delete();
                 $this->flashMessage('Data berhasil dihapus!', 'warning', 'check');

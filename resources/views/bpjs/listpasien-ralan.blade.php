@@ -21,7 +21,16 @@
                     <span class="info-box-text"><b>Total Yang Sudah Terbundling</b></span>
                     <span class="info-box-number">
                         <h4>
-                            {{ $daftarPasien->flatMap->getAllBerkas->count() }}
+                            <h4>
+                                @php
+                                    $sudahBundling = $daftarPasien
+                                        ->filter(function ($item) {
+                                            return !is_null($item->file);
+                                        })
+                                        ->count();
+                                @endphp
+                                {{$sudahBundling}}
+                            </h4>
                         </h4>
                     </span>
                 </div>
@@ -34,7 +43,7 @@
                     <span class="info-box-text"><b>Total Yang Belum Terbundling</b></span>
                     <span class="info-box-number">
                         <h4>
-                            {{ abs($daftarPasien->flatMap->getAllBerkas->count() - $daftarPasien->count()) }}
+                            {{ abs($sudahBundling - $daftarPasien->count()) }}
                         </h4>
                     </span>
                 </div>
@@ -105,11 +114,11 @@
                         @foreach ($daftarPasien as $key => $item)
                             <tr>
                                 <td class="text-center">
-                                    @forelse ($item->getAllBerkas as $berkas)
-                                        <a href="{{ url('hasil_pdf/' . $berkas->file) }}" download class="text-success">
+                                    @if ($item->file)
+                                        <a href="{{ url('hasil_pdf/' . $item->file) }}" download class="text-success">
                                             <i class="fas fa-download"></i>
                                         </a>
-                                    @empty
+                                    @else
                                         <form action="{{ url('casemix-home-cari') }}" method="">
                                             @csrf
                                             <input name="cariNorawat" value="{{ $item->no_sep }}" hidden>
@@ -118,7 +127,7 @@
                                                 <i class="nav-icon fas fa-receipt"></i>
                                             </button>
                                         </form>
-                                    @endforelse
+                                    @endif
                                 </td>
                                 <td>{{ $item->no_rkm_medis }}</td>
                                 <td>{{ $item->no_rawat }}</td>

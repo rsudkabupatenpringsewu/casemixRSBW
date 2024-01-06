@@ -11,15 +11,8 @@ use Illuminate\Support\Facades\Session;
 class GabungBerkas extends Controller
 {
     function gabungBerkas(Request $request){
-        $noRawat = $request->cariNorawat;
-        $cekNorawat = DB::table('reg_periksa')
-            ->select('reg_periksa.status_lanjut', 'pasien.nm_pasien', 'reg_periksa.no_rkm_medis')
-            ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
-            ->where('no_rawat', '=', $noRawat);
-        $getpasien = $cekNorawat->first();
-
-        $fileCasemix = DB::connection('db_con2')->table('file_casemix')
-            ->where('no_rawat', $noRawat)
+        $fileCasemix = DB::table('file_casemix')
+            ->where('no_rawat', $request->cariNorawat)
             ->whereIn('jenis_berkas', ['INACBG', 'RESUMEDLL', 'SCAN'])
             ->get();
         $cekINACBG = $fileCasemix->where('jenis_berkas', 'INACBG')->first();
@@ -48,25 +41,25 @@ class GabungBerkas extends Controller
             if ($pdfPathSCAN) {
                 importPages($pdf, $pdfPathSCAN);
             }
-            $no_rawatSTR = str_replace('/', '', $noRawat);
+            $no_rawatSTR = str_replace('/', '', $request->cariNorawat);
             $path_file = 'HASIL' . '-' . $no_rawatSTR.'.pdf';
             $outputPath = public_path('hasil_pdf/'.$path_file);
             $pdf->Output($outputPath, 'F');
-            DB::connection('db_con2')->beginTransaction();
+            DB::beginTransaction();
 
-                $cekBerkas = DB::connection('db_con2')->table('file_casemix')
-                    ->where('no_rawat', $noRawat)
+                $cekBerkas = DB::table('file_casemix')
+                    ->where('no_rawat', $request->cariNorawat)
                     ->where('jenis_berkas', 'HASIL')
                     ->exists();
                 if (!$cekBerkas) {
-                    DB::connection('db_con2')->table('file_casemix')->insert([
-                        'no_rkm_medis' => $getpasien->no_rkm_medis,
-                        'no_rawat' => $noRawat,
-                        'nama_pasein' => $getpasien->nm_pasien,
+                    DB::table('file_casemix')->insert([
+                        'no_rkm_medis' => $request->no_rkm_medis,
+                        'no_rawat' => $request->cariNorawat,
+                        'nama_pasein' => $request->nm_pasien,
                         'jenis_berkas' => 'HASIL',
                         'file' => $path_file,
                     ]);
-                    DB::connection('db_con2')->commit();
+                    DB::commit();
                 }
 
             Session::forget('tgl1');

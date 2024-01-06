@@ -15,25 +15,29 @@ class ListPasienRalan extends Controller
 
         $daftarPasien = DB::table('reg_periksa')
             ->select('reg_periksa.no_rkm_medis', 'reg_periksa.no_rawat', 'reg_periksa.status_bayar', 'bridging_sep.no_sep', 'pasien.nm_pasien', 'bridging_sep.tglsep',
-            'poliklinik.nm_poli'
+            'poliklinik.nm_poli', 'file_casemix.file', 'file_casemix.jenis_berkas'
             )
             ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
             ->join('poliklinik','reg_periksa.kd_poli','=','poliklinik.kd_poli')
             ->leftJoin('bridging_sep','bridging_sep.no_rawat','=','reg_periksa.no_rawat')
+            ->leftJoin('file_casemix',function($join) {
+                $join->on('reg_periksa.no_rawat','=','file_casemix.no_rawat')
+                ->where('file_casemix.jenis_berkas','=','HASIL');
+            })
             ->whereBetween('reg_periksa.tgl_registrasi',[$tanggl1, $tanggl2])
             ->where('reg_periksa.status_lanjut','=','Ralan')
             ->where('reg_periksa.kd_pj','=', $penjamnin)
             ->get();
 
-        // GET ALL BERKAS
-        $daftarPasien->map(function ($item) {
-            $item->getAllBerkas = DB::connection('db_con2')
-                ->table('file_casemix')
-                ->select('file')
-                ->where('no_rawat', $item->no_rawat)
-                ->where('jenis_berkas', 'HASIL')
-                ->get();
-        });
+        // // GET ALL BERKAS
+        // $daftarPasien->map(function ($item) {
+        //     $item->getAllBerkas = DB::connection('db_con2')
+        //         ->table('file_casemix')
+        //         ->select('file')
+        //         ->where('no_rawat', $item->no_rawat)
+        //         ->where('jenis_berkas', 'HASIL')
+        //         ->get();
+        // });
 
         session(['tgl1' => $tanggl1]);
         session(['tgl2' => $tanggl2]);
@@ -55,24 +59,28 @@ class ListPasienRalan extends Controller
 
         $daftarPasien = DB::table('reg_periksa')
             ->select('reg_periksa.no_rkm_medis', 'reg_periksa.no_rawat', 'reg_periksa.status_bayar', 'bridging_sep.no_sep', 'pasien.nm_pasien', 'bridging_sep.tglsep',
-            'poliklinik.nm_poli')
+            'poliklinik.nm_poli', 'file_casemix.file', 'file_casemix.jenis_berkas')
             ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
             ->join('poliklinik','reg_periksa.kd_poli','=','poliklinik.kd_poli')
             ->leftJoin('bridging_sep','bridging_sep.no_rawat','=','reg_periksa.no_rawat')
+            ->leftJoin('file_casemix',function($join) {
+                $join->on('reg_periksa.no_rawat','=','file_casemix.no_rawat')
+                ->where('file_casemix.jenis_berkas','=','HASIL');
+            })
             ->whereBetween('reg_periksa.tgl_registrasi',[$tanggl1, $tanggl2])
             ->where('reg_periksa.status_lanjut','=','Ralan')
             ->where('reg_periksa.kd_pj','=', $penjamnin)
             ->get();
 
-         // GET ALL BERKAS
-         $daftarPasien->map(function ($item) {
-            $item->getAllBerkas = DB::connection('db_con2')
-                ->table('file_casemix')
-                ->select('file')
-                ->where('no_rawat', $item->no_rawat)
-                ->where('jenis_berkas', 'HASIL')
-                ->get();
-        });
+        //  // GET ALL BERKAS
+        //  $daftarPasien->map(function ($item) {
+        //     $item->getAllBerkas = DB::connection('db_con2')
+        //         ->table('file_casemix')
+        //         ->select('file')
+        //         ->where('no_rawat', $item->no_rawat)
+        //         ->where('jenis_berkas', 'HASIL')
+        //         ->get();
+        // });
 
         session(['tgl1' => $request->tgl1]);
         session(['tgl2' => $request->tgl2]);

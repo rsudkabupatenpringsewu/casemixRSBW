@@ -148,7 +148,7 @@ class ViewSepResepController extends Controller
                     $itemresep->detailberkasResep = $detailberkasResep;
                 }
         }
-        $cekBerkas = DB::connection('db_con2')->table('file_farmasi')
+        $cekBerkas = DB::table('file_farmasi')
             ->select('jenis_berkas')
             ->where('no_rawat', $noRawat)
             ->get();
@@ -171,11 +171,11 @@ class ViewSepResepController extends Controller
             $no_rawatSTR = str_replace('/', '', $request->no_rawat);
             $path_file = 'FILE-SCAN-FARMASI' . '-' . $no_rawatSTR. '.' . $file->getClientOriginalExtension();
             Storage::disk('public')->put('file_scan_farmasi/' . $path_file, file_get_contents($file));
-            $cekBerkas = DB::connection('db_con2')->table('file_farmasi')->where('no_rawat', $request->no_rawat)
+            $cekBerkas = DB::table('file_farmasi')->where('no_rawat', $request->no_rawat)
                 ->where('jenis_berkas', 'FILE-SCAN-FARMASI')
                 ->exists();
             if (!$cekBerkas){
-                DB::connection('db_con2')->table('file_farmasi')->insert([
+                DB::table('file_farmasi')->insert([
                     'no_rkm_medis' => $request->no_rkm_medis,
                     'no_rawat' => $request->no_rawat,
                     'nama_pasein' => $request->nama_pasein,
@@ -189,7 +189,7 @@ class ViewSepResepController extends Controller
 
     // DOWNLOAD BERKAS RESEP
     function DonwloadSEPResep(Request $request){
-        $cekBerkas = DB::connection('db_con2')->table('file_farmasi')
+        $cekBerkas = DB::table('file_farmasi')
             ->select('file')
             ->where('jenis_berkas', 'SEP-RESEP')
             ->where('no_rawat', $request->no_rawat)
@@ -199,7 +199,7 @@ class ViewSepResepController extends Controller
     }
     // DOWNLOAD HASIL GABUNG
     function DonwloadHasilGabung(Request $request){
-        $cekBerkas = DB::connection('db_con2')->table('file_farmasi')
+        $cekBerkas = DB::table('file_farmasi')
             ->select('file')
             ->where('jenis_berkas', 'HASIL-FARMASI')
             ->where('no_rawat', $request->no_rawat)

@@ -492,11 +492,11 @@ class PrintCesmikController extends Controller
         $no_rawatSTR = str_replace('/', '', $noRawat);
         $pdfFilename = 'RESUMEDLL-'.$no_rawatSTR.'.pdf';
         Storage::disk('public')->put('resume_dll/' . $pdfFilename, $pdf->output());
-        $cekBerkas = DB::connection('db_con2')->table('file_casemix')->where('no_rawat', $noRawat)
+        $cekBerkas = DB::table('file_casemix')->where('no_rawat', $noRawat)
             ->where('jenis_berkas', 'RESUMEDLL')
             ->exists();
         if (!$cekBerkas){
-            DB::connection('db_con2')->table('file_casemix')->insert([
+            DB::table('file_casemix')->insert([
                 'no_rkm_medis' => $getpasien->no_rkm_medis,
                 'no_rawat' => $noRawat,
                 'nama_pasein' => $getpasien->nm_pasien,

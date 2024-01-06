@@ -36,11 +36,11 @@ class BpjsController extends Controller
             $no_rawatSTR = str_replace('/', '', $request->no_rawat);
             $path_file = 'INACBG' . '-' . $no_rawatSTR. '.' . $file->getClientOriginalExtension();
             Storage::disk('public')->put('file_inacbg/' . $path_file, file_get_contents($file));
-            $cekBerkas = DB::connection('db_con2')->table('file_casemix')->where('no_rawat', $request->no_rawat)
+            $cekBerkas = DB::table('file_casemix')->where('no_rawat', $request->no_rawat)
                 ->where('jenis_berkas', 'INACBG')
                 ->exists();
             if (!$cekBerkas){
-                DB::connection('db_con2')->table('file_casemix')->insert([
+                DB::table('file_casemix')->insert([
                     'no_rkm_medis' => $request->no_rkm_medis,
                     'no_rawat' => $request->no_rawat,
                     'nama_pasein' => $request->nama_pasein,
@@ -56,11 +56,11 @@ class BpjsController extends Controller
             $no_rawatSTR = str_replace('/', '', $request->no_rawat);
             $path_file = 'SCAN' . '-' . $no_rawatSTR. '.' . $file->getClientOriginalExtension();
             Storage::disk('public')->put('file_scan/' . $path_file, file_get_contents($file));
-            $cekBerkas = DB::connection('db_con2')->table('file_casemix')->where('no_rawat', $request->no_rawat)
+            $cekBerkas = DB::table('file_casemix')->where('no_rawat', $request->no_rawat)
                 ->where('jenis_berkas', 'SCAN')
                 ->exists();
             if (!$cekBerkas){
-                DB::connection('db_con2')->table('file_casemix')->insert([
+                DB::table('file_casemix')->insert([
                     'no_rkm_medis' => $request->no_rkm_medis,
                     'no_rawat' => $request->no_rawat,
                     'nama_pasein' => $request->nama_pasein,

@@ -21,25 +21,21 @@ class ListPasienRanap extends Controller
                 'bridging_sep.no_sep',
                 'bridging_sep.jnspelayanan',
                 'pasien.nm_pasien',
-                'poliklinik.nm_poli')
+                'poliklinik.nm_poli',
+                'file_casemix.file',
+                'file_casemix.jenis_berkas')
             ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
             ->leftJoin('bridging_sep','bridging_sep.no_rawat','=','reg_periksa.no_rawat')
             ->join('poliklinik','reg_periksa.kd_poli','=','poliklinik.kd_poli')
             ->leftJoin('kamar_inap','kamar_inap.no_rawat','=','reg_periksa.no_rawat')
+            ->leftJoin('file_casemix',function($join) {
+                $join->on('reg_periksa.no_rawat','=','file_casemix.no_rawat')
+                ->where('file_casemix.jenis_berkas','=','HASIL');
+            })
             ->whereBetween('kamar_inap.tgl_keluar',[$tanggl1, $tanggl2])
             ->where('reg_periksa.status_lanjut','=','Ranap')
             ->where('reg_periksa.kd_pj','=', $penjamnin)
             ->get();
-
-        // GET ALL BERKAS
-        $daftarPasien->map(function ($item) {
-            $item->getAllBerkas = DB::connection('db_con2')
-                ->table('file_casemix')
-                ->select('file')
-                ->where('no_rawat', $item->no_rawat)
-                ->where('jenis_berkas', 'HASIL')
-                ->get();
-        });
 
         session(['tgl1' => $tanggl1]);
         session(['tgl2' => $tanggl2]);
@@ -66,25 +62,21 @@ class ListPasienRanap extends Controller
                     'bridging_sep.no_sep',
                     'bridging_sep.jnspelayanan',
                     'pasien.nm_pasien',
-                    'poliklinik.nm_poli')
+                    'poliklinik.nm_poli',
+                    'file_casemix.file',
+                    'file_casemix.jenis_berkas')
             ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
             ->leftJoin('bridging_sep','bridging_sep.no_rawat','=','reg_periksa.no_rawat')
             ->join('poliklinik','reg_periksa.kd_poli','=','poliklinik.kd_poli')
             ->leftJoin('kamar_inap','kamar_inap.no_rawat','=','reg_periksa.no_rawat')
+            ->leftJoin('file_casemix',function($join) {
+                $join->on('reg_periksa.no_rawat','=','file_casemix.no_rawat')
+                ->where('file_casemix.jenis_berkas','=','HASIL');
+            })
             ->whereBetween('kamar_inap.tgl_keluar',[$tanggl1, $tanggl2])
             ->where('reg_periksa.status_lanjut','=','Ranap')
             ->where('reg_periksa.kd_pj','=', $penjamnin)
             ->get();
-
-        // GET ALL BERKAS
-        $daftarPasien->map(function ($item) {
-            $item->getAllBerkas = DB::connection('db_con2')
-                ->table('file_casemix')
-                ->select('file')
-                ->where('no_rawat', $item->no_rawat)
-                ->where('jenis_berkas', 'HASIL')
-                ->get();
-        });
 
         session(['tgl1' => $request->tgl1]);
         session(['tgl2' => $request->tgl2]);

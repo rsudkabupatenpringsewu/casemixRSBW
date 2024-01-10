@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RM\BerkasRM;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Bpjs\DataInacbg;
@@ -117,6 +118,10 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     Route::get('/antrian-pendaftaran', [AntrianPendaftaran::class, 'AntrianPendaftaran'])->middleware('permision-rsbw:registrasi');
     Route::get('/cari-loket', [AntrianPendaftaran::class, 'DisplayAntrian'])->middleware('permision-rsbw:edit_registrasi');
     Route::get('/setting-antrian', [AntrianPendaftaran::class, 'SetingAntrian'])->middleware('permision-rsbw:edit_registrasi');
+
+    // RM
+    Route::get('/berkas-rm', [BerkasRM::class, 'BerkasRM']);
+
 });
     Route::get('/display-petugas', [AntrianPendaftaran::class, 'DisplayPetugas']);
 });

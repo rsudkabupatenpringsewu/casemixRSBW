@@ -324,7 +324,7 @@
                             @endif
                         </li>
                         <li class="nav-header user-panel"></li>
-                        <li class="nav-header">Pelayanan</li>
+                        <li class="nav-header">Pelayanan - RM</li>
 
                         <li class="nav-item">{{-- menu-open --}}
                             <a href="#" class="nav-link">{{-- active --}}
@@ -352,6 +352,27 @@
                                     </li>
                                 </ul>
                             @endif
+                        </li>
+                        <li class="nav-item">{{-- menu-open --}}
+                            <a href="#" class="nav-link">{{-- active --}}
+                                <i class="nav-icon fas fa-file"></i>
+                                <p>
+                                    E-Rekam Medis
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('berkas-rm') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Berkas Pasien BPJS</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item mt-5">
+                        </li>
+                        <li class="nav-item mt-5">
                         </li>
                     </ul>
                 </nav>

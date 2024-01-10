@@ -29,16 +29,6 @@ class ListPasienRalan extends Controller
             ->where('reg_periksa.kd_pj','=', $penjamnin)
             ->get();
 
-        // // GET ALL BERKAS
-        // $daftarPasien->map(function ($item) {
-        //     $item->getAllBerkas = DB::connection('db_con2')
-        //         ->table('file_casemix')
-        //         ->select('file')
-        //         ->where('no_rawat', $item->no_rawat)
-        //         ->where('jenis_berkas', 'HASIL')
-        //         ->get();
-        // });
-
         session(['tgl1' => $tanggl1]);
         session(['tgl2' => $tanggl2]);
         // session(['page' => $request->page]);

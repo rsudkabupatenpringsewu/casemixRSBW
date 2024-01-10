@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class MinimalStokObat extends Component
 {
-    public $bangsal = '';
+    public $bangsal = 'DepRI';
     public $stok_minimal_medis;
 
     public function mount()

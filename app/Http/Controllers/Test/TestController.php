@@ -15,29 +15,28 @@ class TestController extends Controller
 {
 
     function Test(){
+        $data = [
+        ['id' =>	'', 'no_rkm_medis' =>	'362359'	, 'no_rawat' => '	2023/12/31/000008	', 'nama_pasein' => '	YULIAN SARI	', 'jenis_berkas' => '	HASIL	', 'file' => '	HASIL-20231231000008.pdf	'],
+        ['id' =>	''	, 'no_rawat' => '	2023/12/31/000036	', 'nama_pasein' => '	RINAWATI	', 'jenis_berkas' => '	HASIL	', 'file' => '	HASIL-20231231000036.pdf	'],
 
-       $result = DB::connection('db_con2')
-       ->table('file_casemix')
-       ->select('file_casemix.id', 'file_casemix.no_rkm_medis', 'file_casemix.no_rawat', 'file_casemix.nama_pasein', 'file_casemix.jenis_berkas', 'file_casemix.file')
-       ->paginate(500);
-        return view('test.test', [
-            'result' => $result,
-        ]);
+        ];
+
+        foreach ($data as $entry) {
+            $existingEntry = DB::table('file_casemix')
+            ->where('no_rawat', $entry['no_rawat'])
+            ->where('jenis_berkas', $entry['jenis_berkas'])
+            ->first();
+
+            if (!$existingEntry) {
+                DB::table('file_casemix')->insert($entry);
+                echo "Data inserted for ID: " . $entry['no_rawat'] . "<br/>";
+            } else {
+                echo "Data already exists for ID: " . $entry['no_rawat'] . "<br/>";
+            }
+        }
     }
 
     function TestDelete(Request $request) {
-        DB::connection('db_con2')
-        ->table('file_casemix')
-        ->where('no_rawat', $yourNoRawatValue) // Replace $yourNoRawatValue with the actual value you want to match
-        ->delete();
 
     }
-
-
-    function TestCari(Request $request){
-        $cariNomor = $request->cariNomor;
-        $tanggl1 = $request->tgl1;
-        $tanggl2 = $request->tgl2;
-    }
-
 }

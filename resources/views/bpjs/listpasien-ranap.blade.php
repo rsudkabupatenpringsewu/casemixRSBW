@@ -108,7 +108,6 @@
                             <th>Bayar</th>
                             <th>Asal</th>
                             <th>Tgl Masuk</th>
-                            <th>Act</th>
                         </tr>
                     </thead>
                     <tbody>

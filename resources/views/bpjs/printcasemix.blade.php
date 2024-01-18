@@ -357,7 +357,13 @@
                                 </tr>
                                 <tr style="vertical-align: top;">
                                     <td>Umur</td>
-                                    <td>: {{ $getResume->umurdaftar }} Th</td>
+                                    @php
+                                        $tanggal_lahir_obj = date_create($getResume->tgl_lahir);
+                                        $today = date_create('today');
+                                        $umur = date_diff($tanggal_lahir_obj, $today);
+                                        $umur_text = $umur->y == 0 ? $umur->m . ' Bulan' : $umur->y . ' Tahun, ' . $umur->m . ' Bulan';
+                                    @endphp
+                                    <td>: {{ $umur_text }}</td>
                                     <td>Ruang</td>
                                     <td>:
                                         @if ($getKamarInap)
@@ -692,7 +698,13 @@
                                 </tr>
                                 <tr style="vertical-align: top;">
                                     <td>Umur</td>
-                                    <td>: {{ $getResume->umurdaftar }} Th</td>
+                                    @php
+                                        $tanggal_lahir_obj = date_create($getResume->tgl_lahir);
+                                        $today = date_create('today');
+                                        $umur = date_diff($tanggal_lahir_obj, $today);
+                                        $umur_text = $umur->y == 0 ? $umur->m . ' Bulan' : $umur->y . ' Tahun, ' . $umur->m . ' Bulan';
+                                    @endphp
+                                    <td>: {{ $umur_text }}</td>
                                     <td>Ruang</td>
                                     <td>: {{ $getResume->nm_poli }} </td>
                                 </tr>

@@ -39,7 +39,7 @@ class SettingBpjs extends Component
             ->get();
     }
 
-    // UPDATE
+    // DELETE
     public function deleteDataFile($id, $jenis_berkas, $file) {
         try {
             DB::table('file_casemix')
@@ -68,7 +68,6 @@ class SettingBpjs extends Component
 
     }
 
-    // ALLERT
     // ALLERT FUNTION
     private function flashMessage($message, $color, $icon){
         Session::flash('message', $message);

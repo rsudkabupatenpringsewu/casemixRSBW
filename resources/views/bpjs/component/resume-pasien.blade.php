@@ -5,20 +5,22 @@
             <div class="card p-4 d-flex justify-content-center align-items-center">
                 <table border="0px" width="1000px">
                     <tr>
-                        <td rowspan="3"> <img src="data:image/png;base64,{{ base64_encode($getSetting->logo) }}" alt="Girl in a jacket" width="80" height="80">
+                        <td rowspan="3"> <img src="data:image/png;base64,{{ base64_encode($getSetting->logo) }}"
+                                alt="Girl in a jacket" width="80" height="80">
                         </td>
                         <td class="text-center">
-                            <h4>{{$getSetting->nama_instansi}}</h4>
+                            <h4>{{ $getSetting->nama_instansi }}</h4>
                         </td>
                         <td class="text-center" width="100px">
                         </td>
                     </tr>
                     <tr class="text-center mr-5">
-                        <td>{{$getSetting->alamat_instansi}} , {{$getSetting->kabupaten}}, {{$getSetting->propinsi}}
-                            {{$getSetting->kontak}}</td>
+                        <td>{{ $getSetting->alamat_instansi }} , {{ $getSetting->kabupaten }},
+                            {{ $getSetting->propinsi }}
+                            {{ $getSetting->kontak }}</td>
                     </tr>
                     <tr class="text-center">
-                        <td> E-mail : {{$getSetting->email}}</td>
+                        <td> E-mail : {{ $getSetting->email }}</td>
                     </tr>
                 </table>
                 <hr width="1000px" class="mt-1 mb-0"
@@ -111,7 +113,7 @@
                         <td width="250px" class="text-center">
                             Dokter Penanggung Jawab
                             <div class="barcode mt-1">
-                                <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di '.$getSetting->nama_instansi.', Kabupaten/Kota '.$getSetting->kabupaten.' Ditandatangani secara elektronik oleh dr. Sanjoto Santibudi, Sp.KFR ID ' . $getResume->kd_dokter . ' ' . $getResume->tgl_registrasi, 'QRCODE') }}"
+                                <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di ' . $getSetting->nama_instansi . ', Kabupaten/Kota ' . $getSetting->kabupaten . ' Ditandatangani secara elektronik oleh dr. Sanjoto Santibudi, Sp.KFR ID ' . $getResume->kd_dokter . ' ' . $getResume->tgl_registrasi, 'QRCODE') }}"
                                     alt="barcode" width="80px" height="75px" />
                             </div>
                             dr. Sanjoto Santibudi, Sp.KFR
@@ -127,18 +129,19 @@
                 <div class="card py-4  d-flex justify-content-center align-items-center">
                     <table border="0px" width="1000px">
                         <tr>
-                            <td rowspan="3"> <img src="data:image/png;base64,{{ base64_encode($getSetting->logo) }}" alt="Girl in a jacket" width="80"
-                                    height="80"></td>
+                            <td rowspan="3"> <img src="data:image/png;base64,{{ base64_encode($getSetting->logo) }}"
+                                    alt="Girl in a jacket" width="80" height="80"></td>
                             <td class="text-center">
-                                <h4>{{$getSetting->nama_instansi}} </h4>
+                                <h4>{{ $getSetting->nama_instansi }} </h4>
                             </td>
                         </tr>
                         <tr class="text-center">
-                            <td>{{$getSetting->alamat_instansi}} , {{$getSetting->kabupaten}}, {{$getSetting->propinsi}}
-                                {{$getSetting->kontak}}</td>
+                            <td>{{ $getSetting->alamat_instansi }} , {{ $getSetting->kabupaten }},
+                                {{ $getSetting->propinsi }}
+                                {{ $getSetting->kontak }}</td>
                         </tr>
                         <tr class="text-center">
-                            <td> E-mail : {{$getSetting->email}}</td>
+                            <td> E-mail : {{ $getSetting->email }}</td>
                         </tr>
                         <tr class="text-center">
                             <td colspan="2">
@@ -155,7 +158,12 @@
                         </tr>
                         <tr style="vertical-align: top;">
                             <td width="100px">Umur</td>
-                            <td width="400px">: {{ $getResume->umurdaftar }} Th</td>
+                            @php
+                                $tanggal_lahir_obj = date_create($getResume->tgl_lahir);
+                                $today = date_create('today');
+                                $umur = date_diff($tanggal_lahir_obj, $today);
+                            @endphp
+                            <td width="400px">: {{ $umur->y . ' Tahun, ' . $umur->m . ' Bulan' }}</td>
                             <td width="100px">Ruang</td>
                             <td width="200px">:
                                 @if ($getKamarInap)
@@ -434,7 +442,7 @@
                             <td width="250px" class="text-center">
                                 Dokter Penanggung Jawab
                                 <div class="barcode mt-1">
-                                    <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di '.$getSetting->nama_instansi.', Kabupaten/Kota '.$getSetting->kabupaten.' Ditandatangani secara elektronik oleh ' . $getResume->nm_dokter . ' ID ' . $getResume->kd_dokter . ' ' . $getKamarInap->tgl_keluar, 'QRCODE') }}"
+                                    <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di ' . $getSetting->nama_instansi . ', Kabupaten/Kota ' . $getSetting->kabupaten . ' Ditandatangani secara elektronik oleh ' . $getResume->nm_dokter . ' ID ' . $getResume->kd_dokter . ' ' . $getKamarInap->tgl_keluar, 'QRCODE') }}"
                                         alt="barcode" width="80px" height="75px" />
                                 </div>
                                 {{ $getResume->nm_dokter }}
@@ -443,7 +451,7 @@
                             <td width="250px" class="text-center">
                                 Dokter Penanggung Jawab2
                                 <div class="barcode mt-1">
-                                    <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di '.$getSetting->nama_instansi.', Kabupaten/Kota '.$getSetting->kabupaten.' Ditandatangani secara elektronik oleh ' . $getResume->nm_dokter . ' ID ' . $getResume->kd_dokter . ' ' . $getKamarInap->tgl_keluar, 'QRCODE') }}"
+                                    <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di ' . $getSetting->nama_instansi . ', Kabupaten/Kota ' . $getSetting->kabupaten . ' Ditandatangani secara elektronik oleh ' . $getResume->nm_dokter . ' ID ' . $getResume->kd_dokter . ' ' . $getKamarInap->tgl_keluar, 'QRCODE') }}"
                                         alt="barcode" width="80px" height="75px" />
                                 </div>
                                 {{ $getResume->nm_dokter }}
@@ -458,18 +466,20 @@
                 <div class="card py-4  d-flex justify-content-center align-items-center">
                     <table border="0px" width="1000px">
                         <tr>
-                            <td rowspan="3"> <img src="data:image/png;base64,{{ base64_encode($getSetting->logo) }}" alt="Girl in a jacket" width="80"
-                                    height="80"></td>
+                            <td rowspan="3"> <img
+                                    src="data:image/png;base64,{{ base64_encode($getSetting->logo) }}"
+                                    alt="Girl in a jacket" width="80" height="80"></td>
                             <td class="text-center">
-                                <h4>{{$getSetting->nama_instansi}} </h4>
+                                <h4>{{ $getSetting->nama_instansi }} </h4>
                             </td>
                         </tr>
                         <tr class="text-center">
-                            <td>{{$getSetting->alamat_instansi}} , {{$getSetting->kabupaten}}, {{$getSetting->propinsi}}
-                                {{$getSetting->kontak}}</td>
+                            <td>{{ $getSetting->alamat_instansi }} , {{ $getSetting->kabupaten }},
+                                {{ $getSetting->propinsi }}
+                                {{ $getSetting->kontak }}</td>
                         </tr>
                         <tr class="text-center">
-                            <td> E-mail : {{$getSetting->email}}</td>
+                            <td> E-mail : {{ $getSetting->email }}</td>
                         </tr>
                         <tr class="text-center">
                             <td colspan="2">
@@ -486,7 +496,13 @@
                         </tr>
                         <tr style="vertical-align: top;">
                             <td width="100px">Umur</td>
-                            <td width="400px">: {{ $getResume->umurdaftar }} Th</td>
+                            @php
+                                $tanggal_lahir_obj = date_create($getResume->tgl_lahir);
+                                $today = date_create('today');
+                                $umur = date_diff($tanggal_lahir_obj, $today);
+                                $umur_text = $umur->y == 0 ? $umur->m . ' Bulan' : $umur->y . ' Tahun, ' . $umur->m . ' Bulan';
+                            @endphp
+                            <td width="400px">: {{ $umur_text }}</td>
                             <td width="100px">Ruang</td>
                             <td width="200px">: {{ $getResume->nm_poli }} </td>
                         </tr>
@@ -680,7 +696,7 @@
                             <td width="250px" class="text-center">
                                 Dokter Penanggung Jawab2
                                 <div class="barcode mt-1">
-                                    <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di '.$getSetting->nama_instansi.', Kabupaten/Kota '.$getSetting->kabupaten.' Ditandatangani secara elektronik oleh ' . $getResume->nm_dokter . ' ID ' . $getResume->kd_dokter . ' ' . $getResume->tgl_registrasi, 'QRCODE') }}"
+                                    <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di ' . $getSetting->nama_instansi . ', Kabupaten/Kota ' . $getSetting->kabupaten . ' Ditandatangani secara elektronik oleh ' . $getResume->nm_dokter . ' ID ' . $getResume->kd_dokter . ' ' . $getResume->tgl_registrasi, 'QRCODE') }}"
                                         alt="barcode" width="80px" height="75px" />
                                 </div>
                                 {{ $getResume->nm_dokter }}

@@ -119,7 +119,7 @@
                         <td>{{ $item->no_rawat }}</td>
                         <td>{{ $item->nm_pasien }}</td>
                         <td class="text-center">{{ $nama_file }}</td>
-                        <td>
+                        <td class="text-center">
                             <a href="{{ url($folder . $item->file) }}" download class="text-success">
                                 <i class="fas fa-download"></i>
                             </a>

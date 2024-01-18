@@ -40,16 +40,19 @@ class SettingPosisiDokter extends Component
     // EDIT LOKET DOKTER
     public $confirmingEdit = false;
     public $selectedKdDokter;
+    public $selectedNmDokter;
     public $selectedKdLoket;
-    public function editLoketConfirm($kd_dokter, $kd_loket) {
+    public function editLoketConfirm($kd_dokter, $nm_dokter, $kd_loket) {
         $this->confirmingEdit = true;
         $this->selectedKdDokter = $kd_dokter;
+        $this->selectedNmDokter = $nm_dokter;
         $this->selectedKdLoket = $kd_loket;
     }
     public function editLoket() {
         try {
             DB::table('list_dokter')->updateOrInsert(
                 ['kd_dokter' => $this->selectedKdDokter],
+                ['nama_dokter' => $this->selectedNmDokter],
                 ['kd_loket' => $this->selectedKdLoket]
             );
             $this->flashMessage('Posisi Dokter Dipindahkan Ke '.$this->selectedKdLoket, 'success', 'check');

@@ -36,7 +36,7 @@
                                             $typeBtn = $data->kd_loket == $item->kd_loket ? 'btn-primary' : 'btn-outline-primary';
                                         @endphp
                                         <button type="button" class="btn {{ $typeBtn }} btn-xs mx-1"
-                                            wire:click.prevent="editLoketConfirm('{{ $item->kd_dokter }}', '{{ $data->kd_loket }}')">
+                                            wire:click.prevent="editLoketConfirm('{{ $item->kd_dokter }}', '{{ $item->nm_dokter }}', '{{ $data->kd_loket }}')">
                                             {{ $data->nama_loket }}
                                         </button>
                                     @endforeach

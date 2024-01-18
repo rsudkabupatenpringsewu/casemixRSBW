@@ -11,6 +11,12 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     @stack('styles')
+    <script type="text/javascript">
+        setTimeout(function(){
+            location.reload();
+        }, 900000); // 30,000 milidetik (30 detik)
+    </script>
+
 </head>
 <style>
     .pricing-card-title {

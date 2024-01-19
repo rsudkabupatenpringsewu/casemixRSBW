@@ -16,7 +16,7 @@
                             @if ($item->getPasien->isEmpty())
                                 <div class="container d-flex justify-content-center align-items-center"
                                     style="height: 300px">
-                                    <h1 class="display-3 font-weight-bold">Tidak Ada Antrian</h1>
+                                    <h1 class="font-weight-bold">Tidak Ada Antrian</h1>
                                 </div>
                             @else
                                 @foreach ($item->getPasien as $item)

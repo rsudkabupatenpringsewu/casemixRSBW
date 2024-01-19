@@ -52,8 +52,7 @@ class SettingPosisiDokter extends Component
         try {
             DB::table('list_dokter')->updateOrInsert(
                 ['kd_dokter' => $this->selectedKdDokter],
-                ['nama_dokter' => $this->selectedNmDokter],
-                ['kd_loket' => $this->selectedKdLoket]
+                ['nama_dokter' => $this->selectedNmDokter, 'kd_loket' => $this->selectedKdLoket]
             );
             $this->flashMessage('Posisi Dokter Dipindahkan Ke '.$this->selectedKdLoket, 'success', 'check');
         } catch (\Exception $e) {

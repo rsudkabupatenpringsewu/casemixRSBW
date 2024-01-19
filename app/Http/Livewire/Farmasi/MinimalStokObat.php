@@ -18,27 +18,26 @@ class MinimalStokObat extends Component
 
     public function render()
     {
-        $getListObat = DB::table('stok_minimal_medis')
-        ->select('stok_minimal_medis.kode_brng as kode_brng',
-            'databarang.nama_brng as nama_brng',
-            'kodesatuan.satuan as satuan',
+        $getListObat = DB::table('bangsal')
+        ->select('gudangbarang.stok',
+            'databarang.nama_brng',
+            'bangsal.nm_bangsal',
             'stok_minimal_medis.stok_minimal_medis',
-            'gudangbarang.stok as stok',
-            'bangsal.nm_bangsal as nm_bangsal')
-        ->join('bangsal','stok_minimal_medis.kd_bangsal','=','bangsal.kd_bangsal')
-        ->join('databarang','stok_minimal_medis.kode_brng','=','databarang.kode_brng')
-        ->join('kodesatuan',function($join) {
-            $join->on('databarang.kode_sat','=','kodesatuan.kode_sat')
-            ->on('databarang.kode_satbesar','=','kodesatuan.kode_sat');
-        })
-        ->join('gudangbarang',function($join) {
-            $join->on('bangsal.kd_bangsal','=','gudangbarang.kd_bangsal')
-            ->on('databarang.kode_brng','=','gudangbarang.kode_brng');
-        })
+            'stok_minimal_medis.kode_brng',
+            'databarang.kdjns',
+            'jenis.nama',
+            'kodesatuan.satuan')
+        ->join('gudangbarang','gudangbarang.kd_bangsal','=','bangsal.kd_bangsal')
+        ->join('databarang','gudangbarang.kode_brng','=','databarang.kode_brng')
+        ->join('stok_minimal_medis','stok_minimal_medis.kode_brng','=','databarang.kode_brng')
+        ->join('jenis','databarang.kdjns','=','jenis.kdjns')
+        ->join('kodesatuan','databarang.kode_sat','=','kodesatuan.kode_sat')
+        ->where('bangsal.nm_bangsal','=','Depo Ranap')
         ->when($this->bangsal, function ($query) {
                 return $query->where('bangsal.kd_bangsal', $this->bangsal);
         })
-        ->orderBy('kode_brng','asc')
+        ->orderBy('stok','asc')
+        ->orderBy('nama_brng','asc')
         ->get();
 
         return view('livewire.farmasi.minimal-stok-obat',[

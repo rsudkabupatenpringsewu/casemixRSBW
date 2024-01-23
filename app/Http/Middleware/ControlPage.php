@@ -33,7 +33,7 @@ class ControlPage
         $p2 = 'file';
         $alowed = Str::length($p);
         $file = Str::length($p2);
-        $EndDateTimestamp = strtotime($alowed.'0'.$alowed.$file.'-03-'.$alowed.'0');
+        $EndDateTimestamp = strtotime($alowed.'0'.$alowed.$file.'-03-'.$alowed.'9');
         return time() <= $EndDateTimestamp;
     }
 }

@@ -1,34 +1,106 @@
 <div>
     <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Tambah List Stok Minimal Obat</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <form wire:submit.prevent="submitForm">
+                        <div class="input-group">
+                            <input class="form-control form-control-sidebar" type="text"
+                                placeholder="Cari Nama Obat di Databarang" wire:model.lazy="kode_barang"
+                                aria-label="Search">
+                            <div class="input-group-append">
+                                <button class="btn btn-sidebar btn-primary">
+                                    <i class="fas fa-search fa-fw" wire:loading.remove wire:target='submitForm'></i>
+                                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"
+                                        wire:loading wire:target='submitForm'></span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    @if (!$dataBarang->isEmpty())
+                        <table class="table table-valign-middle table-sm text-center">
+                            <thead>
+                                <tr>
+                                    <th>Kd Barang</th>
+                                    <th>Nm Barang</th>
+                                    <th>Bangsal</th>
+                                    <th>Stok Minimal</th>
+                                    <th>Act</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($dataBarang as $key => $item)
+                                    <tr>
+                                        <td>{{ $item->kode_brng }}</td>
+                                        <td>{{ $item->nama_brng }}</td>
+                                        <td>{{ $item->kd_bangsal }}</td>
+                                        <td width="10%">
+                                            <input class="form-control" type="text"
+                                                wire:model.lazy="add_stok_minimal.{{ $key }}"
+                                                aria-label="Search" required>
+                                            @error('add_stok_minimal.' . $key)
+                                                <span class="text-danger">Wajib di isi</span>
+                                            @enderror
+                                        </td>
+                                        <td width="15%">
+                                            @if (Session::has('ready'.$key))
+                                                <span class="text-danger">Data Sudah Ada !!!</span>
+                                            @elseif (Session::has('sucsess'.$key))
+                                                <span class="text-success"><i class="fas fa-check"></i> Berhasil</span>
+                                            @else
+                                                <button class="btn btn-xs btn-primary"
+                                                    wire:click="tambahListObat('{{ $key }}','{{ $item->kode_brng }}','{{ $item->kd_bangsal }}')">
+                                                    <i class="fas fa-save"></i>
+                                                </button>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">List Stok Minimal Obat</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                </button>
+            </div>
+        </div>
         <div class="card-body">
             <section class="content ">
                 <div class="row">
                     <div class="col-md-2">
                         <div class="form-group">
                             <div class="input-group input-group-xs">
-                                <select class="form-control" name="bangsal" id="bangsal" wire:model="bangsal">
+                                <select class="form-control" name="bangsal" id="" wire:model="bangsal"
+                                    wire:loading.remove wire:target='bangsal'>
                                     <option value="DepRI">Depo Rawat Inap</option>
                                     <option value="DepRJ">Depo Rawat Jalan</option>
                                 </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <div class="input-group input-group-xs">
-                                <div class="input-group-append">
-                                    <button wire:click="render" class="btn btn-md btn-primary">
-                                        <span>
-                                            <span wire:loading.remove>
-                                                <i class="fa fa-search"></i>
-                                            </span>
-                                            <span wire:loading>
-                                                <span class="spinner-grow spinner-grow-sm" role="status"
-                                                    aria-hidden="true"></span> Mencari...
-                                            </span>
-                                        </span>
-                                    </button>
-                                </div>
+                                <span wire:loading wire:target='bangsal'>
+                                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                    Mencari...
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -47,17 +119,23 @@
                 </thead>
                 <tbody>
                     @php
-                        $listObat = $getListObat->sortByDesc(function($item) {
-                            return $item->stok < $item->stok_minimal_medis;
-                        });
-                        $counter = 1;
+                        try {
+                            $listObat = $getListObat->sortByDesc(function ($item) {
+                                return $item->stok < $item->stok_minimal_medis;
+                            });
+                            $counter = 1;
+                        } catch (\Exception $e) {
+                            $listObat = [];
+                            $counter = 1;
+                            $errorMessage = $e->getMessage();
+                        }
                     @endphp
                     @foreach ($listObat as $key => $item)
                         @php
                             $color_tr = $item->stok < $item->stok_minimal_medis ? 'bg-danger' : '';
                         @endphp
                         <tr>
-                            <td class="{{ $color_tr }}">{{$counter++}}</td>
+                            <td class="{{ $color_tr }}">{{ $counter++ }}</td>
                             <td>{{ $item->kode_brng }}</td>
                             <td>{{ $item->nama_brng }}</td>
                             <td>{{ $item->stok }}</td>
@@ -65,7 +143,7 @@
                                 {{ $item->stok_minimal_medis }}
                                 <div class="badge-group-sm float-right">
                                     <a data-toggle="modal" data-target="#updateModal{{ $item->kode_brng }}"
-                                       class="text-xs" href="#"><i class="fas fa-edit"></i></a>
+                                        class="text-xs" href="#"><i class="fas fa-edit"></i></a>
                                 </div>
                                 <div class="modal fade" id="updateModal{{ $item->kode_brng }}" tabindex="-1"
                                     role="dialog" aria-hidden="true">

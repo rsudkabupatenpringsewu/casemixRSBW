@@ -9,7 +9,7 @@
                     <th scope="col">NAMA</th>
                     <th scope="col">NO RM</th>
                     <th scope="col">NO REG</th>
-                    <th scope="col">DR</th>
+                    <th scope="col">Dokter</th>
                     <th scope="col">kd dokter</th>
                     <th scope="col" class="text-center">Aksi</th>
                 </tr>
@@ -31,12 +31,14 @@
                             <audio id="{{ $kdLoket }}" src="/sound/loket/{{ $kdLoket }}.mp3"></audio>
                             <button
                                 onclick="playSequentialSounds(['{{ $item->no_reg }}','{{ $item->kd_dokter }}','{{ $kdLoket }}'])"
-                                class="btn btn-primary" role="button" aria-disabled="true">Panggil
+                                class="btn btn-sm btn-primary" role="button" aria-disabled="true"><i class="fas fa-bullhorn"></i> Panggil
                             </button>
                             <button wire:click="handleLog('{{ $item->kd_dokter }}', '{{ $item->no_rawat }}', '{{ $kdLoket }}', 'ada')"
-                                class="btn btn-success mx-2" aria-disabled="true">Ada</button>
+                                class="btn btn-sm btn-success ml-2" aria-disabled="true"><i class="fas fa-check"></i> Ada</button>
                             <button wire:click="handleLog('{{ $item->kd_dokter }}', '{{ $item->no_rawat }}', '{{ $kdLoket }}', 'tidakada')"
-                                class="btn btn-danger" aria-disabled="true">Tidak Ada</button>
+                                class="btn btn-sm btn-danger mx-2" aria-disabled="true"><i class="fas fa-ban"></i> Tidak Ada</button>
+                            <button wire:click="resetLog('{{ $item->no_rawat }}')"
+                                class="btn btn-sm btn-default" aria-disabled="true"><i class="fas fa-undo"></i> Ulang</button>
                         </td>
                     </tr>
                 @endforeach

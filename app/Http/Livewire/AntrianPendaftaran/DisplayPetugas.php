@@ -57,5 +57,11 @@ class DisplayPetugas extends Component
             ['kd_loket' => $kdLoket, 'status' => $status]
         );
     }
+    public function resetLog($no_rawat)
+    {
+        DB::table('log_antrian_loket')
+            ->where('no_rawat', $no_rawat)
+            ->delete();
+    }
 
 }

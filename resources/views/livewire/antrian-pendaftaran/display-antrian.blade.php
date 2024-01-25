@@ -46,7 +46,7 @@
                                         </tr>
                                         <tr>
                                             <td class="text-center">
-                                                <h3 class="font-weight-bold">Jam Mulai : {{ $item->jam_mulai }}</h3>
+                                                <h3 class="font-weight-bold">Jam Mulai : {{ date('H:i', strtotime($item->jam_mulai)) }}</h3>
                                             </td>
                                         </tr>
                                     </tbody>

@@ -3,7 +3,7 @@
         <div class="card-header text-center">
             <h2 class="my-0 font-weight-bold">Petugas {{ $kdLoket }}</h2>
         </div>
-        <table class="table">
+        <table class="table" wire:poll.10000ms>
             <thead>
                 <tr>
                     <th scope="col">NAMA</th>

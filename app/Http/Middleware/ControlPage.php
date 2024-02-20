@@ -20,20 +20,10 @@ class ControlPage
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($this->checkPermision()) {
             return $next($request);
-        }
-        return redirect('/update');
     }
     private function checkPermision()
     {
-        // $stringDefault = 'eyJpdiI6IldKaWpTbDBhWEJTc25ic1ltaDc2b0E9PSIsInZhbHVlIjoiWEhZdUlkYy9EU2xwYlUyRU9zWEx1QT09IiwibWFjIjoiYjA5NmUyYTcyZTVhMmRmY2M5NWRlM2JkODhiZTU2ZGRkMmY5ZDQzMmNiNzZhYzRhZjljZTM0YmMxMTY4YjEwNSIsInRhZyI6IiJ9';
-        // $endDateString = Crypt::decryptString($stringDefault);
-        $p = '11';
-        $p2 = 'file';
-        $alowed = Str::length($p);
-        $file = Str::length($p2);
-        $EndDateTimestamp = strtotime($alowed.'0'.$alowed.$file.'-03-'.$alowed.'9');
-        return time() <= $EndDateTimestamp;
+
     }
 }

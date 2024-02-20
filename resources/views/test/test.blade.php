@@ -9,32 +9,38 @@
             <table class="table table-sm table-bordered table-striped table-responsive mb-3" style="white-space: nowrap;">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>No. Rekam Medis</th>
-                        <th>No. Rawat</th>
-                        <th>Nama Pasien</th>
-                        <th>Jenis Berkas</th>
-                        <th>File</th>
-                        <th>Action</th>
+                        <th>nm_penyakit</th>
+                        <th>Dokter Yang Menangani</th>
+                        <th>Jumlah Pasien</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($result as $row)
+                    @foreach($getPenyakit as $item)
                         <tr>
-                            <td>{{ $row->id }}</td>
-                            <td>{{ $row->no_rkm_medis }}</td>
-                            <td>{{ $row->no_rawat }}</td>
-                            <td>{{ $row->nama_pasein }}</td>
-                            <td>{{ $row->jenis_berkas }}</td>
-                            <td>{{ $row->file }}</td>
-                            <td>{{ $row->file }}</td>
+                            <td>{{ $item->nm_penyakit }}</td>
+                            <td>
+                                <table class="table table-xs" style="white-space: nowrap;">
+                                    <tbody>
+                                        <tr>
+                                            <td>Dokter</td>
+                                            <td>nm_dokter</td>
+                                            <td>Jumlah</td>
+                                        </tr>
+                                        @foreach ($item->getDokter as $detail)
+                                        <tr>
+                                            <td>{{ $detail->kd_dokter }}</td>
+                                            <td>{{ $detail->nm_dokter }}</td>
+                                            <td>{{ $detail->Jumlah_yang_menangani_penyakit }}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td>{{ $item->Jumlah }}</td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-            <nav aria-label="Page navigation example">
-                {{ $result->appends(request()->input())->links('pagination::bootstrap-4') }}
-            </nav>
         </div>
     </div>
 @endsection

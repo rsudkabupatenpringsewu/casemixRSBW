@@ -21,6 +21,7 @@ use App\Http\Controllers\Bpjs\PrintCesmikController;
 use App\Http\Controllers\DetailTindakan\RalanDokter;
 use App\Http\Controllers\DetailTindakan\RanapDokter;
 use App\Http\Controllers\Farmasi\SepResepController;
+use App\Http\Controllers\Keperawatan\LaporanLogBook;
 use App\Http\Controllers\DetailTindakan\OperasiAndVK;
 use App\Http\Controllers\DetailTindakan\RalanParamedis;
 use App\Http\Controllers\DetailTindakan\RanapParamedis;
@@ -28,6 +29,7 @@ use App\Http\Controllers\Farmasi\MinimalStokController;
 use App\Http\Controllers\Returobat\ReturObatController;
 use App\Http\Controllers\Farmasi\ViewSepResepController;
 use App\Http\Controllers\DetailTindakan\PeriksaRadiologi;
+use App\Http\Controllers\Keperawatan\PengawasKeperawatan;
 use App\Http\Controllers\DetailTindakan\RalanDokterParamedis;
 use App\Http\Controllers\DetailTindakan\RanapDokterParamedis;
 use App\Http\Controllers\AntrianPendaftaran\AntrianPendaftaran;
@@ -51,7 +53,6 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     Route::get('/test', [TestController::class, 'Test']);
     Route::get('/test-delte', [TestController::class, 'TestDelete']);
     Route::get('/test-cari', [TestController::class, 'TestCari']);
-
     Route::get('/logout', [AuthController::class, 'Logout'])->name('logout');
     Route::get('/', [PasienController::class, 'Pasien']);
 
@@ -63,45 +64,34 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     // CASEMIX
     Route::get('/list-pasein-ralan', [ListPasienRalan::class, 'lisPaseinRalan']);
     Route::get('/cari-list-pasein-ralan', [ListPasienRalan::class, 'cariListPaseinRalan']);
-
     Route::get('/list-pasein-ranap', [ListPasienRanap::class, 'lisPaseinRanap']);
     Route::get('/cari-list-pasein-ranap', [ListPasienRanap::class, 'cariListPaseinRanap']);
-
     Route::get('/casemix-home', [HomeCasemix::class, 'casemixHome']);
     Route::get('/casemix-home-cari', [HomeCasemix::class, 'casemixHomeCari']);
-
     Route::get('/cariNorawat-ClaimBpjs', [BpjsController::class, 'claimBpjs']);
     Route::post('/upload-berkas', [BpjsController::class, 'inputClaimBpjs']);
-
     Route::get('/carinorawat-casemix', [CesmikController::class, 'Casemix']);
     Route::get('/print-casemix', [PrintCesmikController::class, 'printCasemix']);
-
     Route::get('/gabung-berkas-casemix', [GabungBerkas::class, 'gabungBerkas']);
-
     Route::get('/data-inacbg', [DataInacbg::class, 'Inacbg']);
-
     Route::get('/setting-bpjs-casemix', [SettingBpjs::class, 'settingBpjsCasemix']);
 
     // FARMASI
     Route::get('/list-pasien-farmasi', [SepResepController::class, 'ListPasienFarmasi']);
     Route::get('/cari-list-pasien-farmasi', [SepResepController::class, 'CariListPasienFarmasi']);
-
     Route::get('/view-sep-resep', [ViewSepResepController::class, 'ViewBerkasSepResep']);
     Route::post('/upload-berkas-farmasi', [ViewSepResepController::class, 'UploadBerkasFarmasi']);
     Route::get('/download-sepresep-farmasi', [ViewSepResepController::class, 'DonwloadSEPResep']);
     Route::get('/download-hasilgabungberks', [ViewSepResepController::class, 'DonwloadHasilGabung']);
     Route::get('/print-sep-resep', [BundlingFarmasi::class, 'PrintBerkasSepResep']);
     Route::get('/gabung-berkas-farmasi', [BundlingFarmasi::class, 'GabungBergkas']);
-
     Route::get('/minimal-stok-obat', [MinimalStokController::class, 'MinimalStokObat']);
 
     // LAPORAN / KEUANGAN
     Route::get('/pembayaran-ralan', [PembayaranRalan::class, 'PembayaranRanal']);
     Route::get('/cari-pembayaran-ralan', [PembayaranRalan::class, 'CariPembayaranRanal']);
-
     Route::get('/piutang-ralan', [PiutangRalan::class, 'PiutangRalan']);
     Route::get('/cari-piutang-ralan', [PiutangRalan::class, 'CariPiutangRalan']);
-
     Route::get('/cari-bayar-piutang', [BayarPiutang::class, 'CariBayarPiutang']);
 
     // DETAIL TINDAKAN
@@ -121,6 +111,10 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
 
     // RM
     Route::get('/berkas-rm', [BerkasRM::class, 'BerkasRM']);
+
+    // KEPERAWATAN
+    Route::get('/logbook-keperawatan', [PengawasKeperawatan::class, 'PengawasKeperawatan']);
+    Route::get('/laporan-logbook-keperawatan', [LaporanLogBook::class, 'getLookBook']);
 
 });
     Route::get('/display-petugas', [AntrianPendaftaran::class, 'DisplayPetugas']);

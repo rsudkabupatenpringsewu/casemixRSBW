@@ -370,6 +370,31 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="nav-item">{{-- menu-open --}}
+                            <a href="#" class="nav-link">{{-- active --}}
+                                <i class="nav-icon fas fa-user-nurse"></i>
+                                <p>
+                                    Keperawatan
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('logbook-keperawatan') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Log Book Perawat PK II</p>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('laporan-logbook-keperawatan') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Laporan LogBook Perawat</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                         <li class="nav-item mt-5">
                         </li>
                         <li class="nav-item mt-5">

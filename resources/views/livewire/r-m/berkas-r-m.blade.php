@@ -70,7 +70,6 @@
             </div>
         </div>
     </section>
-    Jumlah : {{ count($getBerkasPasien) }}
     <table class="table table-bordered">
         <thead>
             <tr>

@@ -46,7 +46,7 @@
                                     <tr>
                                         <td>{{ $item->kode_brng }}</td>
                                         <td>{{ $item->nama_brng }}</td>
-                                        <td>{{ $item->kd_bangsal }}</td>
+                                        <td><b>{{ $item->kd_bangsal }}</b></td>
                                         <td width="10%">
                                             <input class="form-control" type="text"
                                                 wire:model.lazy="add_stok_minimal.{{ $key }}"
@@ -56,9 +56,9 @@
                                             @enderror
                                         </td>
                                         <td width="15%">
-                                            @if (Session::has('ready'.$key))
+                                            @if (Session::has('ready' . $key))
                                                 <span class="text-danger">Data Sudah Ada !!!</span>
-                                            @elseif (Session::has('sucsess'.$key))
+                                            @elseif (Session::has('sucsess' . $key))
                                                 <span class="text-success"><i class="fas fa-check"></i> Berhasil</span>
                                             @else
                                                 <button class="btn btn-xs btn-primary"
@@ -78,7 +78,7 @@
     </div>
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">List Stok Minimal Obat</h3>
+            <h3 class="card-title">List Stok Minimal Obat <b>{{$bangsal === 'DepRI' ? 'Depo Rawat Inap' : 'Depo Rawat Jalan' }}</b></h3>
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                     <i class="fas fa-minus"></i>
@@ -106,6 +106,12 @@
                     </div>
                 </div>
             </section>
+            @if (Session::has('sucsessDelete'))
+                    <div class="alert alert-warning alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <i class="icon fas fa-check"></i> {{ Session::get('sucsessDelete') }}!
+                    </div>
+                @endif
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -115,6 +121,7 @@
                         <th>Stok Tersedia</th>
                         <th contenteditable="true">Stok Minimal</th>
                         <th>Satuan</th>
+                        <th>Hapus</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -171,10 +178,35 @@
                                 </div>
                             </td>
                             <td>{{ $item->satuan }}</td>
+                            <td class="text-center">
+                                <button class="btn btn-xs btn-danger text-xs"
+                                    wire:click="deleteListObat('{{ $item->kode_brng }}', '{{ $item->kd_bangsal }}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
     </div>
+    @if ($confirmingEdit)
+        <div class="modal fade show"  tabindex="-100" role="dialog" style="padding-right: 17px; display: block;"
+            aria-modal="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <h5>Anda yakin ingin menghapus daftar obat dari list stok minimal medis?</h5>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" wire:click="cancelDeleteObat()">Tidak
+                                !</button>
+                            <button type="button" class="btn btn-danger" wire:click="confirmDelteObat()">Ya !</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 </div>

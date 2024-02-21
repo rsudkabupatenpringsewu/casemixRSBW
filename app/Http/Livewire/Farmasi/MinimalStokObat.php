@@ -62,29 +62,52 @@ class MinimalStokObat extends Component
             ->where('databarang.kode_brng', $this->kode_barang)
             ->whereIn('gudangbarang.kd_bangsal', ['DepRI', 'DepRJ'])
             ->get();
-
     }
 
     public $add_stok_minimal = [];
     public function tambahListObat($key, $kode_brng, $kd_bangsal) {
-            $this->validate([
-                'add_stok_minimal.' . $key => 'required',
+        $this->validate([
+            'add_stok_minimal.' . $key => 'required',
+        ]);
+        $cekTbleStokMinimal =  DB::table('stok_minimal_medis')
+            ->where('kode_brng', $kode_brng)
+            ->where('kd_bangsal', $kd_bangsal)
+            ->count();
+        if($cekTbleStokMinimal > 0)
+        {
+            Session::flash('ready'.$key, 'Data sudah ada');
+        }
+        else{
+            DB::table('stok_minimal_medis')->insert([
+                'kode_brng' => $kode_brng,
+                'kd_bangsal' => $kd_bangsal,
+                'stok_minimal_medis' => $this->add_stok_minimal[$key],
             ]);
-           $cekTbleStokMinimal =  DB::table('stok_minimal_medis')
-                ->where('kode_brng', $kode_brng)
-                ->where('kd_bangsal', $kd_bangsal)
-                ->count();
-            if($cekTbleStokMinimal > 0)
-            {
-                Session::flash('ready'.$key, 'Data sudah ada');
-            }
-            else{
-                DB::table('stok_minimal_medis')->insert([
-                    'kode_brng' => $kode_brng,
-                    'kd_bangsal' => $kd_bangsal,
-                    'stok_minimal_medis' => $this->add_stok_minimal[$key],
-                ]);
-                Session::flash('sucsess'.$key, 'Berhasil');
-            }
+            Session::flash('sucsess'.$key, 'Berhasil');
+        }
+    }
+
+    public $confirmingEdit = false;
+    public $kd_bangsal;
+    public function deleteListObat($kode_brng, $kd_bangsal) {
+        $this->confirmingEdit = true;
+        $this->kode_brng = $kode_brng;
+        $this->kd_bangsal = $kd_bangsal;
+    }
+    public function confirmDelteObat() {
+        try {
+            DB::table('stok_minimal_medis')
+            ->where('kode_brng', $this->kode_brng)
+            ->where('kd_bangsal', $this->kd_bangsal)
+            ->delete();
+            Session::flash('sucsessDelete', 'Anda Menghapus Obat '.$this->kode_brng);
+            $this->confirmingEdit = false;
+        } catch (\Throwable $th) {
+            $this->confirmingEdit = false;
+        }
+        // AU000006360
+    }
+    public function cancelDeleteObat() {
+        $this->confirmingEdit = false;
     }
 }

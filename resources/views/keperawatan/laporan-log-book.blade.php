@@ -82,58 +82,63 @@
                     </div>
                 </div>
             </form>
-            <table class="table table-bordered" id="tableToCopy">
-                <thead>
-                    <tr>
-                        <th width="100px">No. </th>
-                        <th width="200px">No. Rekam Medis</th>
-                        <th class="text-center">Log Book Kegiatan {{$getPetugas->nama}}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php
-                        $no = 1;
-                    @endphp
-                    @foreach ($getPasien as $item)
-                        <tr>
-                            <td>{{ $no++ }}</td>
-                            <td>{{ $item->no_rkm_medis }}</td>
-                            <td class="p-0">
-                                <table class="table table-sm table-hover text-xs" id="tableToCopy">
-                                    <thead>
-                                        <tr>
-                                            <th colspan="4" class="text-center">{{ $item->tanggal }}</th>
-                                        </tr>
-                                        <tr>
-                                            <th width="100px">Kode Kegiatan</th>
-                                            <th>Nama Kegiatan</th>
-                                            <th width="100px" class="text-center">Mandiri</th>
-                                            <th width="100px" class="text-center">Dibawah_Supervisi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($item->getLogPerawat as $data)
-                                            <tr>
-                                                <td>{{ $data->kd_kegiatan }}</td>
-                                                <td>{{ $data->nama_kegiatan }}</td>
-                                                <td class="text-center">
-                                                    @if ($data->mandiri == 1)
-                                                        <i class="fas fa-check"></i>
-                                                    @endif
-                                                </td>
-                                                <td class="text-center">
-                                                    @if ($data->supervisi == 1)
-                                                        <i class="fas fa-check"></i>
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    @endforeach
-            </table>
+            @foreach ($getPetugas as $petugas)
+                @if ($petugas->getPasien->isEmpty())
+                @else
+                    <table class="table table-bordered" id="tableToCopy">
+                        <thead>
+                            <tr>
+                                <th width="100px">No. </th>
+                                <th width="200px">No. Rekam Medis</th>
+                                <th class="text-center">Log Book Kegiatan {{ $petugas->nama }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                                $no = 1;
+                            @endphp
+                            @foreach ($petugas->getPasien as $item)
+                                <tr>
+                                    <td>{{ $no++ }}</td>
+                                    <td>{{ $item->no_rkm_medis }}</td>
+                                    <td class="p-0">
+                                        <table class="table table-sm table-hover text-xs" id="tableToCopy">
+                                            <thead>
+                                                <tr>
+                                                    <th colspan="4" class="text-center">{{ $item->tanggal }}</th>
+                                                </tr>
+                                                <tr>
+                                                    <th width="100px">Kode Kegiatan</th>
+                                                    <th>Nama Kegiatan</th>
+                                                    <th width="100px" class="text-center">Mandiri</th>
+                                                    <th width="100px" class="text-center">Dibawah_Supervisi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($item->getLogPerawat as $data)
+                                                    <tr>
+                                                        <td>{{ $data->kd_kegiatan }}</td>
+                                                        <td>{{ $data->nama_kegiatan }}</td>
+                                                        <td class="text-center">
+                                                            @if ($data->mandiri == 1)
+                                                                <i class="fas fa-check"></i>
+                                                            @endif
+                                                        </td>
+                                                        <td class="text-center">
+                                                            @if ($data->supervisi == 1)
+                                                                <i class="fas fa-check"></i>
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                            @endforeach
+                    </table>
+                @endif
+            @endforeach
         </div>
     </div>
 @endsection

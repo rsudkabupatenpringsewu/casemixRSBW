@@ -380,9 +380,9 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{{ url('logbook-keperawatan') }}" class="nav-link">
+                                    <a href="{{ url('home-keperawatan') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Log Book Perawat PK II</p>
+                                        <p>Kegiatan Keperawtan</p>
                                     </a>
                                 </li>
                             </ul>

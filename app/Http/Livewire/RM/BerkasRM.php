@@ -13,14 +13,13 @@ class BerkasRM extends Component
     public $cari_nomor = '';
     public $tgl1;
     public $tgl2;
-    public $getBerkasPasien;
     public function mount() {
         $this->tgl1 = now()->format('Y-m-d');
         $this->tgl2 = now()->format('Y-m-d');
     }
     public function render()
     {
-        $this->getBerkasPasien = DB::table('file_casemix')
+        $getBerkasPasien = DB::table('file_casemix')
             ->select('file_casemix.jenis_berkas', 'file_casemix.no_rkm_medis', 'file_casemix.no_rawat', 'reg_periksa.tgl_registrasi', 'reg_periksa.status_lanjut', 'pasien.nm_pasien', 'file_casemix.file')
             ->join('reg_periksa','file_casemix.no_rawat','=','reg_periksa.no_rawat')
             ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
@@ -38,6 +37,8 @@ class BerkasRM extends Component
                       ->orWhere('pasien.nm_pasien',  $searchTerm);
             })
             ->get();
-        return view('livewire.r-m.berkas-r-m');
+        return view('livewire.r-m.berkas-r-m', [
+            'getBerkasPasien' => $getBerkasPasien,
+        ]);
     }
 }

@@ -41,11 +41,8 @@
                                                 <img class="img-circle" height="80px" width="80px"
                                                     src="/img/user.jpg" alt="User profile picture">
                                             </div>
-
                                             <h3 class="profile-username text-center">{{ $item->nm_pasien }}</h3>
-
                                             <p class="text-muted text-center">{{ $item->no_rkm_medis }}</p>
-
                                             <ul class="list-group list-group-unbordered">
                                                 <li class="list-group-item">
                                                     <b>Tanggal Lahir</b> <span
@@ -54,6 +51,10 @@
                                                 <li class="list-group-item">
                                                     <b>Nomor Telpon</b> <span
                                                         class="float-right">{{ $item->no_tlp }}</span>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <b>Jenis Kelamin</b> <span
+                                                        class="float-right">{{ $item->jk }}</span>
                                                 </li>
                                             </ul>
                                         </div>
@@ -86,7 +87,8 @@
                                                 <div class="col-lg-4">
                                                     <div class="input-group">
                                                         <select class="form-control form-control-sm"
-                                                            wire:model="kodejnslb">
+                                                            wire:model="kodejnslb" >
+                                                            <option>Pilih Jenis Log Book</option>
                                                             @foreach ($getLookBook as $lokbok)
                                                                 <option value="{{ $lokbok->kd_jesni_lb }}">
                                                                     {{ $lokbok->nama_jenis_lb }}</option>
@@ -106,9 +108,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-body">
+                                        <div class="card-body table-responsive p-0" style="height: 290px;">
                                             @if (!$getKegiatan->isEmpty())
-                                                <table class="table table-sm table-bordered">
+                                                <table class="table table-sm table-bordered table-head-fixed p-3">
                                                     <thead>
                                                         <tr>
                                                             <th>Kd.Kegiatan</th>
@@ -125,13 +127,11 @@
                                                                 <td class="text-sm">{{ $data->nama_kegiatan }}</td>
                                                                 <td class="text-center">
                                                                     <input type="checkbox"
-                                                                        wire:model ="mandiri.{{ $key }}"
-                                                                        wire:init="initializeCheckbox('mandiri', {{ $key }} , {{ $data->default_mandiri }})">
+                                                                        wire:model.defer ="mandiri.{{ $key }}" >
                                                                 </td>
                                                                 <td class="text-center">
                                                                     <input type="checkbox"
-                                                                        wire:model ="dibawahsupervisi.{{ $key }}"
-                                                                        wire:init="initializeCheckbox('dibawahsupervisi', {{ $key }} , {{ $data->default_supervisi }})">
+                                                                        wire:model.defer ="dibawahsupervisi.{{ $key }}" >
                                                                 </td>
                                                                 <td class="text-center">
                                                                     @php
@@ -153,7 +153,7 @@
                                                     </tbody>
                                                 </table>
                                             @else
-                                                <h6 class="text-center">Silahkan Cari Data !!!</h6>
+                                                <h6 class="text-center mt-3">Silahkan Cari Data Pada Jenis Log Book !!!</h6>
                                             @endif
                                         </div>
                                     </div>
@@ -165,4 +165,5 @@
             </div>
         </div>
     </div>
+
 </div>

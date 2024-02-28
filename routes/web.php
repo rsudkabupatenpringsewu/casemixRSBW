@@ -23,6 +23,7 @@ use App\Http\Controllers\DetailTindakan\RanapDokter;
 use App\Http\Controllers\Farmasi\SepResepController;
 use App\Http\Controllers\Keperawatan\LaporanLogBook;
 use App\Http\Controllers\DetailTindakan\OperasiAndVK;
+use App\Http\Controllers\Keperawatan\HomeKeperawatan;
 use App\Http\Controllers\DetailTindakan\RalanParamedis;
 use App\Http\Controllers\DetailTindakan\RanapParamedis;
 use App\Http\Controllers\Farmasi\MinimalStokController;
@@ -115,6 +116,7 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     // KEPERAWATAN
     Route::get('/logbook-keperawatan', [PengawasKeperawatan::class, 'PengawasKeperawatan']);
     Route::get('/laporan-logbook-keperawatan', [LaporanLogBook::class, 'getLookBook']);
+    Route::get('/home-keperawatan', [HomeKeperawatan::class, 'HomeKeperawatan']);
 
 });
     Route::get('/display-petugas', [AntrianPendaftaran::class, 'DisplayPetugas']);

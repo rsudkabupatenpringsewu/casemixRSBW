@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Session;
 class PengawasKeperawatan extends Component
 {
 
+    protected $listeners = ['render'];
+
     public $kodejnslb;
     public function mount()
     {
@@ -47,6 +49,8 @@ class PengawasKeperawatan extends Component
     }
 
     // Get Nama Kegiatan
+    public $mandiri = [];
+    public $dibawahsupervisi = [];
     public $getKegiatan;
     public $cari_kode_kegiatan;
     public function cariNamaKegiatan() {
@@ -59,20 +63,14 @@ class PengawasKeperawatan extends Component
                 ->orWhere('nama_kegiatan', 'LIKE', "%$cariKode%");
         })
         ->get();
+        foreach ($this->getKegiatan as $key => $kegiatan) {
+            $this->mandiri[$key] = $kegiatan->default_mandiri == 'false' ? false : true;
+            $this->dibawahsupervisi[$key] = $kegiatan->default_supervisi == 'false' ? false : true;
+        }
     }
 
     // Simpan Kegiatan
-    public $mandiri = [];
-    public $dibawahsupervisi = [];
     public $tanggal;
-    public function initializeCheckbox($namaKegiatan, $key, $default_mandiri)
-    {
-        if ($default_mandiri === false) {
-            $this->$namaKegiatan[$key] = false;
-        }else{
-            $this->$namaKegiatan[$key] = true;
-        }
-    }
     public function simpanKegiatan($key, $kd_kegiatan, $user, $no_rkm_medis) {
         DB::connection('db_con2')->table('logbook_keperawatan')->insert([
             'kd_kegiatan' => $kd_kegiatan,

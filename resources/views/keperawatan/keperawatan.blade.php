@@ -1,5 +1,5 @@
 @extends('..layout.layoutDashboard')
-@section('title', 'Keperawatan')
+@section('title', 'Input Tindakan Dasar Keperawatan')
 @push('styles')
     @livewireStyles
 @endpush

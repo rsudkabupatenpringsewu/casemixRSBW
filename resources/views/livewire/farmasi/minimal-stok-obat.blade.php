@@ -112,7 +112,7 @@
                         <i class="icon fas fa-check"></i> {{ Session::get('sucsessDelete') }}!
                     </div>
                 @endif
-            <table class="table table-bordered">
+            <table class="table table-sm table-hover table-bordered">
                 <thead>
                     <tr>
                         <th style="width: 10px">No</th>
@@ -178,8 +178,8 @@
                                 </div>
                             </td>
                             <td>{{ $item->satuan }}</td>
-                            <td class="text-center">
-                                <button class="btn btn-xs btn-danger text-xs"
+                            <td class="text-center ">
+                                <button class="badge badge-xs badge-danger text-xs"
                                     wire:click="deleteListObat('{{ $item->kode_brng }}', '{{ $item->kd_bangsal }}')">
                                     <i class="fas fa-trash"></i>
                                 </button>

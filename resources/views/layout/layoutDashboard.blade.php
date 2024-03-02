@@ -166,8 +166,16 @@
                                     </a>
                                 </li>
                             </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('/cari-bayar-umum') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Bayar Umum</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
-                        {{-- DETAIL TINDAKAN --}}
+                        {{-- MENU DETAIL TINDAKAN --}}
                         <li class="nav-item">{{-- menu-open --}}
                             <a href="#" class="nav-link">{{-- active --}}
                                 <i class="nav-icon fas fa-hospital-user"></i>
@@ -325,7 +333,7 @@
                         </li>
                         <li class="nav-header user-panel"></li>
                         <li class="nav-header">Pelayanan - RM</li>
-
+                        {{-- MENU ANTRIAN --}}
                         <li class="nav-item">{{-- menu-open --}}
                             <a href="#" class="nav-link">{{-- active --}}
                                 <i class="nav-icon fas fa-user"></i>
@@ -353,6 +361,7 @@
                                 </ul>
                             @endif
                         </li>
+                        {{-- MENU RM --}}
                         <li class="nav-item">{{-- menu-open --}}
                             <a href="#" class="nav-link">{{-- active --}}
                                 <i class="nav-icon fas fa-file"></i>
@@ -370,6 +379,7 @@
                                 </li>
                             </ul>
                         </li>
+                        {{-- MENU KEPERAWATAN --}}
                         <li class="nav-item">{{-- menu-open --}}
                             <a href="#" class="nav-link">{{-- active --}}
                                 <i class="nav-icon fas fa-user-nurse"></i>

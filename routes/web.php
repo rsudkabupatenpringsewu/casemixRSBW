@@ -7,6 +7,7 @@ use App\Http\Controllers\Bpjs\DataInacbg;
 use App\Http\Controllers\Bpjs\HomeCasemix;
 use App\Http\Controllers\Bpjs\SettingBpjs;
 use App\Http\Controllers\Bpjs\GabungBerkas;
+use App\Http\Controllers\Laporan\BayarUmum;
 use App\Http\Controllers\Bpjs\BpjsController;
 use App\Http\Controllers\Test\TestController;
 use App\Http\Controllers\Bpjs\ListPasienRalan;
@@ -94,6 +95,7 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     Route::get('/piutang-ralan', [PiutangRalan::class, 'PiutangRalan']);
     Route::get('/cari-piutang-ralan', [PiutangRalan::class, 'CariPiutangRalan']);
     Route::get('/cari-bayar-piutang', [BayarPiutang::class, 'CariBayarPiutang']);
+    Route::get('/cari-bayar-umum', [BayarUmum::class, 'CariBayarUmum']);
 
     // DETAIL TINDAKAN
     Route::get('/ralan-dokter', [RalanDokter::class, 'RalanDokter']);

@@ -6,9 +6,8 @@ use Illuminate\Http\Request;
 use App\Services\CacheService;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Cache;
 
-class BayarPiutang extends Controller
+class BayarUmum extends Controller
 {
     protected $cacheService;
     public function __construct(CacheService $cacheService)
@@ -16,38 +15,32 @@ class BayarPiutang extends Controller
         $this->cacheService = $cacheService;
     }
 
-    function CariBayarPiutang(Request $request) {
+    function CariBayarUmum(Request $request) {
         $penjab = $this->cacheService->getPenjab();
 
         $cariNomor = $request->cariNomor;
         $tanggl1 = $request->tgl1;
         $tanggl2 = $request->tgl2;
-
-        $status = ($request->statusLunas == "Lunas") ? "Lunas" : (($request->statusLunas == "Belum Lunas") ? "Belum Lunas" : "");
         $kdPenjamin = ($request->input('kdPenjamin') == null) ? "" : explode(',', $request->input('kdPenjamin'));
 
-        $bayarPiutang = DB::table('bayar_piutang')
-            ->select('bayar_piutang.tgl_bayar',
-                'bayar_piutang.no_rkm_medis',
+        $bayarUmum = DB::table('reg_periksa')
+            ->select('reg_periksa.no_rawat',
+                'reg_periksa.kd_dokter',
+                'reg_periksa.kd_poli',
+                'reg_periksa.status_lanjut',
+                'billing.tgl_byr',
                 'pasien.nm_pasien',
-                'bayar_piutang.besar_cicilan',
-                'bayar_piutang.catatan',
-                'bayar_piutang.no_rawat',
-                'bayar_piutang.diskon_piutang',
-                'bayar_piutang.tidak_terbayar',
-                'reg_periksa.kd_pj',
                 'penjab.png_jawab',
-                'piutang_pasien.status',
-                'piutang_pasien.uangmuka')
-            ->join('pasien','bayar_piutang.no_rkm_medis','=','pasien.no_rkm_medis')
-            ->leftJoin('reg_periksa','bayar_piutang.no_rawat','=','reg_periksa.no_rawat')
-            ->leftJoin('penjab','reg_periksa.kd_pj','=','penjab.kd_pj')
-            ->leftJoin('piutang_pasien','piutang_pasien.no_rawat','=','bayar_piutang.no_rawat')
-            ->whereBetween('bayar_piutang.tgl_bayar', [$tanggl1 , $tanggl2])
-            ->where(function ($query) use ($status, $kdPenjamin) {
-                if ($status) {
-                    $query->where('piutang_pasien.status', $status);
-                }
+                'pasien.no_rkm_medis')
+            ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
+            ->join('billing','billing.no_rawat','=','reg_periksa.no_rawat')
+            ->join('penjab','penjab.kd_pj','=','reg_periksa.kd_pj')
+            ->join('dokter','reg_periksa.kd_dokter','=','dokter.kd_dokter')
+            ->whereBetween('billing.tgl_byr', [$tanggl1 , $tanggl2])
+            ->whereNotIn('reg_periksa.no_rawat', function ($query) {
+                $query->select('piutang_pasien.no_rawat')->from('piutang_pasien');
+            })
+            ->where(function ($query) use ($kdPenjamin) {
                 if ($kdPenjamin) {
                     $query->whereIn('penjab.kd_pj', $kdPenjamin);
                 }
@@ -57,10 +50,10 @@ class BayarPiutang extends Controller
                 $query->orWhere('reg_periksa.no_rkm_medis', 'like', '%' . $cariNomor . '%');
                 $query->orWhere('pasien.nm_pasien', 'like', '%' . $cariNomor . '%');
             })
-            ->orderBy('bayar_piutang.tgl_bayar','asc')
-            ->orderBy('bayar_piutang.no_rkm_medis','asc')
-            ->paginate(1000);
-            $bayarPiutang->map(function ($item) {
+            ->where('billing.no','=','No.Nota')
+            ->orderBy('reg_periksa.status_lanjut', 'DESC')
+            ->get();
+            $bayarUmum->map(function ($item) {
                 // NOMOR NOTA
                 $item->getNomorNota = DB::table('billing')
                     ->select('nm_perawatan')
@@ -79,6 +72,12 @@ class BayarPiutang extends Controller
                     ->where('no_rawat', $item->no_rawat)
                     ->where('status', '=', 'Obat')
                     ->get();
+                // Retur Obat
+                $item->getReturObat = DB::table('billing')
+                ->select('totalbiaya')
+                ->where('no_rawat', $item->no_rawat)
+                ->where('status', '=', 'Retur Obat')
+                ->get();
                 // Retur Obat
                 $item->getReturObat = DB::table('billing')
                     ->select('totalbiaya')
@@ -129,10 +128,10 @@ class BayarPiutang extends Controller
                     ->get();
                 // OPRASI
                 $item->getOprasi = DB::table('billing')
-                    ->select('totalbiaya')
-                    ->where('no_rawat', $item->no_rawat)
-                    ->where('status', '=', 'Operasi')
-                    ->get();
+                ->select('totalbiaya')
+                ->where('no_rawat', $item->no_rawat)
+                ->where('status', '=', 'Operasi')
+                ->get();
                 // LABORAT
                 $item->getLaborat = DB::table('billing')
                     ->select('totalbiaya')
@@ -151,12 +150,12 @@ class BayarPiutang extends Controller
                     ->where('no_rawat', $item->no_rawat)
                     ->where('status', '=', 'Tambahan')
                     ->get();
-                // POTONGAN
+                     // POTONGAN
                 $item->getPotongan = DB::table('billing')
-                    ->select('totalbiaya')
-                    ->where('no_rawat', $item->no_rawat)
-                    ->where('status', '=', 'Potongan')
-                    ->get();
+                ->select('totalbiaya')
+                ->where('no_rawat', $item->no_rawat)
+                ->where('status', '=', 'Potongan')
+                ->get();
                 // KAMAR INAP
                 $item->getKamarInap = DB::table('billing')
                     ->select('totalbiaya')
@@ -165,9 +164,10 @@ class BayarPiutang extends Controller
                     ->get();
                 return $item;
             });
-        return view('laporan.bayarPiutang', [
-            'penjab'=> $penjab,
-            'bayarPiutang'=> $bayarPiutang,
+
+        return  view('laporan.bayarUmum', [
+            'penjab' => $penjab,
+            'bayarUmum' => $bayarUmum,
         ]);
     }
 }

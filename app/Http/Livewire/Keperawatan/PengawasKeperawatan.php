@@ -12,11 +12,13 @@ class PengawasKeperawatan extends Component
     protected $listeners = ['render'];
 
     public $kodejnslb;
+    public $tanggal;
     public function mount()
     {
         $this->tanggal = date('Y-m-d');
         $this->cariPasien();
         $this->cariNamaKegiatan();
+        $this->cariKewenanganKhusus();
         $this->getLookBook();
         $this->kodejnslb =  $this->kodejnslb;
     }
@@ -24,6 +26,7 @@ class PengawasKeperawatan extends Component
     {
         $this->cariPasien();
         $this->cariNamaKegiatan();
+        $this->cariKewenanganKhusus();
         $this->getLookBook();
         $this->kodejnslb =  $this->kodejnslb;
         return view('livewire.keperawatan.pengawas-keperawatan');
@@ -48,7 +51,7 @@ class PengawasKeperawatan extends Component
         ->get();
     }
 
-    // Get Nama Kegiatan
+    // Get Nama Kegiatan Dasar
     public $mandiri = [];
     public $dibawahsupervisi = [];
     public $getKegiatan;
@@ -69,8 +72,7 @@ class PengawasKeperawatan extends Component
         }
     }
 
-    // Simpan Kegiatan
-    public $tanggal;
+    // Simpan Kegiatan Dasar
     public function simpanKegiatan($key, $kd_kegiatan, $user, $no_rkm_medis) {
         DB::connection('db_con2')->table('logbook_keperawatan')->insert([
             'kd_kegiatan' => $kd_kegiatan,
@@ -81,5 +83,37 @@ class PengawasKeperawatan extends Component
             'tanggal' => $this->tanggal,
         ]);
         Session::flash('sucsess'.$key, 'Berhasil');
+    }
+
+     // Get Nama Kegiatan Kewewnangan Khusus
+    public $kw_mandiri = [];
+    public $kw_dibawahsupervisi = [];
+    public $getKewenanganKhusus;
+    public $cari_kode_kewenagankhusus;
+    public function cariKewenanganKhusus() {
+        $cariKode = $this->cari_kode_kewenagankhusus;
+        $this->getKewenanganKhusus = DB::connection('db_con2')->table('rsbw_kewenangankhusus_keperawatan')
+        ->select('rsbw_kewenangankhusus_keperawatan.kd_kewenangan', 'rsbw_kewenangankhusus_keperawatan.nama_kewenangan', 'default_mandiri','default_supervisi')
+        ->where('kd_jesni_lb', $this->kodejnslb)
+        ->where(function ($query) use ($cariKode) {
+            $query->orwhere('kd_kewenangan', 'LIKE', "%$cariKode%")
+                ->orWhere('nama_kewenangan', 'LIKE', "%$cariKode%");
+        })
+        ->get();
+        foreach ($this->getKewenanganKhusus as $key => $kegiatan) {
+            $this->kw_mandiri[$key] = $kegiatan->default_mandiri == 'false' ? false : true;
+            $this->kw_dibawahsupervisi[$key] = $kegiatan->default_supervisi == 'false' ? false : true;
+        }
+    }
+    public function simpanKewenangan($key, $kd_kewenangan, $user, $no_rkm_medis) {
+        DB::connection('db_con2')->table('logbook_keperawatan_kewenangankhusus')->insert([
+            'kd_kewenangan' => $kd_kewenangan,
+            'user' => $user,
+            'no_rkm_medis' => $no_rkm_medis,
+            'mandiri' => $this->kw_mandiri[$key],
+            'supervisi' => $this->kw_dibawahsupervisi[$key],
+            'tanggal' => $this->tanggal,
+        ]);
+        Session::flash('sucsess2'.$key, 'Berhasil');
     }
 }

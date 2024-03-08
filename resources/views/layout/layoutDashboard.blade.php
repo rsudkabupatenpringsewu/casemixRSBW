@@ -396,14 +396,6 @@
                                     </a>
                                 </li>
                             </ul>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ url('laporan-logbook-keperawatan') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Laporan LogBook Perawat</p>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
                         <li class="nav-item mt-5">
                         </li>

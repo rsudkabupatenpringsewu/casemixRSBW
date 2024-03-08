@@ -1,5 +1,5 @@
 @extends('..layout.layoutDashboard')
-@section('title', 'Keperawatan')
+@section('title', 'Laporan Keperawatan I')
 @section('konten')
     <div class="card">
         <div class="card-body">
@@ -85,7 +85,7 @@
             @foreach ($getPetugas as $petugas)
                 @if ($petugas->getPasien->isEmpty())
                 @else
-                    <table class="table table-bordered" id="tableToCopy">
+                    <table class="table table-bordered mt-4" id="tableToCopy">
                         <thead>
                             <tr>
                                 <th width="100px">No. </th>
@@ -102,7 +102,7 @@
                                     <td>{{ $no++ }}</td>
                                     <td>{{ $item->no_rkm_medis }}</td>
                                     <td class="p-0">
-                                        <table class="table table-sm table-hover text-xs" id="tableToCopy">
+                                        <table class="table table-sm table-hover text-xs m-0 p-0" id="tableToCopy">
                                             <thead>
                                                 <tr>
                                                     <th colspan="4" class="text-center">{{ $item->tanggal }}</th>
@@ -133,9 +133,72 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
+                                        <table class="table table-sm table-hover text-xs m-0 p-0" id="tableToCopy">
+                                            <thead>
+                                                <tr>
+                                                    <th width="100px">Kode</th>
+                                                    <th>Nama Kewenangan Khusus</th>
+                                                    <th width="100px" class="text-center">Mandiri</th>
+                                                    <th width="100px" class="text-center">Dibawah_Supervisi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($item->getKewenanganKhusus as $data)
+                                                    <tr>
+                                                        <td>{{ $data->kd_kewenangan }}</td>
+                                                        <td>{{ $data->nama_kewenangan }}</td>
+                                                        <td class="text-center">
+                                                            @if ($data->mandiri == 1)
+                                                                <i class="fas fa-check"></i>
+                                                            @endif
+                                                        </td>
+                                                        <td class="text-center">
+                                                            @if ($data->supervisi == 1)
+                                                                <i class="fas fa-check"></i>
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
                                     </td>
                                 </tr>
                             @endforeach
+                    </table>
+                @endif
+                @if ($petugas->getKegiatanLain->isEmpty())
+                @else
+                    <table class="table table-bordered table table-sm table-hover text-xs" id="tableToCopy">
+                        <thead>
+                            <tr>
+                                <th>Kegiatan Lain</th>
+                                <th>Judul</th>
+                                <th>Deskripsi</th>
+                                <th class="text-center">Mandiri</th>
+                                <th class="text-center">Supervisi</th>
+                                <th class="text-center">Tanggal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($petugas->getKegiatanLain as $item)
+                                <tr>
+                                    <td width="18%">{{ $item->nama_kegiatan }}</td>
+                                    <td width="15%">{{ $item->judul }}</td>
+                                    <td width="45%">{{ $item->deskripsi }}</td>
+                                    <td class="text-center">
+                                        @if ($data->mandiri == 1)
+                                            <i class="fas fa-check"></i>
+                                        @endif
+                                    </td>
+                                    <td class="text-center">
+                                        @if ($data->supervisi == 1)
+                                            <i class="fas fa-check"></i>
+                                        @endif
+                                    </td>
+                                    <td class="text-center">{{ $item->tanggal }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
                     </table>
                 @endif
             @endforeach

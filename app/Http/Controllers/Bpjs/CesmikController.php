@@ -139,6 +139,7 @@ class CesmikController extends Controller
                                 'kamar_inap.tgl_masuk',
                                 'pasien.nm_pasien',
                                 'pasien.tgl_lahir',
+                                'pasien.alamat',
                                 'pasien.jk as jenis_kelamin',
                                 'pasien.pekerjaan',
                                 'dokter.nm_dokter',

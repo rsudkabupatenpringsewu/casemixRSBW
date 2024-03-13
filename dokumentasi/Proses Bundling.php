@@ -6,15 +6,15 @@
         ->where('no_rawat', '=', $noRawat);
     $getpasien = $cekNorawat->first();
     // INACBG
-    $cekINACBG = DB::connection('db_con2')->table('file_casemix')->where('no_rawat', $noRawat)
+    $cekINACBG = DB::table('file_casemix')->where('no_rawat', $noRawat)
             ->where('jenis_berkas', 'INACBG')
             ->first();
     // RESEUMEDLL
-    $cekRESUMEDLL = DB::connection('db_con2')->table('file_casemix')->where('no_rawat', $noRawat)
+    $cekRESUMEDLL = DB::table('file_casemix')->where('no_rawat', $noRawat)
     ->where('jenis_berkas', 'RESUMEDLL')
     ->first();
     // SCAN
-    $cekSCAN = DB::connection('db_con2')->table('file_casemix')->where('no_rawat', $noRawat)
+    $cekSCAN = DB::table('file_casemix')->where('no_rawat', $noRawat)
     ->where('jenis_berkas', 'SCAN')
     ->first();
 
@@ -73,11 +73,11 @@
      $outputPath = public_path('hasil_pdf/'.$path_file);
      $pdf->Output($outputPath, 'F');
 
-     $cekBerkas = DB::connection('db_con2')->table('file_casemix')->where('no_rawat', $noRawat)
+     $cekBerkas = DB::table('file_casemix')->where('no_rawat', $noRawat)
          ->where('jenis_berkas', 'HASIL')
          ->exists();
      if (!$cekBerkas){
-         DB::connection('db_con2')->table('file_casemix')->insert([
+         DB::table('file_casemix')->insert([
              'no_rkm_medis' => $getpasien->no_rkm_medis,
              'no_rawat' => $noRawat,
              'nama_pasein' => $getpasien->nm_pasien,
@@ -106,7 +106,7 @@
             ->where('no_rawat', '=', $request->cariNorawat);
         $getpasien = $cekNorawat->first();
 
-        $fileCasemix = DB::connection('db_con2')->table('file_casemix')
+        $fileCasemix = DB::table('file_casemix')
             ->where('no_rawat', $request->cariNorawat)
             ->whereIn('jenis_berkas', ['INACBG', 'RESUMEDLL', 'SCAN'])
             ->get();
@@ -140,21 +140,21 @@
             $path_file = 'HASIL' . '-' . $no_rawatSTR.'.pdf';
             $outputPath = public_path('hasil_pdf/'.$path_file);
             $pdf->Output($outputPath, 'F');
-            DB::connection('db_con2')->beginTransaction();
+            DB::beginTransaction();
 
-                $cekBerkas = DB::connection('db_con2')->table('file_casemix')
+                $cekBerkas = DB::table('file_casemix')
                     ->where('no_rawat', $request->cariNorawat)
                     ->where('jenis_berkas', 'HASIL')
                     ->exists();
                 if (!$cekBerkas) {
-                    DB::connection('db_con2')->table('file_casemix')->insert([
+                    DB::table('file_casemix')->insert([
                         'no_rkm_medis' => $getpasien->no_rkm_medis,
                         'no_rawat' => $request->cariNorawat,
                         'nama_pasein' => $getpasien->nm_pasien,
                         'jenis_berkas' => 'HASIL',
                         'file' => $path_file,
                     ]);
-                    DB::connection('db_con2')->commit();
+                    DB::commit();
                 }
 
             Session::forget('tgl1');

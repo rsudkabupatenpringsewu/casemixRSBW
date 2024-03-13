@@ -46,7 +46,7 @@ class PengawasKeperawatan extends Component
     // Get Jenis LookBook
     public $getLookBook;
     public function getLookBook() {
-        $this->getLookBook = DB::connection('db_con2')->table('jenis_lookbook')
+        $this->getLookBook = DB::table('bw_jenis_lookbook')
         ->select('kd_jesni_lb', 'nama_jenis_lb')
         ->get();
     }
@@ -58,8 +58,8 @@ class PengawasKeperawatan extends Component
     public $cari_kode_kegiatan;
     public function cariNamaKegiatan() {
         $cariKode = $this->cari_kode_kegiatan;
-        $this->getKegiatan = DB::connection('db_con2')->table('rsbw_nm_kegiatan_keperawatan')
-        ->select('rsbw_nm_kegiatan_keperawatan.kd_kegiatan', 'rsbw_nm_kegiatan_keperawatan.nama_kegiatan', 'default_mandiri','default_supervisi')
+        $this->getKegiatan = DB::table('bw_nm_kegiatan_keperawatan')
+        ->select('bw_nm_kegiatan_keperawatan.kd_kegiatan', 'bw_nm_kegiatan_keperawatan.nama_kegiatan', 'default_mandiri','default_supervisi')
         ->where('kd_jesni_lb', $this->kodejnslb)
         ->where(function ($query) use ($cariKode) {
             $query->orwhere('kd_kegiatan', 'LIKE', "%$cariKode%")
@@ -74,7 +74,7 @@ class PengawasKeperawatan extends Component
 
     // Simpan Kegiatan Dasar
     public function simpanKegiatan($key, $kd_kegiatan, $user, $no_rkm_medis) {
-        DB::connection('db_con2')->table('logbook_keperawatan')->insert([
+        DB::table('bw_logbook_keperawatan')->insert([
             'kd_kegiatan' => $kd_kegiatan,
             'user' => $user,
             'no_rkm_medis' => $no_rkm_medis,
@@ -92,8 +92,8 @@ class PengawasKeperawatan extends Component
     public $cari_kode_kewenagankhusus;
     public function cariKewenanganKhusus() {
         $cariKode = $this->cari_kode_kewenagankhusus;
-        $this->getKewenanganKhusus = DB::connection('db_con2')->table('rsbw_kewenangankhusus_keperawatan')
-        ->select('rsbw_kewenangankhusus_keperawatan.kd_kewenangan', 'rsbw_kewenangankhusus_keperawatan.nama_kewenangan', 'default_mandiri','default_supervisi')
+        $this->getKewenanganKhusus = DB::table('bw_kewenangankhusus_keperawatan')
+        ->select('bw_kewenangankhusus_keperawatan.kd_kewenangan', 'bw_kewenangankhusus_keperawatan.nama_kewenangan', 'default_mandiri','default_supervisi')
         ->where('kd_jesni_lb', $this->kodejnslb)
         ->where(function ($query) use ($cariKode) {
             $query->orwhere('kd_kewenangan', 'LIKE', "%$cariKode%")
@@ -106,7 +106,7 @@ class PengawasKeperawatan extends Component
         }
     }
     public function simpanKewenangan($key, $kd_kewenangan, $user, $no_rkm_medis) {
-        DB::connection('db_con2')->table('logbook_keperawatan_kewenangankhusus')->insert([
+        DB::table('bw_logbook_keperawatan_kewenangankhusus')->insert([
             'kd_kewenangan' => $kd_kewenangan,
             'user' => $user,
             'no_rkm_medis' => $no_rkm_medis,

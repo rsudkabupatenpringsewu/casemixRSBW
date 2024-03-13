@@ -79,7 +79,7 @@ class HomeCasemix extends Controller
             // }
             // foreach ($getPasien as $item) {
             //     $noRawatPasien = $item->no_rawat;
-            //     $downloadFile = DB::connection('db_con2')->table('file_casemix')
+            //     $downloadFile = DB::table('file_casemix')
             //     ->select('file')
             //     ->where('no_rawat', $noRawatPasien)
             //     ->where('jenis_berkas', 'HASIL')

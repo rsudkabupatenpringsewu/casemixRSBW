@@ -197,7 +197,7 @@
                         </tr>
                         <tr style="vertical-align: top;">
                             <td width="100px">Alamat</td>
-                            <td width="400px">: {{ $getResume->almt_pj }}</td>
+                            <td width="400px">: {{ $getResume->alamat }}</td>
                             <td width="100px">Tanggak Keluar</td>
                             <td width="200px">:
                                 @if ($getKamarInap)

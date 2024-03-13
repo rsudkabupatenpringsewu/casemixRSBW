@@ -15,6 +15,7 @@ use App\Http\Controllers\Bpjs\ListPasienRanap;
 use App\Http\Controllers\Laporan\BayarPiutang;
 use App\Http\Controllers\Laporan\PiutangRalan;
 use App\Http\Controllers\Bpjs\CesmikController;
+use App\Http\Controllers\AntrianPoli\AntrianPoli;
 use App\Http\Controllers\Farmasi\BundlingFarmasi;
 use App\Http\Controllers\Laporan\PembayaranRalan;
 use App\Http\Controllers\Laporan\PasienController;
@@ -112,6 +113,12 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     Route::get('/antrian-pendaftaran', [AntrianPendaftaran::class, 'AntrianPendaftaran'])->middleware('permision-rsbw:registrasi');
     Route::get('/cari-loket', [AntrianPendaftaran::class, 'DisplayAntrian'])->middleware('permision-rsbw:edit_registrasi');
     Route::get('/setting-antrian', [AntrianPendaftaran::class, 'SetingAntrian'])->middleware('permision-rsbw:edit_registrasi');
+
+    // ANTRIAN POLI
+    Route::get('/antrian-poli', [AntrianPoli::class, 'AntrianPoli']);
+    Route::get('/display', [AntrianPoli::class, 'display']);
+    Route::get('/panggil-poli', [AntrianPoli::class, 'panggilpoli']);
+
 
     // RM
     Route::get('/berkas-rm', [BerkasRM::class, 'BerkasRM']);

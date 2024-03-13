@@ -142,6 +142,7 @@ class PrintCesmikController extends Controller
                                 'pasien.tgl_lahir',
                                 'pasien.jk as jenis_kelamin',
                                 'pasien.pekerjaan',
+                                'pasien.alamat',
                                 'dokter.nm_dokter',
                                 'kamar_inap.kd_kamar',
                                 'kamar_inap.tgl_masuk',

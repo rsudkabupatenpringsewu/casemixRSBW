@@ -10,9 +10,7 @@
                         <th>Kd Pendaftaran</th>
                         <th>Nama Pendaftaran</th>
                         <th class="text-center">Display Antrian</th>
-                        @if (session('edit_registrasi') === 'true')
-                            <th class="text-center">Display Petugas</th>
-                        @endif
+                        <th class="text-center">Display Petugas</th>
                     </tr>
                 </thead>
                 <tbody>

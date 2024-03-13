@@ -27,9 +27,9 @@ class KegiatanLainKeperawatan extends Component
     // Get Jenis Kegiatan
     public $getJenisKegiatan;
     public function getJenisKegiatan() {
-        $this->getJenisKegiatan = DB::connection('db_con2')->table('jenis_lookbook_kegiatan_lain')
-        ->select('jenis_lookbook_kegiatan_lain.id_kegiatan', 'jenis_lookbook_kegiatan_lain.nama_kegiatan')
-        ->orderBy('jenis_lookbook_kegiatan_lain.id_kegiatan','desc')
+        $this->getJenisKegiatan = DB::table('bw_jenis_lookbook_kegiatan_lain')
+        ->select('bw_jenis_lookbook_kegiatan_lain.id_kegiatan', 'bw_jenis_lookbook_kegiatan_lain.nama_kegiatan')
+        ->orderBy('bw_jenis_lookbook_kegiatan_lain.id_kegiatan','desc')
         ->get();
     }
 
@@ -58,7 +58,7 @@ class KegiatanLainKeperawatan extends Component
     public  function simpanKegiatan($id_user) {
         $this->validate();
         try {
-            DB::connection('db_con2')->table('logbook_keperawatan_kegiatanlain')->insert([
+            DB::table('bw_logbook_keperawatan_kegiatanlain')->insert([
                 'id_kegiatan' => $this->id_kegiatan,
                 'judul' => $this->judul,
                 'tanggal' => $this->tanggal,
@@ -82,14 +82,14 @@ class KegiatanLainKeperawatan extends Component
     public $tanggal2;
     public function getListKegiatan() {
         $cariKode = $this->cariKodeListKegiatan;
-        $this->getListKegiatan = DB::connection('db_con2')->table('logbook_keperawatan_kegiatanlain')
-        ->select('logbook_keperawatan_kegiatanlain.id_kegiatan_keperawatanlain','logbook_keperawatan_kegiatanlain.id_kegiatan','jenis_lookbook_kegiatan_lain.nama_kegiatan', 'logbook_keperawatan_kegiatanlain.judul', 'logbook_keperawatan_kegiatanlain.deskripsi', 'logbook_keperawatan_kegiatanlain.mandiri', 'logbook_keperawatan_kegiatanlain.supervisi', 'logbook_keperawatan_kegiatanlain.tanggal')
-        ->join('jenis_lookbook_kegiatan_lain','logbook_keperawatan_kegiatanlain.id_kegiatan','=','jenis_lookbook_kegiatan_lain.id_kegiatan')
-        ->where('logbook_keperawatan_kegiatanlain.user', session('auth')['id_user'])
-        ->whereBetween('logbook_keperawatan_kegiatanlain.tanggal',[$this->tanggal1, $this->tanggal2])
+        $this->getListKegiatan = DB::table('bw_logbook_keperawatan_kegiatanlain')
+        ->select('bw_logbook_keperawatan_kegiatanlain.id_kegiatan_keperawatanlain','bw_logbook_keperawatan_kegiatanlain.id_kegiatan','bw_jenis_lookbook_kegiatan_lain.nama_kegiatan', 'bw_logbook_keperawatan_kegiatanlain.judul', 'bw_logbook_keperawatan_kegiatanlain.deskripsi', 'bw_logbook_keperawatan_kegiatanlain.mandiri', 'bw_logbook_keperawatan_kegiatanlain.supervisi', 'bw_logbook_keperawatan_kegiatanlain.tanggal')
+        ->join('bw_jenis_lookbook_kegiatan_lain','bw_logbook_keperawatan_kegiatanlain.id_kegiatan','=','bw_jenis_lookbook_kegiatan_lain.id_kegiatan')
+        ->where('bw_logbook_keperawatan_kegiatanlain.user', session('auth')['id_user'])
+        ->whereBetween('bw_logbook_keperawatan_kegiatanlain.tanggal',[$this->tanggal1, $this->tanggal2])
         ->where(function ($query) use ($cariKode) {
-            $query->orwhere('jenis_lookbook_kegiatan_lain.nama_kegiatan', 'LIKE', "%$cariKode%")
-                ->orWhere('logbook_keperawatan_kegiatanlain.judul', 'LIKE', "%$cariKode%");
+            $query->orwhere('bw_jenis_lookbook_kegiatan_lain.nama_kegiatan', 'LIKE', "%$cariKode%")
+                ->orWhere('bw_logbook_keperawatan_kegiatanlain.judul', 'LIKE', "%$cariKode%");
         })
         ->get();
         foreach ($this->getListKegiatan as $key => $kegiatan) {
@@ -103,7 +103,7 @@ class KegiatanLainKeperawatan extends Component
     public function editListKegiatan($key, $id_kegiatan_keperawatanlain) {
         try {
             $this->select = $this->getListKegiatan[$key]['id_kegiatan'];
-            DB::connection('db_con2')->table('logbook_keperawatan_kegiatanlain')->where('id_kegiatan_keperawatanlain', $id_kegiatan_keperawatanlain)
+            DB::table('bw_logbook_keperawatan_kegiatanlain')->where('id_kegiatan_keperawatanlain', $id_kegiatan_keperawatanlain)
                 ->update([
                     'id_kegiatan' => $this->getListKegiatan[$key]['id_kegiatan'],
                     'tanggal' => $this->getListKegiatan[$key]['tanggal'],
@@ -122,7 +122,7 @@ class KegiatanLainKeperawatan extends Component
     public function hapusListKegiatan($key, $id_kegiatan_keperawatanlain){
         try {
             DB::connection('db_con2')
-            ->table('logbook_keperawatan_kegiatanlain')
+            ->table('bw_logbook_keperawatan_kegiatanlain')
             ->where('id_kegiatan_keperawatanlain', $id_kegiatan_keperawatanlain)
             ->delete();
             Session::flash('succsesDeleteKegiatan');

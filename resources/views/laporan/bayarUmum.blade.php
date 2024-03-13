@@ -5,6 +5,14 @@
     <div class="card">
         <div class="card-body">
             @include('laporan.component.search-bayarUmum')
+            Jumlah Data : {{ count($bayarUmum) }}
+            <div class="row no-print">
+                <div class="col-12">
+                    <button type="button" class="btn btn-default float-right" id="copyButton">
+                        <i class="fas fa-copy"></i> Copy table
+                    </button>
+                </div>
+            </div>
             <table class="table table-sm table-hover table-bordered table-striped table-responsive text-xs mb-3"
                 style="white-space: nowrap;" id="tableToCopy">
                 <tbody>
@@ -28,6 +36,7 @@
                         <th>Tambahan</th>
                         <th>Kamar+Service</th>
                         <th>Potongan</th>
+                        <th>Total</th>
                     </tr>
                     @foreach ($bayarUmum as $key => $item)
                         <tr>
@@ -98,6 +107,24 @@
                             <td>
                                 {{ $item->getPotongan->sum('totalbiaya') }}
                             </td>
+                            <td>
+                                {{ $item->getRegistrasi->sum('totalbiaya') +
+                                    $item->getObat->sum('totalbiaya') +
+                                    $item->getReturObat->sum('totalbiaya') +
+                                    $item->getResepPulang->sum('totalbiaya') +
+                                    $item->getRalanDokter->sum('totalbiaya') +
+                                    $item->getRalanParamedis->sum('totalbiaya') +
+                                    $item->getRalanDrParamedis->sum('totalbiaya') +
+                                    $item->getRanapDokter->sum('totalbiaya') +
+                                    $item->getRanapDrParamedis->sum('totalbiaya') +
+                                    $item->getRanapParamedis->sum('totalbiaya') +
+                                    $item->getOprasi->sum('totalbiaya') +
+                                    $item->getLaborat->sum('totalbiaya') +
+                                    $item->getRadiologi->sum('totalbiaya') +
+                                    $item->getTambahan->sum('totalbiaya') +
+                                    $item->getKamarInap->sum('totalbiaya') +
+                                    $item->getPotongan->sum('totalbiaya') }}
+                            </td>
                         </tr>
                     @endforeach
                     <tr>
@@ -162,9 +189,49 @@
                                 return $item->getPotongan->sum('totalbiaya');
                             }) }}
                         </th>
+                        <th>
+                            {{ $bayarUmum->sum(function ($item) {
+                                return $item->getRegistrasi->sum('totalbiaya') +
+                                    $item->getObat->sum('totalbiaya') +
+                                    $item->getReturObat->sum('totalbiaya') +
+                                    $item->getResepPulang->sum('totalbiaya') +
+                                    $item->getRalanDokter->sum('totalbiaya') +
+                                    $item->getRalanParamedis->sum('totalbiaya') +
+                                    $item->getRalanDrParamedis->sum('totalbiaya') +
+                                    $item->getRanapDokter->sum('totalbiaya') +
+                                    $item->getRanapDrParamedis->sum('totalbiaya') +
+                                    $item->getRanapParamedis->sum('totalbiaya') +
+                                    $item->getOprasi->sum('totalbiaya') +
+                                    $item->getLaborat->sum('totalbiaya') +
+                                    $item->getRadiologi->sum('totalbiaya') +
+                                    $item->getTambahan->sum('totalbiaya') +
+                                    $item->getKamarInap->sum('totalbiaya') +
+                                    $item->getPotongan->sum('totalbiaya');
+                            }) }}
+                        </th>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
+    <script>
+        document.getElementById("copyButton").addEventListener("click", function() {
+            copyTableToClipboard("tableToCopy");
+        });
+
+        function copyTableToClipboard(tableId) {
+            const table = document.getElementById(tableId);
+            const range = document.createRange();
+            range.selectNode(table);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            try {
+                document.execCommand("copy");
+                window.getSelection().removeAllRanges();
+                alert("Tabel telah berhasil disalin ke clipboard.");
+            } catch (err) {
+                console.error("Tidak dapat menyalin tabel:", err);
+            }
+        }
+    </script>
 @endsection

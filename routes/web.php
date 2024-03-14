@@ -35,10 +35,12 @@ use App\Http\Controllers\Farmasi\ViewSepResepController;
 use App\Http\Controllers\DetailTindakan\PeriksaRadiologi;
 use App\Http\Controllers\Keperawatan\PengawasKeperawatan;
 use App\Http\Controllers\DetailTindakanUmum\RalanDokterUm;
+use App\Http\Controllers\DetailTindakanUmum\OperasiAndVKUm;
 use App\Http\Controllers\DetailTindakan\RalanDokterParamedis;
 use App\Http\Controllers\DetailTindakan\RanapDokterParamedis;
 use App\Http\Controllers\DetailTindakanUmum\RalanParamedisUm;
 use App\Http\Controllers\AntrianPendaftaran\AntrianPendaftaran;
+use App\Http\Controllers\DetailTindakanUmum\RalanDokterParamedisUm;
 
 /*
 |--------------------------------------------------------------------------
@@ -114,6 +116,8 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     // DETAIL TINDAKAN Umum
     Route::get('/ralan-dokter-umum', [RalanDokterUm::class, 'RalanDokterUm']);
     Route::get('/ralan-paramedis-umum', [RalanParamedisUm::class, 'RalanParamedisUm']);
+    Route::get('/ralan-dokter-paramedis-umum', [RalanDokterParamedisUm::class, 'RalanDokterParamedisUm']);
+    Route::get('/operasi-and-vk-umum', [OperasiAndVKUm::class, 'OperasiAndVKUm']);
 
     // ANTRIAN PENDAFTARAN
     Route::get('/antrian-pendaftaran', [AntrianPendaftaran::class, 'AntrianPendaftaran'])->middleware('permision-rsbw:registrasi');

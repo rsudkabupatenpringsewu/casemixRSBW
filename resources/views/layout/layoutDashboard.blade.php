@@ -41,9 +41,7 @@
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
         @php
-            $getSeting = DB::table('setting')
-                ->select('setting.nama_instansi', 'setting.logo')
-                ->first();
+            $getSeting = DB::table('setting')->select('setting.nama_instansi', 'setting.logo')->first();
         @endphp
         <!-- Preloader -->
         {{-- <div class="preloader flex-column justify-content-center align-items-center">
@@ -179,10 +177,10 @@
                         <li class="nav-item">{{-- menu-open --}}
                             <a href="#" class="nav-link">{{-- active --}}
                                 <i class="nav-icon fas fa-hospital-user"></i>
-                                <p>
-                                    Detail Tindakan
-                                    <i class="right fas fa-angle-left"></i>
+                                <p class="class="btn btn-app">
+                                    Detail Tindakan <span class="text-xs">(Asuransi)</span>
                                 </p>
+                                <i class="right fas fa-angle-left"></i>
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
@@ -245,6 +243,32 @@
                                     <a href="{{ url('/periksa-radiologi') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Periksa Radiologi</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        {{-- DETAIL TINDAKAN UMUM --}}
+                        <li class="nav-item">{{-- menu-open --}}
+                            <a href="#" class="nav-link">{{-- active --}}
+                                <i class="nav-icon fas fa-hospital-user"></i>
+                                <p class="class="btn btn-app">
+                                    Detail Tindakan <span class="text-xs">(Umum)</span>
+                                </p>
+                                <i class="right fas fa-angle-left"></i>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{url('/ralan-dokter-umum')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Ralan Dokter</p>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{url('/ralan-paramedis-umum')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Ralan Paramedis</p>
                                     </a>
                                 </li>
                             </ul>
@@ -364,7 +388,7 @@
                         {{-- ANTRIAN POLI --}}
                         <li class="nav-item">{{-- menu-open --}}
                             <a href="#" class="nav-link">{{-- active --}}
-                                <i class="nav-icon fas fa-user"></i>
+                                <i class="nav-icon fas fa-layer-group"></i>
                                 <p>
                                     Antrian Poli
                                     <i class="right fas fa-angle-left"></i>

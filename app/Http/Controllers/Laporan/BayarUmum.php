@@ -9,19 +9,13 @@ use App\Http\Controllers\Controller;
 
 class BayarUmum extends Controller
 {
-    protected $cacheService;
-    public function __construct(CacheService $cacheService)
-    {
-        $this->cacheService = $cacheService;
-    }
 
     function CariBayarUmum(Request $request) {
-        $penjab = $this->cacheService->getPenjab();
 
         $cariNomor = $request->cariNomor;
         $tanggl1 = $request->tgl1;
         $tanggl2 = $request->tgl2;
-        $kdPenjamin = ($request->input('kdPenjamin') == null) ? "" : explode(',', $request->input('kdPenjamin'));
+        $stsLanjut = $request->stsLanjut;
 
         $bayarUmum = DB::table('reg_periksa')
             ->select('reg_periksa.no_rawat',
@@ -36,13 +30,14 @@ class BayarUmum extends Controller
             ->join('billing','billing.no_rawat','=','reg_periksa.no_rawat')
             ->join('penjab','penjab.kd_pj','=','reg_periksa.kd_pj')
             ->join('dokter','reg_periksa.kd_dokter','=','dokter.kd_dokter')
+            ->where('penjab.kd_pj', 'UMU')
             ->whereBetween('billing.tgl_byr', [$tanggl1 , $tanggl2])
             ->whereNotIn('reg_periksa.no_rawat', function ($query) {
                 $query->select('piutang_pasien.no_rawat')->from('piutang_pasien');
             })
-            ->where(function ($query) use ($kdPenjamin) {
-                if ($kdPenjamin) {
-                    $query->whereIn('penjab.kd_pj', $kdPenjamin);
+            ->where(function ($query) use ($stsLanjut) {
+                if ($stsLanjut) {
+                    $query->where('reg_periksa.status_lanjut', $stsLanjut);
                 }
             })
             ->where(function($query) use ($cariNomor) {
@@ -166,7 +161,6 @@ class BayarUmum extends Controller
             });
 
         return  view('laporan.bayarUmum', [
-            'penjab' => $penjab,
             'bayarUmum' => $bayarUmum,
         ]);
     }

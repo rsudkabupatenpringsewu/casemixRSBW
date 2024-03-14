@@ -34,8 +34,10 @@ use App\Http\Controllers\Returobat\ReturObatController;
 use App\Http\Controllers\Farmasi\ViewSepResepController;
 use App\Http\Controllers\DetailTindakan\PeriksaRadiologi;
 use App\Http\Controllers\Keperawatan\PengawasKeperawatan;
+use App\Http\Controllers\DetailTindakanUmum\RalanDokterUm;
 use App\Http\Controllers\DetailTindakan\RalanDokterParamedis;
 use App\Http\Controllers\DetailTindakan\RanapDokterParamedis;
+use App\Http\Controllers\DetailTindakanUmum\RalanParamedisUm;
 use App\Http\Controllers\AntrianPendaftaran\AntrianPendaftaran;
 
 /*
@@ -99,7 +101,7 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     Route::get('/cari-bayar-piutang', [BayarPiutang::class, 'CariBayarPiutang']);
     Route::get('/cari-bayar-umum', [BayarUmum::class, 'CariBayarUmum']);
 
-    // DETAIL TINDAKAN
+    // DETAIL TINDAKAN Asuransi
     Route::get('/ralan-dokter', [RalanDokter::class, 'RalanDokter']);
     Route::get('/ralan-paramedis', [RalanParamedis::class, 'RalanParamedis']);
     Route::get('/ralan-dokter-paramedis', [RalanDokterParamedis::class, 'RalanDokterParamedis']);
@@ -108,6 +110,10 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     Route::get('/ranap-paramedis', [RanapParamedis::class, 'RanapParamedis']);
     Route::get('/ranap-dokter-paramedis', [RanapDokterParamedis::class, 'RanapDokterParamedis']);
     Route::get('/periksa-radiologi', [PeriksaRadiologi::class, 'PeriksaRadiologi']);
+
+    // DETAIL TINDAKAN Umum
+    Route::get('/ralan-dokter-umum', [RalanDokterUm::class, 'RalanDokterUm']);
+    Route::get('/ralan-paramedis-umum', [RalanParamedisUm::class, 'RalanParamedisUm']);
 
     // ANTRIAN PENDAFTARAN
     Route::get('/antrian-pendaftaran', [AntrianPendaftaran::class, 'AntrianPendaftaran'])->middleware('permision-rsbw:registrasi');

@@ -450,7 +450,10 @@
                                 <li class="nav-item">
                                     <a href="{{ url('kirim-taskid-bpjs') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Berkas Pasien BPJS</p>
+                                        <p>
+                                            Cekin / Kirim TaskID
+                                            <span class="badge badge-info right">dev</span>
+                                        </p>
                                     </a>
                                 </li>
                             </ul>

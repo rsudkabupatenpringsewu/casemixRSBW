@@ -18,6 +18,7 @@ use App\Http\Controllers\Bpjs\CesmikController;
 use App\Http\Controllers\AntrianPoli\AntrianPoli;
 use App\Http\Controllers\Farmasi\BundlingFarmasi;
 use App\Http\Controllers\Laporan\PembayaranRalan;
+use App\Http\Controllers\BriggingBpjs\KirimTaskId;
 use App\Http\Controllers\Laporan\PasienController;
 use App\Http\Controllers\Bpjs\PrintCesmikController;
 use App\Http\Controllers\DetailTindakan\RalanDokter;
@@ -139,6 +140,10 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     Route::get('/laporan-logbook-keperawatan', [LaporanLogBook::class, 'getLookBook']);
     Route::get('/laporan-logbook-keperawatan2', [LaporanLogBook2::class, 'getLookBook']);
     Route::get('/input-kegiatan-keperawatan-lain', [PengawasKeperawatan::class, 'InputKegiatanLain']);
+
+    // BRIFING BPJS
+    Route::get('/kirim-taskid-bpjs', [KirimTaskId::class, 'KirimTaskId']);
+
 
 });
     Route::get('/display-petugas', [AntrianPendaftaran::class, 'DisplayPetugas']);

@@ -13,7 +13,7 @@
             <div class="row mt-3">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <input type="test" class="form-control" wire:model.lazy="kodebooking">
+                        <input type="test" class="form-control" wire:model.lazy="kodebooking" placeholder="Kode Booking">
                     </div>
                 </div>
             </div>

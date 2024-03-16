@@ -1,7 +1,0 @@
-CONS_ID=26519
-SECRET_KEY=3kB2D07001
-USER_KEY_VCLAIM=5e51bb79a4c6abcacde7ab1c48362adc
-API_BPJS_VCLAIM=https://apijkn.bpjs-kesehatan.go.id/vclaim-rest/
-
-API_BPJS_ANTROL=https://apijkn.bpjs-kesehatan.go.id/antreanrs/
-USER_KEY_ANTROL=128eadf3293910a8e028cb22aebd4893

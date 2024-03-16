@@ -1,5 +1,5 @@
 @extends('..layout.layoutDashboard')
-@section('title', 'Minimal Stok Obat')
+@section('title', 'Cekin / Kirim TaskID')
 @push('styles')
     @livewireStyles
 @endpush

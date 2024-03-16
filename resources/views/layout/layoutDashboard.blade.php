@@ -371,6 +371,27 @@
                                 </ul>
                             @endif
                         </li>
+                        {{-- MENU BRIGING BPJS--}}
+                        <li class="nav-item">{{-- menu-open --}}
+                            <a href="#" class="nav-link">{{-- active --}}
+                                <i class="nav-icon fas fa-file"></i>
+                                <p>
+                                    Brigging BPJS
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('kirim-taskid-bpjs') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>
+                                            Cekin / Kirim TaskID
+                                            <span class="badge badge-info right">dev</span>
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                         <li class="nav-header user-panel"></li>
                         <li class="nav-header">Pelayanan - RM</li>
                         {{-- MENU ANTRIAN --}}
@@ -433,27 +454,6 @@
                                     <a href="{{ url('berkas-rm') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Berkas Pasien BPJS</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        {{-- MENU BRIGING --}}
-                        <li class="nav-item">{{-- menu-open --}}
-                            <a href="#" class="nav-link">{{-- active --}}
-                                <i class="nav-icon fas fa-file"></i>
-                                <p>
-                                    Brigging BPJS
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ url('kirim-taskid-bpjs') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>
-                                            Cekin / Kirim TaskID
-                                            <span class="badge badge-info right">dev</span>
-                                        </p>
                                     </a>
                                 </li>
                             </ul>

@@ -6,6 +6,7 @@ use setasign\Fpdi\Fpdi;
 use Spatie\PdfToImage\Pdf;
 use Illuminate\Http\Request;
 use App\Services\TestService;
+use App\Services\Bpjs\Referensi;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
@@ -13,6 +14,12 @@ use Illuminate\Support\Facades\Storage;
 
 class TestController extends Controller
 {
+    protected $Referensi;
+    protected $RsbwFktl;
+    public function __construct()
+    {
+        $this->Referensi = new Referensi;
+    }
     function TestDelete(Request $request) {
         //   $data = [
             //     // ['kode_brng'=>'GU000003240', 'kd_bangsal' => 'DepRJ', 'stok_minimal_medis' =>750],
@@ -23,7 +30,7 @@ class TestController extends Controller
         // }
     }
 
-    function Test(){
+    // function Test(){
         // $getPenyakit = DB::table('diagnosa_pasien')
         //     ->select('penyakit.nm_penyakit',
         //             'diagnosa_pasien.kd_penyakit',
@@ -56,77 +63,22 @@ class TestController extends Controller
         //     });
 
         // return view('test.test', ['getPenyakit' => $getPenyakit]);
+    // }
 
-        $consid = '26519'; // Ganti dengan nilai cons-id Anda
-        $secretKey = '3kB2D07001'; // Ganti dengan nilai secret key Anda
-        $userKey = '5e51bb79a4c6abcacde7ab1c48362adc'; // Ganti dengan nilai user key Anda
-
-        $tStamp = strval(time());
-
-        $signature = hash_hmac('sha256', $consid . "&" . $tStamp, $secretKey, true);
-
-        $encodedSignature = base64_encode($signature);
-
-            $parameter1 = date("Y-m-d"); // Jika tidak ada parameter, gunakan tanggal saat ini
-
-        $api_url = 'https://apijkn.bpjs-kesehatan.go.id/antreanrs/antrean/pendaftaran/tanggal/' . $parameter1;
-
-        // Melakukan HTTP GET request menggunakan HTTP Client dari Laravel
-        $response = Http::withHeaders([
-            'X-cons-id' => $consid,
-            'X-timestamp' => $tStamp,
-            'X-signature' => $encodedSignature,
-            'user_key' => $userKey,
-            'Content-Type' => 'application/json;charset=utf-8'
-        ])->get($api_url);
-
-       // Mengembalikan hasil dalam bentuk JSON
-        $encryptedData = $response->json();
-        $decryptedData = $this->decryptResponse($encryptedData, $consid.$secretKey.$tStamp);
-
-        return $this->decompressFromEncodedURIComponent($decryptedData);
+    public function dashboardTanggal() {
+        $data = json_decode($this->Referensi->dashboardTanggal('2024-03-15'));
+        dd($data);
     }
-
-    private function decryptResponse($encryptedData, $encryptionKey)
-    {
-        // Lakukan dekripsi pada setiap nilai string dalam array
-        array_walk_recursive($encryptedData, function (&$value) use ($encryptionKey) {
-            $value = $this->stringDecrypt($encryptionKey, $value);
-        });
-
-        return $encryptedData;
+    public function cekantrianTaskID() {
+        $data = json_decode($this->Referensi->cekantrianTaskID('20240315000004'));
+        dd($data);
     }
-
-    private function stringDecrypt($key, $string)
-    {
-        $encrypt_method = 'AES-256-CBC';
-        $key_hash = hex2bin(hash('sha256', $key));
-        $iv = substr(hex2bin(hash('sha256', $key)), 0, 16);
-        $output = openssl_decrypt(base64_decode($string), $encrypt_method, $key_hash, OPENSSL_RAW_DATA, $iv);
-        return $output;
-    }
-
-    private function decompressFromEncodedURIComponent($input){
-        if ($input === null) {
-            return "";
-        }
-        if ($input === "") {
-            return null;
-        }
-
-        $input = str_replace(' ', "+", $input);
-
-        return self::_decompress(
-            $input,
-            32,
-            function($data) {
-                $sub = substr($data->str, $data->index, 6);
-                $sub = LZUtil::utf8_charAt($sub, 0);
-                $data->index += strlen($sub);
-                $data->end = strlen($sub) <= 0;
-                return LZUtil::getBaseValue(LZUtil::$keyStrUriSafe, $sub);
-            }
-        );
+    public function cekTaskID() {
+        $jayParsedAry = [
+            "kodebooking" => '20240315000004',
+        ];
+        $data = json_decode($this->Referensi->cekTaskID(json_encode($jayParsedAry)));
+        dd($data);
     }
 
 

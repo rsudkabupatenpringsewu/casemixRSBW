@@ -51,4 +51,21 @@ class Referensi
             $endpoint = 'antrean/updatewaktu';
             return $this->antrol->postRequest($endpoint, $data, "POST");
 	}
+
+    public function dashboardTanggal($tanggal)
+	{
+        $endpoint = "antrean/pendaftaran/tanggal/{$tanggal}";
+		return $this->antrol->getRequest($endpoint);
+	}
+
+    public function cekantrianTaskID($kodebooking)
+    {
+            $endpoint = "antrean/pendaftaran/kodebooking/{$kodebooking}";
+            return $this->antrol->getRequest($endpoint);
+    }
+    public function cekTaskID($data)
+    {
+            $endpoint = 'antrean/getlisttask';
+            return $this->antrol->postRequest($endpoint, $data, "POST");
+    }
 }

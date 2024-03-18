@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 
 class KirimTaskId extends Controller
 {
+
     function KirimTaskId() {
         return view('briging-bpjs.kirim-taskid');
     }

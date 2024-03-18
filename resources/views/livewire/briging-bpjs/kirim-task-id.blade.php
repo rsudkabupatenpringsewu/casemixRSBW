@@ -165,4 +165,16 @@
             </div>
         </div>
     </div> --}}
+    {{-- <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary" wire:click="TestFktl()">Test Fktl
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> --}}
 </div>

@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Services\CacheService;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Cache;
 
 class BayarPiutang extends Controller
 {
@@ -16,7 +15,8 @@ class BayarPiutang extends Controller
         $this->cacheService = $cacheService;
     }
 
-    function CariBayarPiutang(Request $request) {
+    function CariBayarPiutang(Request $request)
+    {
         $penjab = $this->cacheService->getPenjab();
 
         $cariNomor = $request->cariNomor;
@@ -27,7 +27,8 @@ class BayarPiutang extends Controller
         $kdPenjamin = ($request->input('kdPenjamin') == null) ? "" : explode(',', $request->input('kdPenjamin'));
 
         $bayarPiutang = DB::table('bayar_piutang')
-            ->select('bayar_piutang.tgl_bayar',
+            ->select(
+                'bayar_piutang.tgl_bayar',
                 'bayar_piutang.no_rkm_medis',
                 'pasien.nm_pasien',
                 'bayar_piutang.besar_cicilan',
@@ -38,12 +39,13 @@ class BayarPiutang extends Controller
                 'reg_periksa.kd_pj',
                 'penjab.png_jawab',
                 'piutang_pasien.status',
-                'piutang_pasien.uangmuka')
-            ->join('pasien','bayar_piutang.no_rkm_medis','=','pasien.no_rkm_medis')
-            ->leftJoin('reg_periksa','bayar_piutang.no_rawat','=','reg_periksa.no_rawat')
-            ->leftJoin('penjab','reg_periksa.kd_pj','=','penjab.kd_pj')
-            ->leftJoin('piutang_pasien','piutang_pasien.no_rawat','=','bayar_piutang.no_rawat')
-            ->whereBetween('bayar_piutang.tgl_bayar', [$tanggl1 , $tanggl2])
+                'piutang_pasien.uangmuka'
+            )
+            ->join('pasien', 'bayar_piutang.no_rkm_medis', '=', 'pasien.no_rkm_medis')
+            ->leftJoin('reg_periksa', 'bayar_piutang.no_rawat', '=', 'reg_periksa.no_rawat')
+            ->leftJoin('penjab', 'reg_periksa.kd_pj', '=', 'penjab.kd_pj')
+            ->leftJoin('piutang_pasien', 'piutang_pasien.no_rawat', '=', 'bayar_piutang.no_rawat')
+            ->whereBetween('bayar_piutang.tgl_bayar', [$tanggl1, $tanggl2])
             ->where(function ($query) use ($status, $kdPenjamin) {
                 if ($status) {
                     $query->where('piutang_pasien.status', $status);
@@ -52,13 +54,13 @@ class BayarPiutang extends Controller
                     $query->whereIn('penjab.kd_pj', $kdPenjamin);
                 }
             })
-            ->where(function($query) use ($cariNomor) {
+            ->where(function ($query) use ($cariNomor) {
                 $query->orWhere('reg_periksa.no_rawat', 'like', '%' . $cariNomor . '%');
                 $query->orWhere('reg_periksa.no_rkm_medis', 'like', '%' . $cariNomor . '%');
                 $query->orWhere('pasien.nm_pasien', 'like', '%' . $cariNomor . '%');
             })
-            ->orderBy('bayar_piutang.tgl_bayar','asc')
-            ->orderBy('bayar_piutang.no_rkm_medis','asc')
+            ->orderBy('bayar_piutang.tgl_bayar', 'asc')
+            ->orderBy('bayar_piutang.no_rkm_medis', 'asc')
             ->paginate(1000);
             $bayarPiutang->map(function ($item) {
                 // NOMOR NOTA
@@ -166,8 +168,8 @@ class BayarPiutang extends Controller
                 return $item;
             });
         return view('laporan.bayarPiutang', [
-            'penjab'=> $penjab,
-            'bayarPiutang'=> $bayarPiutang,
+            'penjab' => $penjab,
+            'bayarPiutang' => $bayarPiutang,
         ]);
     }
 }

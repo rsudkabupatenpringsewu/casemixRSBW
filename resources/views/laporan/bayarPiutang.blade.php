@@ -13,8 +13,8 @@
                     </button>
                 </div>
             </div>
-            <table class="table table-sm table-bordered table-striped table-responsive text-xs mb-3" style="white-space: nowrap;"
-                id="tableToCopy">
+            <table class="table table-sm table-bordered table-striped table-responsive text-xs mb-3"
+                style="white-space: nowrap;" id="tableToCopy">
                 <tbody>
                     <tr>
                         <th>No</th>
@@ -34,6 +34,7 @@
                         <th>Tambahan</th>
                         <th>Kamar+Service</th>
                         <th>Potongan</th>
+                        <th>Total</th>
                         <th>Ekses / Uang Muka</th>
                         <th>Cicilan(Rp)</th>
                         <th>Diskon Bayar(Rp)</th>
@@ -114,11 +115,27 @@
                             <td>
                                 {{ $item->getPotongan->sum('totalbiaya') }}
                             </td>
+                            <td>
+                                <b>
+                                    {{ $item->getRegistrasi->sum('totalbiaya') +
+                                        $item->getObat->sum('totalbiaya') +
+                                        $item->getReturObat->sum('totalbiaya') +
+                                        $item->getResepPulang->sum('totalbiaya') +
+                                        $item->getRalanDokter->sum('totalbiaya') +
+                                        $item->getRalanParamedis->sum('totalbiaya') +
+                                        $item->getRalanDrParamedis->sum('totalbiaya') +
+                                        $item->getRanapDokter->sum('totalbiaya') +
+                                        $item->getRanapDrParamedis->sum('totalbiaya') +
+                                        $item->getRanapParamedis->sum('totalbiaya') +
+                                        $item->getOprasi->sum('totalbiaya') +
+                                        $item->getLaborat->sum('totalbiaya') +
+                                        $item->getRadiologi->sum('totalbiaya') +
+                                        $item->getTambahan->sum('totalbiaya') +
+                                        $item->getKamarInap->sum('totalbiaya') +
+                                        $item->getPotongan->sum('totalbiaya') }}
+                                </b>
+                            </td>
                             <td>{{ $item->uangmuka }}</td>
-
-
-
-
                             <td>{{ $item->besar_cicilan }}</td>
                             <td>{{ $item->diskon_piutang }}</td>
                             <td>{{ $item->tidak_terbayar }}</td>
@@ -185,11 +202,31 @@
                                 return $item->getKamarInap->sum('totalbiaya');
                             }) }}
                         </th>
-                        <td>
+                        <th>
                             {{ $bayarPiutang->sum(function ($item) {
                                 return $item->getPotongan->sum('totalbiaya');
                             }) }}
-                        </td>
+                        </th>
+                        <th>
+                            {{ $bayarPiutang->sum(function ($item) {
+                                return $item->getRegistrasi->sum('totalbiaya') +
+                                        $item->getObat->sum('totalbiaya') +
+                                        $item->getReturObat->sum('totalbiaya') +
+                                        $item->getResepPulang->sum('totalbiaya') +
+                                        $item->getRalanDokter->sum('totalbiaya') +
+                                        $item->getRalanParamedis->sum('totalbiaya') +
+                                        $item->getRalanDrParamedis->sum('totalbiaya') +
+                                        $item->getRanapDokter->sum('totalbiaya') +
+                                        $item->getRanapDrParamedis->sum('totalbiaya') +
+                                        $item->getRanapParamedis->sum('totalbiaya') +
+                                        $item->getOprasi->sum('totalbiaya') +
+                                        $item->getLaborat->sum('totalbiaya') +
+                                        $item->getRadiologi->sum('totalbiaya') +
+                                        $item->getTambahan->sum('totalbiaya') +
+                                        $item->getKamarInap->sum('totalbiaya') +
+                                        $item->getPotongan->sum('totalbiaya');
+                            }) }}
+                        </th>
                         <th>
                             {{ $bayarPiutang->sum(function ($item) {
                                 return $item->uangmuka;

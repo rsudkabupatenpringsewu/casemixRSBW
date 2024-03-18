@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Laporan;
 
 use Illuminate\Http\Request;
-use App\Services\CacheService;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 

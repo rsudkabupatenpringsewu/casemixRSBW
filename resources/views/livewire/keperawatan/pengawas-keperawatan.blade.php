@@ -179,10 +179,10 @@
                                                             <div class="input-group-append">
                                                                 <button class="btn btn-sidebar btn-default btn-sm">
                                                                     <i class="fas fa-search fa-fw" wire:loading.remove
-                                                                        wire:target='cariNamaKegiatan'></i>
+                                                                        wire:target='cariKewenanganKhusus'></i>
                                                                     <span class="spinner-grow spinner-grow-sm"
                                                                         role="status" aria-hidden="true" wire:loading
-                                                                        wire:target='cariNamaKegiatan'></span>
+                                                                        wire:target='cariKewenanganKhusus'></span>
                                                                 </button>
                                                             </div>
                                                         </div>

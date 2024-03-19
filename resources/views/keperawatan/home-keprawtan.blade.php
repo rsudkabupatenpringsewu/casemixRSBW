@@ -37,6 +37,19 @@
                                 </div>
                             </div>
                             <div class="col-lg-3 col-6">
+                                <div class="small-box bg-primary">
+                                    <div class="inner">
+                                        <h3>3</h3>
+                                        <h5>Input Kegiatan Kepala Ruangan Keperawatan</h5>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="nav-icon fas fa-file-medical"></i>
+                                    </div>
+                                    <a href="{{url('input-kegiatan-karu')}}" class="small-box-footer">More info <i
+                                            class="fas fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-6">
                                 <div class="small-box bg-warning">
                                     <div class="inner">
                                         <h3>3</h3>
@@ -53,13 +66,26 @@
                             <div class="col-lg-3 col-6">
                                 <div class="small-box bg-warning">
                                     <div class="inner">
-                                        <h3>4</h3>
+                                        <h3>5</h3>
                                         <h5>Laporan Logbook Keperawatan II</h5>
                                     </div>
                                     <div class="icon">
                                         <i class="nav-icon fas fa-receipt"></i>
                                     </div>
                                     <a href="{{url('laporan-logbook-keperawatan2')}}" class="small-box-footer">More info <i
+                                            class="fas fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-6">
+                                <div class="small-box bg-warning">
+                                    <div class="inner">
+                                        <h3>6</h3>
+                                        <h5>Laporan Kegiatan Kepala Ruangan</h5>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="nav-icon fas fa-receipt"></i>
+                                    </div>
+                                    <a href="" class="small-box-footer">More info <i
                                             class="fas fa-arrow-circle-right"></i></a>
                                 </div>
                             </div>

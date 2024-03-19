@@ -154,7 +154,7 @@
                             <input type="date" class="form-control form-control-sidebar form-control-sm"
                                 wire:model.lazy="tanggal2">
                             <div class="input-group-append">
-                                <button class="btn btn-sidebar btn-primary btn-sm" wire:click="render()">
+                                <button class="btn btn-sidebar btn-default btn-sm" wire:click="render()">
                                     <i class="fas fa-search fa-fw"></i>
                                 </button>
                             </div>

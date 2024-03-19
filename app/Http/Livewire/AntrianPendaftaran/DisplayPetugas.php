@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 
 class DisplayPetugas extends Component
 {
+    public $kdLoket;
+    public $getPasien;
     public function mount(Request $request)
     {
         $this->kdLoket = $request->kdLoket;

@@ -1,6 +1,6 @@
 <div>
     <div class="mt-4 container-fluid">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center" wire:poll.1000ms>
             @foreach ($getPoli as $item)
                 <div class="col-md-6 mb-4">
                     <div class="card">
@@ -19,17 +19,29 @@
                                 @foreach ($item->getPasien as $item)
                                     <thead>
                                         <tr>
-                                            <th colspan="3" class="text-center">
-                                                <h3 class="font-weight-bold">Nomor Registrasi</h3>
-                                            </th>
-                                        </tr>
-                                        <tr>
                                             <th colspan="3" class="text-center display-2 font-weight-bold">
-                                                {{ $item->nama_dokter }}
+                                                {{ $item->no_reg }}
                                             </th>
                                         </tr>
                                         <tr>
                                     </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th colspan="3" class="text-center">
+                                                <h3 class="font-weight-bold">{{ $item->nm_pasien }}</h3>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="3" class="text-center">
+                                                <h4 class="font-weight-bold">{{ $item->nama_dokter }}</h4>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">
+                                                <h3 class="font-weight-bold">Jam Mulai : {{ date('H:i', strtotime($item->jam_mulai)) }}</h3>
+                                            </td>
+                                        </tr>
+                                    </tbody>
                                 @endforeach
                             @endif
                         </table>

@@ -140,6 +140,7 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     Route::get('/laporan-logbook-keperawatan', [LaporanLogBook::class, 'getLookBook']);
     Route::get('/laporan-logbook-keperawatan2', [LaporanLogBook2::class, 'getLookBook']);
     Route::get('/input-kegiatan-keperawatan-lain', [PengawasKeperawatan::class, 'InputKegiatanLain']);
+    Route::get('/input-kegiatan-karu', [PengawasKeperawatan::class, 'InputKegiatankaru']);
 
     // BRIFING BPJS
     Route::get('/kirim-taskid-bpjs', [KirimTaskId::class, 'KirimTaskId']);

@@ -121,8 +121,7 @@ class KegiatanLainKeperawatan extends Component
     // HAPUS LIST KEGIATAN
     public function hapusListKegiatan($key, $id_kegiatan_keperawatanlain){
         try {
-            DB::connection('db_con2')
-            ->table('bw_logbook_keperawatan_kegiatanlain')
+            DB::table('bw_logbook_keperawatan_kegiatanlain')
             ->where('id_kegiatan_keperawatanlain', $id_kegiatan_keperawatanlain)
             ->delete();
             Session::flash('succsesDeleteKegiatan');

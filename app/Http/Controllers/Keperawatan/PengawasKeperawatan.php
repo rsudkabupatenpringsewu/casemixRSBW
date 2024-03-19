@@ -14,4 +14,8 @@ class PengawasKeperawatan extends Controller
     function InputKegiatanLain() {
          return view('keperawatan.kegiatan-lain-keperawatan');
     }
+
+    function InputKegiatankaru() {
+         return view('keperawatan.kegiatan-karu');
+    }
 }

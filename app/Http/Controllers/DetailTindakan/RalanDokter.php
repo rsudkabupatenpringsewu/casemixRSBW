@@ -55,6 +55,7 @@ class RalanDokter extends Controller
             ->join('poliklinik','reg_periksa.kd_poli','=','poliklinik.kd_poli')
             ->join('penjab','reg_periksa.kd_pj','=','penjab.kd_pj')
             ->join('bayar_piutang','reg_periksa.no_rawat','=','bayar_piutang.no_rawat')
+            ->where('reg_periksa.status_lanjut', 'Ralan')
             ->whereBetween('bayar_piutang.tgl_bayar',[$tanggl1, $tanggl2])
             ->where(function ($query) use ($kdPenjamin, $kdDokter) {
                 if ($kdPenjamin) {

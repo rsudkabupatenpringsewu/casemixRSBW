@@ -39,7 +39,8 @@ class BayarPiutang extends Controller
                 'reg_periksa.kd_pj',
                 'penjab.png_jawab',
                 'piutang_pasien.status',
-                'piutang_pasien.uangmuka'
+                'piutang_pasien.uangmuka',
+                'reg_periksa.status_lanjut'
             )
             ->join('pasien', 'bayar_piutang.no_rkm_medis', '=', 'pasien.no_rkm_medis')
             ->leftJoin('reg_periksa', 'bayar_piutang.no_rawat', '=', 'reg_periksa.no_rawat')

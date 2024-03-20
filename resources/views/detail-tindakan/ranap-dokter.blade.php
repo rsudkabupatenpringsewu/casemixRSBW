@@ -37,27 +37,32 @@
                 </thead>
 
                 <tbody>
-                    @foreach ($ranapDokter as $item)
-                        <tr>
-                            <td>{{ $item->no_rawat }}</td>
-                            <td>{{ $item->no_rkm_medis }}</td>
-                            <td>{{ $item->nm_pasien }}</td>
-                            <td>{{ $item->kd_jenis_prw }}</td>
-                            <td>{{ $item->nm_perawatan }}</td>
-                            <td>{{ $item->kd_dokter }}</td>
-                            <td>{{ $item->nm_dokter }}</td>
-                            <td>{{ $item->tgl_perawatan }}</td>
-                            <td>{{ $item->jam_rawat }}</td>
-                            <td>{{ $item->png_jawab }}</td>
-                            <td>{{ $item->ruang }}</td>
-                            <td>{{ $item->material }}</td>
-                            <td>{{ $item->bhp }}</td>
-                            <td>{{ $item->tarif_tindakandr }}</td>
-                            <td>{{ $item->kso }}</td>
-                            <td>{{ $item->menejemen }}</td>
-                            <td>{{ $item->biaya_rawat }}</td>
-                        </tr>
-                    @endforeach
+                    @php
+                    $mergedData = $ranapDokter->merge($RalanDokter);
+                    $sortedData = $mergedData->sortBy('no_rawat');
+                @endphp
+                @foreach ($sortedData as $item)
+                    <tr>
+                        <td>{{ $item->no_rawat }}</td>
+                        <td>{{ $item->no_rkm_medis }}</td>
+                        <td>{{ $item->nm_pasien }}</td>
+                        <td>{{ $item->kd_jenis_prw }}</td>
+                        <td>{{ $item->nm_perawatan }}</td>
+                        <td>{{ $item->kd_dokter }}</td>
+                        <td>{{ $item->nm_dokter }}</td>
+                        <td>{{ $item->tgl_perawatan }}</td>
+                        <td>{{ $item->jam_rawat }}</td>
+                        <td>{{ $item->png_jawab }}</td>
+                        <td>{{ $item->ruang ?? $item->nm_poli }}</td>
+                        <!-- Tampilkan ruang jika ada, jika tidak, tampilkan nama poli -->
+                        <td>{{ $item->material }}</td>
+                        <td>{{ $item->bhp }}</td>
+                        <td>{{ $item->tarif_tindakandr }}</td>
+                        <td>{{ $item->kso }}</td>
+                        <td>{{ $item->menejemen }}</td>
+                        <td>{{ $item->biaya_rawat }}</td>
+                    </tr>
+                @endforeach
 
                 </tbody>
             </table>

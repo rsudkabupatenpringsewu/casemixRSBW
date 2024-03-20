@@ -1,10 +1,10 @@
 @extends('..layout.layoutDashboard')
-@section('title', 'Ranap Paramedis')
+@section('title', 'Ranap Dokter (Umum)')
 
 @section('konten')
     <div class="card">
         <div class="card-body">
-            @include('detail-tindakan.component.cari-paramedis')
+            @include('detail-tindakan-umum.component.cari-dokter')
             <div class="row no-print">
                 <div class="col-12">
                     <button type="button" class="btn btn-default float-right" id="copyButton">
@@ -16,31 +16,31 @@
                 id="tableToCopy">
                 <thead>
                     <tr>
-                        <th>No.Rawat</th>
-                        <th>No.RM</th>
+                        <th>No. Rawat</th>
+                        <th>No. Rekam Medis</th>
                         <th>Nama Pasien</th>
-                        <th>Kd.Tindakan</th>
+                        <th>Kode Jenis Perawatan</th>
                         <th>Nama Perawatan</th>
-                        <th>NIP</th>
-                        <th>Paramedis Yg Menangani</th>
+                        <th>Kode Dokter</th>
+                        <th>Dokter Yg Menangani</th>
                         <th>Tanggal</th>
                         <th>Jam</th>
                         <th>Cara Bayar</th>
                         <th>Ruang</th>
                         <th>Jasa Sarana</th>
                         <th>Paket BHP</th>
-                        <th>JM Paramedis</th>
+                        <th>JM Dokter</th>
                         <th>KSO</th>
                         <th>Manajemen</th>
                         <th>Total</th>
                     </tr>
                 </thead>
+
                 <tbody>
                     @php
-                        $mergedData = $getRanapParamedis->merge($RalanParamedis);
+                        $mergedData = $ranapDokterUmum->merge($RalanDokterUmum);
                         $sortedData = $mergedData->sortBy('no_rawat');
                     @endphp
-
                     @foreach ($sortedData as $item)
                         <tr>
                             <td>{{ $item->no_rawat }}</td>
@@ -48,8 +48,8 @@
                             <td>{{ $item->nm_pasien }}</td>
                             <td>{{ $item->kd_jenis_prw }}</td>
                             <td>{{ $item->nm_perawatan }}</td>
-                            <td>{{ $item->nip }}</td>
-                            <td>{{ $item->nama }}</td>
+                            <td>{{ $item->kd_dokter }}</td>
+                            <td>{{ $item->nm_dokter }}</td>
                             <td>{{ $item->tgl_perawatan }}</td>
                             <td>{{ $item->jam_rawat }}</td>
                             <td>{{ $item->png_jawab }}</td>
@@ -57,12 +57,13 @@
                             <!-- Tampilkan ruang jika ada, jika tidak, tampilkan nama poli -->
                             <td>{{ $item->material }}</td>
                             <td>{{ $item->bhp }}</td>
-                            <td>{{ $item->tarif_tindakanpr }}</td>
+                            <td>{{ $item->tarif_tindakandr }}</td>
                             <td>{{ $item->kso }}</td>
                             <td>{{ $item->menejemen }}</td>
                             <td>{{ $item->biaya_rawat }}</td>
                         </tr>
                     @endforeach
+
                 </tbody>
             </table>
         </div>

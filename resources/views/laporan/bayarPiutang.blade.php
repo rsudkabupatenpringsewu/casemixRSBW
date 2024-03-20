@@ -20,6 +20,7 @@
                         <th>No</th>
                         <th>Tgl.Bayar</th>
                         <th>No.RM</th>
+                        <th>status_lanjut</th>
                         <th>Nama Pasien</th>
                         <th>Jenis Bayar</th>
                         <th>No. Nota</th>
@@ -51,6 +52,7 @@
                             <td>{{ $no++ }}</td>
                             <td>{{ $item->tgl_bayar }}</td>
                             <td>{{ $item->no_rkm_medis }}</td>
+                            <td>{{ $item->status_lanjut }}</td>
                             <td>{{ $item->nm_pasien }}</td>
                             <td>{{ $item->png_jawab }}</td>
                             <td>
@@ -145,7 +147,7 @@
                         </tr>
                     @endforeach
                     <tr>
-                        <th colspan="6">Total</th>
+                        <th colspan="7">Total</th>
 
                         <th>
                             {{ $bayarPiutang->sum(function ($item) {

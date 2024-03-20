@@ -40,7 +40,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($RanapDRParamedis as $item)
+                    @php
+                        $mergedData = $RanapDRParamedis->merge($RalanDRParamedis);
+                        $sortedData = $mergedData->sortBy('no_rawat');
+                    @endphp
+
+                    @foreach ($sortedData as $item)
                         <tr>
                             <td>{{ $item->no_rawat }}</td>
                             <td>{{ $item->no_rkm_medis }}</td>
@@ -54,14 +59,15 @@
                             <td>{{ $item->tgl_perawatan }}</td>
                             <td>{{ $item->jam_rawat }}</td>
                             <td>{{ $item->png_jawab }}</td>
-                            <td>{{ $item->nm_bangsal }}</td>
-                            <td>{{ str_replace(',', '', number_format($item->material)) }}</td>
-                            <td>{{ str_replace(',', '', number_format($item->bhp)) }}</td>
-                            <td>{{ str_replace(',', '', number_format($item->tarif_tindakandr)) }}</td>
-                            <td>{{ str_replace(',', '', number_format($item->tarif_tindakanpr)) }}</td>
-                            <td>{{ str_replace(',', '', number_format($item->kso)) }}</td>
-                            <td>{{ str_replace(',', '', number_format($item->menejemen)) }}</td>
-                            <td>{{ str_replace(',', '', number_format($item->biaya_rawat)) }}</td>
+                            <td>{{ $item->nm_bangsal ?? $item->nm_poli }}</td>
+                            <!-- Tampilkan nama bangsal jika ada, jika tidak, tampilkan nama poli -->
+                            <td>{{ $item->material }}</td>
+                            <td>{{ $item->bhp }}</td>
+                            <td>{{ $item->tarif_tindakandr }}</td>
+                            <td>{{ $item->tarif_tindakanpr }}</td>
+                            <td>{{ $item->kso }}</td>
+                            <td>{{ $item->menejemen }}</td>
+                            <td>{{ $item->biaya_rawat }}</td>
                             <td>{{ $item->tgl_bayar }}</td>
                         </tr>
                     @endforeach

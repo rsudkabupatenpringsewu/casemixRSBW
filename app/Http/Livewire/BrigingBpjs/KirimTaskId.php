@@ -20,6 +20,7 @@ class KirimTaskId extends Component
 
     public $date;
     public $time;
+    public $konfirmasi_cekin;
     public function mount()
     {
         date_default_timezone_set('Asia/Jakarta');
@@ -27,6 +28,7 @@ class KirimTaskId extends Component
         $this->time = date('H:i:s');
         $this->tanggal1 = date('Y-m-d');
         $this->tanggal2 = date('Y-m-d');
+        $this->konfirmasi_cekin = false;
         $this->getPasienMJKN();
     }
     public function render()
@@ -66,6 +68,7 @@ class KirimTaskId extends Component
     public $taskid;
     public $waktu;
     public $getCekin;
+    public $getCekinFktl;
     public function cekinBPJS()
     {
         date_default_timezone_set('Asia/Jakarta');
@@ -76,9 +79,18 @@ class KirimTaskId extends Component
             "taskid" => $this->taskid,
             "waktu" => $this->waktu
         ];
+        $dataFktl = [
+            "kodebooking"=> $this->kodebooking,
+            "waktu"=> $this->waktu
+        ];
         try {
             $data = json_decode($this->Referensi->cekinBPJS(json_encode($jayParsedAry)));
+            if ($this->taskid == 3 && $this->konfirmasi_cekin == true) {
+                $responsefktl = $this->RsbwFktl->cekinMjkn($dataFktl);
+                $this->getCekinFktl = [$responsefktl->metadata];
+            }
             $this->getCekin = [$data->metadata];
+
         } catch (\Throwable $th) {
         }
     }
@@ -111,11 +123,11 @@ class KirimTaskId extends Component
         date_default_timezone_set('Asia/Jakarta');
         $timestamp_sec = strtotime($this->date . $this->time);
         $this->waktu = $timestamp_sec * 1000;
-        $data = [
+        $dataFktl = [
             "kodebooking"=> "",
             "waktu"=> $this->waktu
         ];
-        $responses = $this->RsbwFktl->cekinMjkn($data);
+        $responses = $this->RsbwFktl->cekinMjkn($dataFktl);
         dd($responses);
     }
 }

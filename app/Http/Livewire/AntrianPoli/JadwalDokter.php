@@ -71,6 +71,7 @@ class JadwalDokter extends Component
                 ->where('jam_mulai', $jam_mulai)
                 ->where('jam_selesai', $jam_selesai)
                 ->delete();
+        Session::flash('sucsessHapusDokter', 'Berhasil');
         } catch (\Throwable $th) {
         }
     }
@@ -86,10 +87,15 @@ class JadwalDokter extends Component
     public $cari_kode_dokter;
     public $getTambahDokter;
     public function cariDokter() {
+        $cariKode = $this->cari_kode_dokter;
         $this->getTambahDokter = DB::table('dokter')
         ->select('dokter.kd_dokter', 'dokter.nm_dokter', 'dokter.status')
         ->where('dokter.status','=','1')
-        ->where('dokter.kd_dokter', $this->cari_kode_dokter)
+        ->where(function ($query) use ($cariKode) {
+            $query->orwhere('dokter.kd_dokter', 'LIKE', "%$cariKode%")
+            ->orwhere('dokter.nm_dokter', 'LIKE', "%$cariKode%");
+        })
+        ->take(1)
         ->get();
     }
 
@@ -100,6 +106,7 @@ class JadwalDokter extends Component
         $this->validate([
             'jam_mulai.' . $key => 'required',
             'jam_selesai.' . $key => 'required',
+            'poli.' . $key => 'required',
         ]);
         DB::table('bw_jadwal_dokter')->insert([
             'kd_dokter' => $kd_dokter,

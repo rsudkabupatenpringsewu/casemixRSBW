@@ -31,21 +31,21 @@ class DisplayPetugas extends Component
                 'reg_periksa.no_rawat',
                 'reg_periksa.no_rkm_medis',
                 'reg_periksa.no_reg',
-                'jadwal.jam_mulai',
-                'jadwal.hari_kerja',
+                'bw_jadwal_dokter.jam_mulai',
+                'bw_jadwal_dokter.hari_kerja',
                 'reg_periksa.kd_dokter',
                 'list_dokter.nama_dokter',
                 'log_antrian_loket.status')
             ->join('list_dokter','reg_periksa.kd_dokter','=','list_dokter.kd_dokter')
             ->join('loket','list_dokter.kd_loket','=','loket.kd_loket')
-            ->join('jadwal','list_dokter.kd_dokter','=','jadwal.kd_dokter')
+            ->join('bw_jadwal_dokter','list_dokter.kd_dokter','=','bw_jadwal_dokter.kd_dokter')
             ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
             ->leftJoin('log_antrian_loket','log_antrian_loket.no_rawat','=','reg_periksa.no_rawat')
             ->where('reg_periksa.tgl_registrasi', date('Y-m-d'))
             ->where('loket.kd_loket', $this->kdLoket)
-            ->where('jadwal.hari_kerja', $hari)
+            ->where('bw_jadwal_dokter.hari_kerja', '=', $hari)
             ->where('reg_periksa.kd_pj','=','BPJ')
-            ->orderBy('jadwal.jam_mulai','asc')
+            ->orderBy('bw_jadwal_dokter.jam_mulai','asc')
             ->orderBy('reg_periksa.no_reg','asc')
             ->orderBy('reg_periksa.jam_reg','asc')
             ->get();

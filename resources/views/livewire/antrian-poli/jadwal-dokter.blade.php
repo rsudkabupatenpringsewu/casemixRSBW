@@ -7,6 +7,13 @@
                 </div>
             </div>
         @endif
+        @if (Session::has('sucsessHapusDokter'))
+            <div class="ribbon-wrapper ribbon-lg" style="z-index: 100">
+                <div class="ribbon bg-warning">
+                    Sukses
+                </div>
+            </div>
+        @endif
         <div class="card-header">
             <form wire:submit.prevent="jdawalDokter">
                 <div class="row">
@@ -214,8 +221,9 @@
                                                 aria-label="Search" required>
                                         </td>
                                         <td class="text-center">
-                                            <select class="form-control form-control-sm"
+                                            <select class="form-control form-control-sm @error('poli.' . $key) is-invalid @enderror"
                                                 wire:model.lazy="poli.{{ $key }}">
+                                                <option>Pilih Poli</option>
                                                 @foreach ($getPoli as $data)
                                                     <option value="{{$data->kd_poli}}">{{$data->nm_poli}}</option>
                                                 @endforeach

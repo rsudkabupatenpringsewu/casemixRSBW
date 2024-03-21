@@ -26,7 +26,28 @@
                                     <div class="alert alert-danger alert-dismissible">
                                         <button type="button" class="close" data-dismiss="alert"
                                             aria-hidden="true">&times;</button>
-                                        <i class="icon fas fa-ban"></i> Gagal ! {{ $item->code }}
+                                        <i class="icon fas fa-ban"></i> Gagal Kirm Task Id! {{ $item->code }}
+                                        status : {{ $item->message }}
+                                    </div>
+                                @endif
+                            @endif
+                        @endforeach
+                    @endif
+                    @if ($getCekinFktl)
+                        @foreach ($getCekinFktl as $item)
+                            @if (is_object($item))
+                                @if ($item->code == 200)
+                                    <div class="alert alert-success alert-sm alert-dismissible">
+                                        <button type="button" class="close" data-dismiss="alert"
+                                            aria-hidden="true">&times;</button>
+                                        <i class="icon fas fa-check"></i> Terkirim ! {{ $item->code }}
+                                        status : {{ $item->message }}
+                                    </div>
+                                @else
+                                    <div class="alert alert-danger alert-sm alert-dismissible">
+                                        <button type="button" class="close" data-dismiss="alert"
+                                            aria-hidden="true">&times;</button>
+                                        <i class="icon fas fa-ban"></i> Gagal Cekin Ke Khanza! {{ $item->code }}
                                         status : {{ $item->message }}
                                     </div>
                                 @endif
@@ -55,6 +76,14 @@
                         </select>
                     </div>
                 </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                      <label class="form-check-label" @if ($taskid != 3) hidden @endif >
+                        <input type="checkbox" wire:model.lazy="konfirmasi_cekin">
+                        Cekin Khanza ?
+                      </label>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-2">
@@ -73,7 +102,11 @@
             <div class="row">
                 <div class="col-md-2">
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary" wire:click="cekinBPJS()">Submit</button>
+                        <button type="button" class="btn btn-primary" wire:click="cekinBPJS()">
+                           Submit
+                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"
+                                wire:loading wire:target='cekinBPJS'></span>
+                        </button>
                     </div>
                 </div>
             </div>

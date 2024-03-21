@@ -447,6 +447,14 @@
                                     </a>
                                 </li>
                             </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('jadwal-dokter') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Jadwal Dokter</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         {{-- MENU RM --}}
                         <li class="nav-item">{{-- menu-open --}}

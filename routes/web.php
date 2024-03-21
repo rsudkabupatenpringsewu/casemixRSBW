@@ -20,6 +20,7 @@ use App\Http\Controllers\Farmasi\BundlingFarmasi;
 use App\Http\Controllers\Laporan\PembayaranRalan;
 use App\Http\Controllers\BriggingBpjs\KirimTaskId;
 use App\Http\Controllers\Laporan\PasienController;
+use App\Http\Controllers\AntrianPoli\BwJadwaldokter;
 use App\Http\Controllers\Bpjs\PrintCesmikController;
 use App\Http\Controllers\DetailTindakan\RalanDokter;
 use App\Http\Controllers\DetailTindakan\RanapDokter;
@@ -131,6 +132,7 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     Route::get('/antrian-poli', [AntrianPoli::class, 'AntrianPoli']);
     Route::get('/display', [AntrianPoli::class, 'display']);
     Route::get('/panggil-poli', [AntrianPoli::class, 'panggilpoli']);
+    Route::get('/jadwal-dokter', [BwJadwaldokter::class, 'BwJadwaldokter']);
 
 
     // RM

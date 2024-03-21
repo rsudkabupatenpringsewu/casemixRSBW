@@ -89,6 +89,7 @@ class MinimalStokObat extends Component
 
     public $confirmingEdit = false;
     public $kd_bangsal;
+    public $kode_brng;
     public function deleteListObat($kode_brng, $kd_bangsal) {
         $this->confirmingEdit = true;
         $this->kode_brng = $kode_brng;

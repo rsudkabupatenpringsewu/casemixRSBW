@@ -57,6 +57,7 @@ class RalanDokterParamedisUm extends Controller
             ->join('billing','billing.no_rawat','=','reg_periksa.no_rawat')
             ->where('billing.no','=','No.Nota')
             ->where('penjab.kd_pj','UMU')
+            ->where('reg_periksa.status_lanjut', 'Ralan')
             ->whereBetween('billing.tgl_byr',[$tanggl1, $tanggl2])
             ->where(function ($query) use ($kdPetugas, $kdDokter) {
                 if ($kdPetugas) {

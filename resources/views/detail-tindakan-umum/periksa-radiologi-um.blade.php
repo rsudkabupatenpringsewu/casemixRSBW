@@ -1,10 +1,10 @@
 @extends('..layout.layoutDashboard')
-@section('title', 'Periksa Radiologi')
+@section('title', 'Periksa Radiologi (Umum)')
 
 @section('konten')
     <div class="card">
         <div class="card-body">
-            @include('detail-tindakan.component.cari-dokter-paramedis')
+            @include('detail-tindakan-umum.component.cari-dokter-paramedis')
             Jumlah Data : {{ count($getPeriksaRadiologi) }}
             <div class="row no-print">
                 <div class="col-12">

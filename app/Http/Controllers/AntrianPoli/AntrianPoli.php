@@ -31,4 +31,7 @@ class AntrianPoli extends Controller
     public function panggilpoli() {
         return view('antrian-poli.panggil-poli');
     }
+    public function settingPoli() {
+        return view('antrian-poli.setting-poli');
+    }
 }

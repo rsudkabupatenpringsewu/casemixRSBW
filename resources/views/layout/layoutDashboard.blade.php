@@ -260,7 +260,7 @@
                                 <li class="nav-item">
                                     <a href="{{url('/ralan-dokter-umum')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Ralan Dokter</p>
+                                        <p>Ralan Dokter <span class="text-xs">(um)</span></p>
                                     </a>
                                 </li>
                             </ul>
@@ -268,7 +268,7 @@
                                 <li class="nav-item">
                                     <a href="{{url('/ralan-paramedis-umum')}}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Ralan Paramedis</p>
+                                        <p>Ralan Paramedis <span class="text-xs">(um)</span></p>
                                     </a>
                                 </li>
                             </ul>
@@ -276,7 +276,7 @@
                                 <li class="nav-item">
                                     <a href="{{ url('/ralan-dokter-paramedis-umum') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Ralan Dokter Paramedis</p>
+                                        <p>Ralan Dokter Paramedis <span class="text-xs">(um)</span></p>
                                     </a>
                                 </li>
                             </ul>
@@ -284,7 +284,7 @@
                                 <li class="nav-item">
                                     <a href="{{ url('/operasi-and-vk-umum') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Operasi & VK</p>
+                                        <p>Operasi & VK <span class="text-xs">(um)</span></p>
                                     </a>
                                 </li>
                             </ul>
@@ -292,10 +292,34 @@
                                 <li class="nav-item">
                                     <a href="{{ url('/ranap-dokter-umum') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Ranap Dokter</p>
+                                        <p>Ranap Dokter <span class="text-xs">(um)</span></p>
                                     </a>
                                 </li>
                             </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('/ranap-paramedis-umum') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Ranap Paramedis <span class="text-xs">(um)</span></p>
+                                    </a>
+                                </li>
+                            </ul>
+                            {{-- <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('/ranap-dokter-paramedis-umum') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Ranap Dokter Paramedis <span class="text-xs">(um)</span></p>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('/periksa-radiologi-umum') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Periksa Radiologi <span class="text-xs">(um)</span></p>
+                                    </a>
+                                </li>
+                            </ul> --}}
                         </li>
                         {{-- MENU CASEMIX --}}
                         <li class="nav-header user-panel"></li>
@@ -444,6 +468,14 @@
                                     <a href="{{ url('antrian-poli') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>List Display</p>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('setting-antrian-poli') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Setting Poli</p>
                                     </a>
                                 </li>
                             </ul>

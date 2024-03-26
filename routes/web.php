@@ -42,8 +42,11 @@ use App\Http\Controllers\DetailTindakanUmum\OperasiAndVKUm;
 use App\Http\Controllers\DetailTindakan\RalanDokterParamedis;
 use App\Http\Controllers\DetailTindakan\RanapDokterParamedis;
 use App\Http\Controllers\DetailTindakanUmum\RalanParamedisUm;
+use App\Http\Controllers\DetailTindakanUmum\RanapParamedisUm;
 use App\Http\Controllers\AntrianPendaftaran\AntrianPendaftaran;
+use App\Http\Controllers\DetailTindakanUmum\PeriksaRadiologiUm;
 use App\Http\Controllers\DetailTindakanUmum\RalanDokterParamedisUm;
+use App\Http\Controllers\DetailTindakanUmum\RanapDokterParamedisUm;
 
 /*
 |--------------------------------------------------------------------------
@@ -122,6 +125,9 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     Route::get('/ralan-dokter-paramedis-umum', [RalanDokterParamedisUm::class, 'RalanDokterParamedisUm']);
     Route::get('/operasi-and-vk-umum', [OperasiAndVKUm::class, 'OperasiAndVKUm']);
     Route::get('/ranap-dokter-umum', [RanapDokterUm::class, 'RanapDokterUm']);
+    Route::get('/ranap-paramedis-umum', [RanapParamedisUm::class, 'RanapParamedisUm']);
+    Route::get('/ranap-dokter-paramedis-umum', [RanapDokterParamedisUm::class, 'RanapDokterParamedisUm']);
+    Route::get('/periksa-radiologi-umum', [PeriksaRadiologiUm::class, 'PeriksaRadiologiUm']);
 
     // ANTRIAN PENDAFTARAN
     Route::get('/antrian-pendaftaran', [AntrianPendaftaran::class, 'AntrianPendaftaran'])->middleware('permision-rsbw:registrasi');
@@ -132,6 +138,7 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     Route::get('/antrian-poli', [AntrianPoli::class, 'AntrianPoli']);
     Route::get('/display', [AntrianPoli::class, 'display']);
     Route::get('/panggil-poli', [AntrianPoli::class, 'panggilpoli']);
+    Route::get('/setting-antrian-poli', [AntrianPoli::class, 'settingPoli']);
     Route::get('/jadwal-dokter', [BwJadwaldokter::class, 'BwJadwaldokter']);
 
 

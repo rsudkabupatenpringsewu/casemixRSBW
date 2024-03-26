@@ -29,15 +29,15 @@
                         <td class="text-center d-flex justify-content-center">
                             <audio id="{{ $item->no_reg }}" src="/sound/noreg/{{ $item->no_reg }}.mp3"></audio>
                             <audio id="{{ $item->kd_dokter }}"src="/sound/dokter/{{ $item->kd_dokter }}.mp3"></audio>
-                            {{-- <audio id="{{ $kdLoket }}" src="/sound/loket/{{ $kdLoket }}.mp3"></audio> --}}
-                            {{-- <button
-                                onclick="playSequentialSounds(['{{ $item->no_reg }}','{{ $item->kd_dokter }}','{{ $kdLoket }}'])"
+                            <audio id="{{ $kd_ruang_poli }}" src="/sound/loket/{{ $kd_ruang_poli }}.mp3"></audio>
+                            <button
+                                onclick="playSequentialSounds(['{{ $item->no_reg }}','{{ $item->kd_dokter }}','{{ $kd_ruang_poli }}'])"
                                 class="btn btn-sm btn-primary" role="button" aria-disabled="true"><i class="fas fa-bullhorn"></i> Panggil
-                            </button> --}}
-                            {{-- <button wire:click="handleLog('{{ $item->kd_dokter }}', '{{ $item->no_rawat }}', '{{ $kdLoket }}', 'ada')"
-                                class="btn btn-sm btn-success ml-2" aria-disabled="true"><i class="fas fa-check"></i> Ada</button> --}}
-                            {{-- <button wire:click="handleLog('{{ $item->kd_dokter }}', '{{ $item->no_rawat }}', '{{ $kdLoket }}', 'tidakada')"
-                                class="btn btn-sm btn-danger mx-2" aria-disabled="true"><i class="fas fa-ban"></i> Tidak Ada</button> --}}
+                            </button>
+                            <button wire:click="handleLog('{{ $item->kd_dokter }}', '{{ $item->no_rawat }}', '{{ $kd_ruang_poli }}', 'ada')"
+                                class="btn btn-sm btn-success ml-2" aria-disabled="true"><i class="fas fa-check"></i> Ada</button>
+                            <button wire:click="handleLog('{{ $item->kd_dokter }}', '{{ $item->no_rawat }}', '{{ $kd_ruang_poli }}', 'tidakada')"
+                                class="btn btn-sm btn-danger mx-2" aria-disabled="true"><i class="fas fa-ban"></i> Tidak Ada</button>
                             <button wire:click="resetLog('{{ $item->no_rawat }}')"
                                 class="btn btn-sm btn-default" aria-disabled="true"><i class="fas fa-undo"></i> Ulang</button>
                         </td>

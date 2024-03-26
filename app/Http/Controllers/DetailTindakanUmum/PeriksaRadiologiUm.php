@@ -1,26 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\DetailTindakan;
+namespace App\Http\Controllers\DetailTindakanUmum;
 
 use Illuminate\Http\Request;
 use App\Services\CacheService;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
-class PeriksaRadiologi extends Controller
+class PeriksaRadiologiUm extends Controller
 {
     protected $cacheService;
     public function __construct(CacheService $cacheService)
     {
         $this->cacheService = $cacheService;
     }
-    function PeriksaRadiologi(Request $request) {
-        $action = '/periksa-radiologi';
-        $penjab = $this->cacheService->getPenjab();
+    function PeriksaRadiologiUm(Request $request) {
+        $action = '/periksa-radiologi-umum';
         $petugas = $this->cacheService->getPetugas();
         $dokter = $this->cacheService->getDokter();
 
-        $kdPenjamin = ($request->input('kdPenjamin') == null) ? "" : explode(',', $request->input('kdPenjamin'));
         $kdPetugas = ($request->input('kdPetugas') == null) ? "" : explode(',', $request->input('kdPetugas'));
         $kdDokter = ($request->input('kdDokter')  == null) ? "" : explode(',', $request->input('kdDokter'));
         $cariNomor = $request->cariNomor;
@@ -53,7 +51,7 @@ class PeriksaRadiologi extends Controller
                 'reg_periksa.status_lanjut',
                 'periksa_radiologi.biaya',
                 DB::raw("IF(periksa_radiologi.status = 'Ralan', (SELECT nm_poli FROM poliklinik WHERE poliklinik.kd_poli = reg_periksa.kd_poli), (SELECT bangsal.nm_bangsal FROM kamar_inap INNER JOIN kamar INNER JOIN bangsal ON kamar_inap.kd_kamar = kamar.kd_kamar AND kamar.kd_bangsal = bangsal.kd_bangsal WHERE kamar_inap.no_rawat = periksa_radiologi.no_rawat LIMIT 1)) AS ruangan"),
-                'bayar_piutang.tgl_bayar'
+                'billing.tgl_byr'
             )
             ->join('reg_periksa', 'periksa_radiologi.no_rawat', '=', 'reg_periksa.no_rawat')
             ->join('pasien', 'reg_periksa.no_rkm_medis', '=', 'pasien.no_rkm_medis')
@@ -62,12 +60,11 @@ class PeriksaRadiologi extends Controller
             ->join('petugas', 'periksa_radiologi.nip', '=', 'petugas.nip')
             ->join('penjab', 'reg_periksa.kd_pj', '=', 'penjab.kd_pj')
             ->join('jns_perawatan_radiologi', 'periksa_radiologi.kd_jenis_prw', '=', 'jns_perawatan_radiologi.kd_jenis_prw')
-            ->join('bayar_piutang', 'periksa_radiologi.no_rawat', '=', 'bayar_piutang.no_rawat')
-            ->whereBetween('bayar_piutang.tgl_bayar', [$tanggl1, $tanggl2])
-            ->where(function ($query) use ($kdPenjamin, $kdPetugas, $kdDokter) {
-                if ($kdPenjamin) {
-                    $query->whereIn('penjab.kd_pj', $kdPenjamin);
-                }
+            ->join('billing','billing.no_rawat','=','reg_periksa.no_rawat')
+            ->where('billing.no','=','No.Nota')
+            ->where('penjab.kd_pj','UMU')
+            ->whereBetween('billing.tgl_byr',[$tanggl1, $tanggl2])
+            ->where(function ($query) use ( $kdPetugas, $kdDokter) {
                 if ($kdPetugas) {
                     $query->whereIn('petugas.nip', $kdPetugas);
                 }
@@ -84,9 +81,8 @@ class PeriksaRadiologi extends Controller
 
 
 
-        return view('detail-tindakan.periksa-radiologi', [
+        return view('detail-tindakan-umum.periksa-radiologi-um', [
             'action'=>$action,
-            'penjab'=>$penjab,
             'petugas'=>$petugas,
             'dokter'=>$dokter,
             'getPeriksaRadiologi'=>$getPeriksaRadiologi,

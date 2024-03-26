@@ -58,6 +58,7 @@ class Displaypoli extends Component
                     ->orderBy('jadwal.jam_mulai','asc')
                     ->orderBy('reg_periksa.no_reg','asc')
                     ->orderBy('reg_periksa.jam_reg','asc')
+                    ->take(1)
                     ->get();
                 });
     }

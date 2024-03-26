@@ -95,8 +95,7 @@
                                                             wire:model.defer="Loket.{{ $key }}.kd_pendaftaran"
                                                             placeholder="Lokasi">
                                                             @foreach ($Pendaftaran as $data)
-                                                                <option value="{{ $data->kd_pendaftaran }}"
-                                                                    @if ($data->kd_pendaftaran == $select) selected @endif>
+                                                                <option value="{{ $data->kd_pendaftaran }}">
                                                                     {{ $data->nama_pendaftaran }}
                                                                 </option>
                                                             @endforeach

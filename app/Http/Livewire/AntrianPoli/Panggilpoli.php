@@ -49,4 +49,18 @@ class Panggilpoli extends Component
         ->orderBy('reg_periksa.jam_reg','asc')
         ->get();
     }
+    public function handleLog($kd_dokter, $no_rawat, $kdLoket, $type)
+    {
+        $status = ($type == 'ada') ? '0' : '1';
+        DB::table('bw_log_antrian_poli')->updateOrInsert(
+            ['no_rawat' => $no_rawat],
+            ['kd_ruang_poli' => $kdLoket, 'status' => $status]
+        );
+    }
+    public function resetLog($no_rawat)
+    {
+        DB::table('bw_log_antrian_poli')
+            ->where('no_rawat', $no_rawat)
+            ->delete();
+    }
 }

@@ -3,19 +3,20 @@
         <div class="card p-4 d-flex justify-content-center align-items-center">
             <table border="0px" width="1000px">
                 <tr>
-                    <td rowspan="4"> <img src="../img/rs.png" alt="Girl in a jacket" width="90" height="75">
+                    <td rowspan="4"><img src="data:image/png;base64,{{ base64_encode($getSetting->logo) }}"
+                        alt="Girl in a jacket" width="80" height="80">
                     </td>
                     <td class="text-center">
                         <h4>RS. BUMI WARAS </h4>
                     </td>
                 </tr>
                 <tr class="text-center">
-                    <td>Jln. Wolter Monginsidi No. 235 , Bandar Lampung, Lampung
-                        (0721)
-                        254589</td>
+                    <td>{{ $getSetting->alamat_instansi }} , {{ $getSetting->kabupaten }},
+                        {{ $getSetting->propinsi }}
+                        {{ $getSetting->kontak }}</td>
                 </tr>
                 <tr class="text-center">
-                    <td> E-mail : www.rsbumiwaras.co.id</td>
+                    <td> E-mail : {{ $getSetting->email }}</td>
                 </tr>
             </table>
             <hr width="1000px" style=" height:2px; border-top:1px solid black; border-bottom:2px solid black;">
@@ -99,19 +100,20 @@
         <div class="card p-4 d-flex justify-content-center align-items-center">
             <table border="0px" width="1000px">
                 <tr>
-                    <td rowspan="4"> <img src="../img/rs.png" alt="Girl in a jacket" width="90" height="75">
+                    <td rowspan="4"> <img src="data:image/png;base64,{{ base64_encode($getSetting->logo) }}"
+                        alt="Girl in a jacket" width="80" height="80">
                     </td>
                     <td class="text-center">
                         <h4>RS. BUMI WARAS </h4>
                     </td>
                 </tr>
                 <tr class="text-center">
-                    <td>Jln. Wolter Monginsidi No. 235 , Bandar Lampung, Lampung
-                        (0721)
-                        254589</td>
+                    <td>{{ $getSetting->alamat_instansi }} , {{ $getSetting->kabupaten }},
+                        {{ $getSetting->propinsi }}
+                        {{ $getSetting->kontak }}</td>
                 </tr>
                 <tr class="text-center">
-                    <td> E-mail : www.rsbumiwaras.co.id</td>
+                    <td> E-mail : {{ $getSetting->email }}</td>
                 </tr>
             </table>
             <hr width="1000px" style=" height:2px; border-top:1px solid black; border-bottom:2px solid black;">
@@ -166,7 +168,7 @@
                     <td class="text-center" width="350px">
                         Bandar Lampung, {{$tgl_peresepan}}<br>
                         <div class="barcode mt-1">
-                            <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di RS. BUMI WARAS, Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $nm_dokter . ' ID ' . $kd_dokter . ' ' . $tgl_peresepan, 'QRCODE') }}"
+                            <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di '.$getSetting->nama_instansi.', Kabupaten/Kota ' . $getSetting->kabupaten . ' Ditandatangani secara elektronik oleh ' . $nm_dokter . ' ID ' . $kd_dokter . ' ' . $tgl_peresepan, 'QRCODE') }}"
                                 alt="barcode" width="80px" height="75px" />
                         </div>
                         <b>{{ $nm_dokter }}</b>

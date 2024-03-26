@@ -84,7 +84,7 @@
                             </tr>
                             <tr>
                                 <th class="text-center">
-                                    <span class="h3">RS.BUMI WARAS</span>
+                                    <span class="h3">{{$getSetting->nama_instansi}}</span>
                                 </th>
                             </tr>
                             <tr>
@@ -188,7 +188,7 @@
                             <td class="text-center" width="220px">
                                 Pasien/Keluarga Pasien <br>
                                 <div class="barcode mt-1">
-                                    <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di ' . $getSEP->nmppkpelayanan . ',' . ' Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $getSEP->nama_pasien . ' ID ' . $getSEP->no_kartu . ' ' . $getSEP->tglsep, 'QRCODE') }}"
+                                    <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di ' . $getSEP->nmppkpelayanan . ',' . ' Kabupaten/Kota '.$getSetting->kabupaten.' Ditandatangani secara elektronik oleh ' . $getSEP->nama_pasien . ' ID ' . $getSEP->no_kartu . ' ' . $getSEP->tglsep, 'QRCODE') }}"
                                         alt="barcode" width="65px" height="65px" />
                                 </div>
                                 <b class="mt-1">{{ $getSEP->nama_pasien }}</b>
@@ -209,23 +209,23 @@
                     <div class="card p-4 d-flex justify-content-center align-items-center">
                         <table width="700px">
                             <tr>
-                                <td rowspan="5"> <img src="{{ public_path('img/rs.png') }}" alt="Girl in a jacket"
-                                        width="90" height="75">
+                                <td rowspan="5"> <img src="data:image/png;base64,{{ base64_encode($getSetting->logo) }}" alt="Girl in a jacket"
+                                    width="80" height="80">
                                 </td>
                                 <td class="text-center">
-                                    <span class="h3">RS. BUMI WARAS </span>
+                                    <span class="h3">{{$getSetting->nama_instansi}} </span>
                                 </td>
                                 <td class="text-center" width="100px">
                                 </td>
                             </tr>
                             <tr class="text-center">
-                                <td class="pr-4 h4">Jln. Wolter Monginsidi No. 235 , Bandar Lampung, Lampung</td>
+                                <td class="pr-4 h4">{{$getSetting->alamat_instansi}} , {{$getSetting->kabupaten}}, {{$getSetting->propinsi}}</td>
                             </tr>
                             <tr class="text-center">
-                                <td class="pr-4 h4">(0721)254589</td>
+                                <td class="pr-4 h4">{{$getSetting->kontak}}</td>
                             </tr>
                             <tr class="text-center">
-                                <td class="pr-4 h4">www.rsbumiwaras.co.id</td>
+                                <td class="pr-4 h4">{{$getSetting->email}}</td>
                             </tr>
                         </table>
                         <hr width="700px"
@@ -312,23 +312,23 @@
                     <div class="card p-4 d-flex justify-content-center align-items-center">
                         <table width="700px">
                             <tr>
-                                <td rowspan="5"> <img src="{{ public_path('img/rs.png') }}" alt="Girl in a jacket"
-                                        width="90" height="75">
+                                <td rowspan="5"> <img src="data:image/png;base64,{{ base64_encode($getSetting->logo) }}" alt="Girl in a jacket"
+                                    width="80" height="80">
                                 </td>
                                 <td class="text-center">
-                                    <span class="h3">RS. BUMI WARAS </span>
+                                    <span class="h3">{{$getSetting->nama_instansi}} </span>
                                 </td>
                                 <td class="text-center" width="100px">
                                 </td>
                             </tr>
                             <tr class="text-center">
-                                <td class="pr-4 h4">Jln. Wolter Monginsidi No. 235 , Bandar Lampung, Lampung</td>
+                                <td class="pr-4 h4">{{$getSetting->alamat_instansi}} , {{$getSetting->kabupaten}}, {{$getSetting->propinsi}}</td>
                             </tr>
                             <tr class="text-center">
-                                <td class="pr-4 h4">(0721)254589</td>
+                                <td class="pr-4 h4">{{$getSetting->kontak}}</td>
                             </tr>
                             <tr class="text-center">
-                                <td class="pr-4 h4">www.rsbumiwaras.co.id</td>
+                                <td class="pr-4 h4">{{$getSetting->email}}</td>
                             </tr>
                         </table>
                         <hr width="700px"
@@ -384,7 +384,7 @@
                                 <td class="text-center" width="220px">
                                     Pasien/Keluarga Pasien <br>
                                     <div class="barcode mt-1">
-                                        <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di RS. BUMI WARAS, Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $nm_dokter . ' ID ' . $kd_dokter . ' ' . $tgl_peresepan, 'QRCODE') }}"
+                                        <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di '.$getSetting->nama_instansi.', Kabupaten/Kota '.$getSetting->kabupaten.' Ditandatangani secara elektronik oleh ' . $nm_dokter . ' ID ' . $kd_dokter . ' ' . $tgl_peresepan, 'QRCODE') }}"
                                             alt="barcode" width="80px" height="75px" />
                                     </div>
                                     <b class="mt-1">{{ $nm_dokter }}</b>

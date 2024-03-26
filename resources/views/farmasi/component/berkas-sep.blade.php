@@ -11,7 +11,7 @@
                 </tr>
                 <tr>
                     <th class="text-center pr-5">
-                        <h5><b>RS.BUMI WARAS</b></h5>
+                        <h5><b>{{$getSetting->nama_instansi}}</b></h5>
                     </th>
                 </tr>
                 <tr>
@@ -114,7 +114,7 @@
                 <td class="text-center" width="350px">
                     Pasien/Keluarga Pasien <br>
                     <div class="barcode">
-                        <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di ' . $getSEP->nmppkpelayanan . ',' . ' Kabupaten/Kota Bandar Lampung Ditandatangani secara elektronik oleh ' . $getSEP->nama_pasien . ' ID ' . $getSEP->no_kartu . ' ' . $getSEP->tglsep, 'QRCODE') }}"
+                        <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('Dikeluarkan di ' . $getSEP->nmppkpelayanan . ',' . $getSetting->kabupaten.'Ditandatangani secara elektronik oleh ' . $getSEP->nama_pasien . ' ID ' . $getSEP->no_kartu . ' ' . $getSEP->tglsep, 'QRCODE') }}"
                             alt="barcode" width="80px" height="75px" />
                     </div>
                     <b>{{ $getSEP->nama_pasien }}</b>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Farmasi;
 use PDF;
 use setasign\Fpdi\Fpdi;
 use Illuminate\Http\Request;
+use App\Services\CacheService;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
@@ -12,8 +13,14 @@ use Illuminate\Support\Facades\Storage;
 
 class BundlingFarmasi extends Controller
 {
+    protected $cacheService;
+    public function __construct(CacheService $cacheService)
+    {
+        $this->cacheService = $cacheService;
+    }
     // PRINT
     function PrintBerkasSepResep(Request $request) {
+        $getSetting = $this->cacheService->getSetting();
         $noRawat = $request->cariNoRawat;
         $noSep = $request->cariNoSep;
         $cekNorawat = DB::table('reg_periksa')
@@ -142,6 +149,7 @@ class BundlingFarmasi extends Controller
                 }
         }
         else {
+            $getSetting = '';
             $noRawat = '';
             $noSep = '';
             $jumlahData = '';
@@ -149,6 +157,7 @@ class BundlingFarmasi extends Controller
             $berkasResep = '';
         }
         $pdf = PDF::loadView('farmasi.print-berkas-sep-resep', [
+            'getSetting'=>$getSetting,
             'noRawat'=>$noRawat,
             'noSep'=>$noSep,
             'jumlahData'=>$jumlahData,

@@ -21,18 +21,16 @@
                         <tr>
                             <td>{{ $item->kd_pendaftaran }}</td>
                             <td>{{ $item->nama_pendaftaran }}</td>
-                            @if (session('edit_registrasi') === 'true')
-                                <td class="text-center">
-                                    <form action="{{ url('cari-loket') }}" method="">
-                                        @csrf
-                                        <input name="KdPendaftaran" value="{{ $item->kd_pendaftaran }}" hidden>
-                                        <input name="KdPenjab" value="{{ $kdPenjab }}" hidden>
-                                        <button class="" style="background: none; border: none;">
-                                            <i class="nav-icon fas fa-search"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            @endif
+                            <td class="text-center">
+                                <form action="{{ url('cari-loket') }}" method="">
+                                    @csrf
+                                    <input name="KdPendaftaran" value="{{ $item->kd_pendaftaran }}" hidden>
+                                    <input name="KdPenjab" value="{{ $kdPenjab }}" hidden>
+                                    <button class="" style="background: none; border: none;">
+                                        <i class="nav-icon fas fa-search"></i>
+                                    </button>
+                                </form>
+                            </td>
                             <td class="text-center">
                                 <div class="badge-group-sm">
                                     <a data-toggle="dropdown" href="#">

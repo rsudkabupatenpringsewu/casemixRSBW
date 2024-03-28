@@ -304,7 +304,7 @@
                                     </a>
                                 </li>
                             </ul>
-                            {{-- <ul class="nav nav-treeview">
+                            <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ url('/ranap-dokter-paramedis-umum') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
@@ -312,7 +312,7 @@
                                     </a>
                                 </li>
                             </ul>
-                            <ul class="nav nav-treeview">
+                            {{-- <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ url('/periksa-radiologi-umum') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>

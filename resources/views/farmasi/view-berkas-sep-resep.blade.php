@@ -71,7 +71,13 @@
                         @endif
                         {{-- BERKAS FARMASI (RESEP) --}}
                         @if ($berkasResep)
-                            @include('farmasi.component.berkas-resep')
+                        @include('farmasi.component.berkas-resep')
+                        @else
+                        {{-- NULL --}}
+                        @endif
+                        {{-- BERKAS LAB --}}
+                        @if ($getLaborat)
+                            @include('farmasi.component.berkas-lab')
                         @else
                             {{-- NULL --}}
                         @endif

@@ -7,7 +7,7 @@
                         alt="Girl in a jacket" width="80" height="80">
                     </td>
                     <td class="text-center">
-                        <h4>RS. BUMI WARAS </h4>
+                        <h4>{{ $getSetting->nama_instansi }} </h4>
                     </td>
                 </tr>
                 <tr class="text-center">

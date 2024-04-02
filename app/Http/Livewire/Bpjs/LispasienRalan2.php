@@ -124,11 +124,11 @@ class LispasienRalan2 extends Component
     // 4 PROSES GABUNG BERKAS ==================================================================================
     public  function GabungBerkas($no_rawat, $no_rkm_medis)
     {
-        try {
+        // try {
             GabungPdfService::printPdf($no_rawat, $no_rkm_medis);
             session()->flash('successSaveINACBG', 'Berhasil Menggabungkan Berkas');
-        } catch (\Throwable $th) {
+        // } catch (\Throwable $th) {
             session()->flash('errorBundling', 'Gagal!! Cek Kelengkapan Berkas Inacbg / Scan / Khanza');
-        }
+        // }
     }
 }

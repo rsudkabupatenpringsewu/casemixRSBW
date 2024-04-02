@@ -52,7 +52,7 @@ class SettingDisplayPoli extends Component
             ]);
             $this->reset(['kd_display', 'nama_display']);
             $this->flashMessage('Display berhasil ditambahkan!', 'success', 'check');
-            $this->emit('hydrate');
+            $this->emit('mount');
         } catch (\Exception $e) {
             $this->flashMessage('Terjadi kesalahan saat menambahkan display poli.', 'danger', 'ban');
         }
@@ -65,7 +65,7 @@ class SettingDisplayPoli extends Component
             ->where('kd_display', $kd_display)
             ->update($this->getDisplay[$key]);
             $this->flashMessage('Display berhasil diupdate!', 'success', 'check');
-            $this->emit('hydrate');
+            $this->emit('mount');
         } catch (\Exception $e) {
             $this->flashMessage('Terjadi kesalahan saat update pendaftaran.', 'danger', 'ban');
         }
@@ -77,7 +77,7 @@ class SettingDisplayPoli extends Component
                 ->where('kd_display', $kd_display)
                 ->delete();
             $this->flashMessage('Display berhasil dihapus!', 'warning', 'check');
-            $this->emit('hydrate');
+            $this->emit('mount');
         } catch (\Exception $e) {
             $this->flashMessage('Terjadi kesalahan saat menghapus pendaftaran.', 'danger', 'ban');
         }

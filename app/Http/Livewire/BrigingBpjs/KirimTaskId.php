@@ -10,6 +10,7 @@ use App\Services\RsbwFktl\ReferensiRSBW;
 
 class KirimTaskId extends Component
 {
+    public $listeners = ['cekinBPJS'];
     protected $Referensi;
     protected $RsbwFktl;
     public function __construct()
@@ -95,39 +96,39 @@ class KirimTaskId extends Component
         }
     }
 
+    // public $kodebooking;
+    // public $taskid = [];
+    // public $waktu;
+    // public $getCekin;
+    // public $getCekinFktl;
+    // public function cekinBPJS($key, $nobooking)
+    // {
+    //     date_default_timezone_set('Asia/Jakarta');
+    //     $timestamp_sec = strtotime($this->date . $this->time);
+    //     $this->waktu = $timestamp_sec * 1000;
+    //     dd([
+    //         $this->taskid[$key],
+    //         $nobooking,
+    //         $this->waktu,
+    //     ]);
+    //     $jayParsedAry = [
+    //         "kodebooking" => $nobooking, //"20240301000001",
+    //         "taskid" => $this->taskid[$key],
+    //         "waktu" => $this->waktu
+    //     ];
+    //     $dataFktl = [
+    //         "kodebooking"=> $nobooking,
+    //         "waktu"=> $this->waktu
+    //     ];
+    //     try {
+    //         $data = json_decode($this->Referensi->cekinBPJS(json_encode($jayParsedAry)));
+    //         if ($this->taskid[$key] == 3 && $this->konfirmasi_cekin == true) {
+    //             $responsefktl = $this->RsbwFktl->cekinMjkn($dataFktl);
+    //             $this->getCekinFktl = [$responsefktl->metadata];
+    //         }
+    //         $this->getCekin = [$data->metadata];
 
-    // TESTTTT
-    public $responses = [];
-    public function Test()
-    {
-        $test = DB::table('referensi_mobilejkn_bpjs')
-            ->select('referensi_mobilejkn_bpjs.nobooking', 'referensi_mobilejkn_bpjs.validasi')
-            ->whereBetween('referensi_mobilejkn_bpjs.tanggalperiksa', ['2024-03-01', '2024-03-16'])
-            ->get();
-        foreach ($test as $row) {
-            $timestamp_sec = strtotime($row->validasi);
-            $waktu = $timestamp_sec * 1000;
-            $jayParsedAry = [
-                "kodebooking" => $row->nobooking . '111',
-                "taskid" => '3',
-                "waktu" => $waktu,
-            ];
-            $data = json_decode($this->Referensi->cekinBPJS(json_encode($jayParsedAry)));
-            $data->metadata->kodebooking = $jayParsedAry['kodebooking'];
-            $this->responses[] = $data;
-        }
-    }
-
-    public function TestFktl()
-    {
-        date_default_timezone_set('Asia/Jakarta');
-        $timestamp_sec = strtotime($this->date . $this->time);
-        $this->waktu = $timestamp_sec * 1000;
-        $dataFktl = [
-            "kodebooking"=> "",
-            "waktu"=> $this->waktu
-        ];
-        $responses = $this->RsbwFktl->cekinMjkn($dataFktl);
-        dd($responses);
-    }
+    //     } catch (\Throwable $th) {
+    //     }
+    // }
 }

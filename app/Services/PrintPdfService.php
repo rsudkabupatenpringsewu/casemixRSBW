@@ -1,26 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Bpjs;
+namespace App\Services;
 
 use PDF;
-use Illuminate\Http\Request;
 use App\Services\CacheService;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
-class PrintCesmikController extends Controller
+class PrintPdfService
 {
-    protected $cacheService;
-    public function __construct(CacheService $cacheService)
-    {
-        $this->cacheService = $cacheService;
-    }
-    function printCasemix(Request $request){
-        $getSetting = $this->cacheService->getSetting();
-        $cariNoSep = $request->cariNoSep;
-        $noRawat = $request->cariNorawat;
+
+    public static function printPdf($no_rawat, $no_sep) {
+        $cacheService = new CacheService();
+        $getSetting = $cacheService->getSetting();
+        $cariNoSep = $no_sep;
+        $noRawat = $no_rawat;
         $cekNorawat = DB::table('reg_periksa')
             ->select('reg_periksa.status_lanjut', 'pasien.nm_pasien', 'reg_periksa.no_rkm_medis', 'reg_periksa.kd_poli')
             ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
@@ -502,10 +497,5 @@ class PrintCesmikController extends Controller
                 'file' => $pdfFilename,
             ]);
         }
-        Session::flash('successSaveINACBG', 'PDF');
-        $redirectUrl = url('/casemix-home-cari');
-        $csrfToken = Session::token();
-        $redirectUrlWithToken = $redirectUrl . '?' . http_build_query(['_token' => $csrfToken, 'cariNorawat' => $cariNoSep, 'cariNorawat' => $noRawat,]);
-        return redirect($redirectUrlWithToken);
     }
 }

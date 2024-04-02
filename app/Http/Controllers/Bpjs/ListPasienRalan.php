@@ -15,15 +15,12 @@ class ListPasienRalan extends Controller
 
         $daftarPasien = DB::table('reg_periksa')
             ->select('reg_periksa.no_rkm_medis', 'reg_periksa.no_rawat', 'reg_periksa.status_bayar', 'bridging_sep.no_sep', 'pasien.nm_pasien', 'bridging_sep.tglsep',
-            'poliklinik.nm_poli', 'file_casemix.file', 'file_casemix.jenis_berkas'
+            'poliklinik.nm_poli', 'bw_file_casemix_hasil.file'
             )
             ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
             ->join('poliklinik','reg_periksa.kd_poli','=','poliklinik.kd_poli')
             ->leftJoin('bridging_sep','bridging_sep.no_rawat','=','reg_periksa.no_rawat')
-            ->leftJoin('file_casemix',function($join) {
-                $join->on('reg_periksa.no_rawat','=','file_casemix.no_rawat')
-                ->where('file_casemix.jenis_berkas','=','HASIL');
-            })
+            ->leftJoin('bw_file_casemix_hasil','bw_file_casemix_hasil.no_rawat','=','reg_periksa.no_rawat')
             ->whereBetween('reg_periksa.tgl_registrasi',[$tanggl1, $tanggl2])
             ->where('reg_periksa.status_lanjut','=','Ralan')
             ->where('reg_periksa.kd_pj','=', $penjamnin)
@@ -49,14 +46,11 @@ class ListPasienRalan extends Controller
 
         $daftarPasien = DB::table('reg_periksa')
             ->select('reg_periksa.no_rkm_medis', 'reg_periksa.no_rawat', 'reg_periksa.status_bayar', 'bridging_sep.no_sep', 'pasien.nm_pasien', 'bridging_sep.tglsep',
-            'poliklinik.nm_poli', 'file_casemix.file', 'file_casemix.jenis_berkas')
+            'poliklinik.nm_poli', 'bw_file_casemix_hasil.file')
             ->join('pasien','reg_periksa.no_rkm_medis','=','pasien.no_rkm_medis')
             ->join('poliklinik','reg_periksa.kd_poli','=','poliklinik.kd_poli')
             ->leftJoin('bridging_sep','bridging_sep.no_rawat','=','reg_periksa.no_rawat')
-            ->leftJoin('file_casemix',function($join) {
-                $join->on('reg_periksa.no_rawat','=','file_casemix.no_rawat')
-                ->where('file_casemix.jenis_berkas','=','HASIL');
-            })
+            ->leftJoin('bw_file_casemix_hasil','bw_file_casemix_hasil.no_rawat','=','reg_periksa.no_rawat')
             ->whereBetween('reg_periksa.tgl_registrasi',[$tanggl1, $tanggl2])
             ->where('reg_periksa.status_lanjut','=','Ralan')
             ->where('reg_periksa.kd_pj','=', $penjamnin)

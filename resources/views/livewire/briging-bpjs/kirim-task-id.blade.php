@@ -78,10 +78,10 @@
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                      <label class="form-check-label" @if ($taskid != 3) hidden @endif >
-                        <input type="checkbox" wire:model.lazy="konfirmasi_cekin">
-                        Cekin Khanza ?
-                      </label>
+                        <label class="form-check-label" @if ($taskid != 3) hidden @endif>
+                            <input type="checkbox" wire:model.lazy="konfirmasi_cekin">
+                            Cekin Khanza ?
+                        </label>
                     </div>
                 </div>
             </div>
@@ -103,9 +103,9 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <button type="button" class="btn btn-primary" wire:click="cekinBPJS()">
-                           Submit
-                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"
-                                wire:loading wire:target='cekinBPJS'></span>
+                            Submit
+                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" wire:loading
+                                wire:target='cekinBPJS'></span>
                         </button>
                     </div>
                 </div>
@@ -116,18 +116,18 @@
         <div class="card-header">
             <form wire:submit.prevent="getPasienMJKN">
                 <div class="row">
-                    <div class="col-lg-3">
+                    <div class="col-lg-2">
                         <div class="input-group">
                             <input class="form-control form-control-sidebar form-control-sm" type="text"
                                 aria-label="Search" placeholder="Cari Kode Booking / Rm / No.Rawat"
                                 wire:model.defer="carinomor">
                         </div>
                     </div>
-                    <div class="col-lg-2 order-lg-last">
+                    <div class="col-lg-2">
                         <input type="date" class="form-control form-control-sidebar form-control-sm"
                             wire:model.defer="tanggal1">
                     </div>
-                    <div class="col-lg-2 order-lg-last">
+                    <div class="col-lg-2">
                         <div class="input-group">
                             <input type="date" class="form-control form-control-sidebar form-control-sm"
                                 wire:model.defer="tanggal2">
@@ -137,6 +137,20 @@
                                 </button>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <input type="date" class="form-control form-control-sidebar form-control-sm" wire:model.lazy="date">
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <input type="time" class="form-control form-control-sidebar form-control-sm"wire:model.lazy="time">
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <input type="checkbox" wire:model.lazy="konfirmasi_cekin">
+                                    Cekin Khanza ?
                     </div>
                 </div>
             </form>
@@ -153,6 +167,8 @@
                         <th>Status Cekin</th>
                         <th>Jam Praktek</th>
                         <th>Validasi <span class="text-xs">(jam Cekin)</span></th>
+                        {{-- <th>Pilih TaskId</th>
+                        <th class="text-center">Act</th> --}}
                     </tr>
                 </thead>
                 <tbody>
@@ -166,49 +182,26 @@
                             <td>{{ $item->status }}</td>
                             <td>{{ $item->jampraktek }}</td>
                             <td>{{ $item->validasi }}</td>
+                            {{-- <td>
+                                <select class="form-control form-control-sm" wire:model.lazy="taskid.{{$key}}">
+                                    <option selected>Pilih Task id</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="99" class="text-danger">99 (Untuk Batal)</option>
+                                </select>
+                            </td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-sm btn-primary" wire:click="cekinBPJS('{{$key}}', '{{$item->nobooking}}' )">
+                                    Submit
+                                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" wire:loading
+                                        wire:target="cekinBPJS('{{$key}}', '{{$item->nobooking}}' )"></span>
+                                </button>
+                            </td> --}}
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
     </div>
-    {{-- <div class="card">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <button type="button" class="btn btn-primary" wire:click="Test()">
-                            <span wire:loading.remove  wire:target="Test">
-                                Jalankan Service (Masih DIkembangkan)
-                            </span>
-                            <span wire:loading wire:target="Test">
-                                <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                                Sedang Menjalnkan Service
-                            </span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                @if ($responses)
-                    @foreach ($responses as $index => $response)
-                        Kode Booking {{ $response->metadata->kodebooking }} = {{ $response->metadata->message }}<br />
-                    @endforeach
-                @endif
-
-            </div>
-        </div>
-    </div> --}}
-    {{-- <div class="card">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <button type="button" class="btn btn-primary" wire:click="TestFktl()">Test Fktl
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
 </div>

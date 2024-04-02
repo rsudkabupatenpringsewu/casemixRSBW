@@ -15,6 +15,7 @@ use App\Http\Controllers\Bpjs\ListPasienRanap;
 use App\Http\Controllers\Laporan\BayarPiutang;
 use App\Http\Controllers\Laporan\PiutangRalan;
 use App\Http\Controllers\Bpjs\CesmikController;
+use App\Http\Controllers\Bpjs\ListPasienRalan2;
 use App\Http\Controllers\AntrianPoli\AntrianPoli;
 use App\Http\Controllers\Farmasi\BundlingFarmasi;
 use App\Http\Controllers\Laporan\PembayaranRalan;
@@ -78,6 +79,7 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
     // CASEMIX
     Route::get('/list-pasein-ralan', [ListPasienRalan::class, 'lisPaseinRalan']);
     Route::get('/cari-list-pasein-ralan', [ListPasienRalan::class, 'cariListPaseinRalan']);
+    Route::get('/list-pasein-ralan2', [ListPasienRalan2::class, 'lisPaseinRalan2']);
     Route::get('/list-pasein-ranap', [ListPasienRanap::class, 'lisPaseinRanap']);
     Route::get('/cari-list-pasein-ranap', [ListPasienRanap::class, 'cariListPaseinRanap']);
     Route::get('/casemix-home', [HomeCasemix::class, 'casemixHome']);

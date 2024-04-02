@@ -342,6 +342,14 @@
                             </ul>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
+                                    <a href="{{ url('/list-pasein-ralan2') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>List Pasien Ralan 2</p>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
                                     <a href="{{ url('/list-pasein-ranap') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>List Pasien Ranap</p>

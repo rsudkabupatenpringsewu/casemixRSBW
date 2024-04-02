@@ -11,13 +11,9 @@ use Illuminate\Support\Facades\Session;
 class GabungBerkas extends Controller
 {
     function gabungBerkas(Request $request){
-        $fileCasemix = DB::table('file_casemix')
-            ->where('no_rawat', $request->cariNorawat)
-            ->whereIn('jenis_berkas', ['INACBG', 'RESUMEDLL', 'SCAN'])
-            ->get();
-        $cekINACBG = $fileCasemix->where('jenis_berkas', 'INACBG')->first();
-        $cekRESUMEDLL = $fileCasemix->where('jenis_berkas', 'RESUMEDLL')->first();
-        $cekSCAN = $fileCasemix->where('jenis_berkas', 'SCAN')->first();
+        $cekINACBG = DB::table('bw_file_casemix_inacbg')->where('no_rawat', $request->cariNorawat)->first();
+        $cekRESUMEDLL = DB::table('bw_file_casemix_remusedll')->where('no_rawat', $request->cariNorawat)->first();
+        $cekSCAN = DB::table('bw_file_casemix_scan')->where('no_rawat', $request->cariNorawat)->first();
 
         // PROSES BNDLING=============================================
         try {
@@ -47,16 +43,13 @@ class GabungBerkas extends Controller
             $pdf->Output($outputPath, 'F');
             DB::beginTransaction();
 
-                $cekBerkas = DB::table('file_casemix')
+                $cekBerkas = DB::table('bw_file_casemix_hasil')
                     ->where('no_rawat', $request->cariNorawat)
-                    ->where('jenis_berkas', 'HASIL')
                     ->exists();
                 if (!$cekBerkas) {
-                    DB::table('file_casemix')->insert([
+                    DB::table('bw_file_casemix_hasil')->insert([
                         'no_rkm_medis' => $request->no_rkm_medis,
                         'no_rawat' => $request->cariNorawat,
-                        'nama_pasein' => $request->nm_pasien,
-                        'jenis_berkas' => 'HASIL',
                         'file' => $path_file,
                     ]);
                     DB::commit();

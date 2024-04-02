@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Session;
 
 class SettingPoli extends Component
 {
+    protected $listeners = ['mount'];
+
     public  function mount()
     {
         $this->getPoli();
@@ -80,7 +82,7 @@ class SettingPoli extends Component
             ]);
             $this->reset(['kd_ruang_poli', 'nama_ruang_poli', 'kd_display']);
             $this->flashMessage('Loket berhasil ditambahkan!', 'success', 'check');
-            $this->emit('mout'); // Triger ke komponen SettingPosisiDokter
+            $this->emit('mount'); // Triger ke komponen SettingPosisiDokter
         } catch (\Exception $e) {
             $this->flashMessage('Terjadi kesalahan saat menambahkan loket.', 'danger', 'ban');
         }
@@ -97,7 +99,7 @@ class SettingPoli extends Component
                     'posisi_display_poli' => $this->getPoli[$key]['posisi_display_poli'],
                 ]);
             $this->flashMessage('Loket berhasil diupdate!', 'success', 'check');
-            $this->emit('mout');
+            $this->emit('mount');
         } catch (\Exception $e) {
             $this->flashMessage('Terjadi kesalahan saat update Loket.', 'danger', 'ban');
         }
@@ -110,7 +112,7 @@ class SettingPoli extends Component
                 ->where('kd_ruang_poli', $kd_ruang_poli)
                 ->delete();
             $this->flashMessage('Poli berhasil dihapus!', 'warning', 'check');
-            $this->emit('mout');
+            $this->emit('mount');
         } catch (\Exception $e) {
             $this->flashMessage('Terjadi kesalahan saat menghapus Poli.', 'danger', 'ban');
         }

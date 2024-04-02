@@ -36,15 +36,12 @@ class BpjsController extends Controller
             $no_rawatSTR = str_replace('/', '', $request->no_rawat);
             $path_file = 'INACBG' . '-' . $no_rawatSTR. '.' . $file->getClientOriginalExtension();
             Storage::disk('public')->put('file_inacbg/' . $path_file, file_get_contents($file));
-            $cekBerkas = DB::table('file_casemix')->where('no_rawat', $request->no_rawat)
-                ->where('jenis_berkas', 'INACBG')
+            $cekBerkas = DB::table('bw_file_casemix_inacbg')->where('no_rawat', $request->no_rawat)
                 ->exists();
             if (!$cekBerkas){
-                DB::table('file_casemix')->insert([
+                DB::table('bw_file_casemix_inacbg')->insert([
                     'no_rkm_medis' => $request->no_rkm_medis,
                     'no_rawat' => $request->no_rawat,
-                    'nama_pasein' => $request->nama_pasein,
-                    'jenis_berkas' => 'INACBG',
                     'file' => $path_file,
                 ]);
             }
@@ -56,15 +53,12 @@ class BpjsController extends Controller
             $no_rawatSTR = str_replace('/', '', $request->no_rawat);
             $path_file = 'SCAN' . '-' . $no_rawatSTR. '.' . $file->getClientOriginalExtension();
             Storage::disk('public')->put('file_scan/' . $path_file, file_get_contents($file));
-            $cekBerkas = DB::table('file_casemix')->where('no_rawat', $request->no_rawat)
-                ->where('jenis_berkas', 'SCAN')
+            $cekBerkas = DB::table('bw_file_casemix_scan')->where('no_rawat', $request->no_rawat)
                 ->exists();
             if (!$cekBerkas){
-                DB::table('file_casemix')->insert([
+                DB::table('bw_file_casemix_scan')->insert([
                     'no_rkm_medis' => $request->no_rkm_medis,
                     'no_rawat' => $request->no_rawat,
-                    'nama_pasein' => $request->nama_pasein,
-                    'jenis_berkas' => 'SCAN',
                     'file' => $path_file,
                 ]);
             }

@@ -31,6 +31,7 @@ class ListPasienRanap extends Controller
             ->whereBetween('kamar_inap.tgl_keluar',[$tanggl1, $tanggl2])
             ->where('reg_periksa.status_lanjut','=','Ranap')
             ->where('reg_periksa.kd_pj','=', $penjamnin)
+            ->orderBy('bw_file_casemix_hasil.no_rawat', 'DESC')
             ->get();
 
         session(['tgl1' => $tanggl1]);
@@ -68,6 +69,7 @@ class ListPasienRanap extends Controller
             ->whereBetween('kamar_inap.tgl_keluar',[$tanggl1, $tanggl2])
             ->where('reg_periksa.status_lanjut','=','Ranap')
             ->where('reg_periksa.kd_pj','=', $penjamnin)
+            ->orderBy('bw_file_casemix_hasil.no_rawat', 'DESC')
             ->get();
 
         session(['tgl1' => $request->tgl1]);

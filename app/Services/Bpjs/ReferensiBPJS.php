@@ -5,7 +5,7 @@ namespace App\Services\Bpjs;
 use Bpjs\Bridging\Antrol\BridgeAntrol;
 use Bpjs\Bridging\Vclaim\BridgeVclaim;
 
-class Referensi
+class ReferensiBPJS
 {
     protected $bridging;
     protected $antrol;
@@ -16,6 +16,7 @@ class Referensi
         $this->antrol = new BridgeAntrol();
 	}
 
+    // 1 REFERENSI ======================================================
     public function getDiagnosa($kode)
 	{
         try {
@@ -46,6 +47,7 @@ class Referensi
         }
 	}
 
+    // 2 ANTROL ======================================================
     public function cekinBPJS($data)
 	{
             $endpoint = 'antrean/updatewaktu';
@@ -68,4 +70,24 @@ class Referensi
             $endpoint = 'antrean/getlisttask';
             return $this->antrol->postRequest($endpoint, $data, "POST");
     }
+
+    // 3 SEP ======================================================
+    public function CariSepVclaim1($nomorsep) {
+        try {
+            $endpoint = 'SEP/'. $nomorsep;
+            return $this->bridging->getRequest($endpoint);
+        } catch (\Throwable $th) {
+            return [];
+        }
+    }
+
+    public function CariSepVclaim2($nomorsep) {
+        try {
+            $endpoint = 'RencanaKontrol/nosep/'. $nomorsep;
+            return $this->bridging->getRequest($endpoint);
+        } catch (\Throwable $th) {
+            return [];
+        }
+    }
+
 }

@@ -66,6 +66,9 @@
                             <div class="input-group-append">
                                 <button class="btn btn-sidebar btn-primary btn-sm" wire:click="render()">
                                     <i class="fas fa-search fa-fw"></i>
+                                    <span class="spinner-grow spinner-grow-sm" role="status"
+                                                aria-hidden="true" wire:loading
+                                                wire:target="getListPasienRalan"></span>
                                 </button>
                             </div>
                         </div>

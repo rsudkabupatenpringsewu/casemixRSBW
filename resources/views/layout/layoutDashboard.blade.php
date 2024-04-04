@@ -312,14 +312,14 @@
                                     </a>
                                 </li>
                             </ul>
-                            {{-- <ul class="nav nav-treeview">
+                            <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ url('/periksa-radiologi-umum') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Periksa Radiologi <span class="text-xs">(um)</span></p>
                                     </a>
                                 </li>
-                            </ul> --}}
+                            </ul>
                         </li>
                         {{-- MENU CASEMIX --}}
                         <li class="nav-header user-panel"></li>
@@ -416,7 +416,7 @@
                             <a href="#" class="nav-link">{{-- active --}}
                                 <i class="nav-icon fas fa-file"></i>
                                 <p>
-                                    Brigging BPJS
+                                    Bridging BPJS
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
@@ -426,6 +426,17 @@
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>
                                             Cekin / Kirim TaskID
+                                            <span class="badge badge-info right">dev</span>
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ url('sep-vclaim') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>
+                                            Sep V-Claim
                                             <span class="badge badge-info right">dev</span>
                                         </p>
                                     </a>

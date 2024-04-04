@@ -157,6 +157,7 @@ Route::group(['middleware' => 'auth-rsbw'], function () {
 
     // BRIFING BPJS
     Route::get('/kirim-taskid-bpjs', [KirimTaskId::class, 'KirimTaskId']);
+    Route::get('/sep-vclaim', [KirimTaskId::class, 'CariSepVclaim']);
 
 
 });

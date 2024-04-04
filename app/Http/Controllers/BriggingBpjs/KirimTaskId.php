@@ -13,4 +13,8 @@ class KirimTaskId extends Controller
         return view('briging-bpjs.kirim-taskid');
     }
 
+    function CariSepVclaim() {
+         return view('briging-bpjs.cari-sep-vclaim');
+    }
+
 }

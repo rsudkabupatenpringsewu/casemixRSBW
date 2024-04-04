@@ -4,18 +4,18 @@ namespace App\Http\Livewire\BrigingBpjs;
 
 use GuzzleHttp\Client;
 use Livewire\Component;
-use App\Services\Bpjs\Referensi;
 use Illuminate\Support\Facades\DB;
+use App\Services\Bpjs\ReferensiBPJS;
 use App\Services\RsbwFktl\ReferensiRSBW;
 
 class KirimTaskId extends Component
 {
     public $listeners = ['cekinBPJS'];
-    protected $Referensi;
+    protected $ReferensiBpjs;
     protected $RsbwFktl;
     public function __construct()
     {
-        $this->Referensi = new Referensi;
+        $this->ReferensiBpjs = new ReferensiBPJS;
         $this->RsbwFktl = new ReferensiRSBW;
     }
 
@@ -85,7 +85,7 @@ class KirimTaskId extends Component
             "waktu"=> $this->waktu
         ];
         try {
-            $data = json_decode($this->Referensi->cekinBPJS(json_encode($jayParsedAry)));
+            $data = json_decode($this->ReferensiBpjs->cekinBPJS(json_encode($jayParsedAry)));
             if ($this->taskid == 3 && $this->konfirmasi_cekin == true) {
                 $responsefktl = $this->RsbwFktl->cekinMjkn($dataFktl);
                 $this->getCekinFktl = [$responsefktl->metadata];
@@ -121,7 +121,7 @@ class KirimTaskId extends Component
     //         "waktu"=> $this->waktu
     //     ];
     //     try {
-    //         $data = json_decode($this->Referensi->cekinBPJS(json_encode($jayParsedAry)));
+    //         $data = json_decode($this->ReferensiBpjs->cekinBPJS(json_encode($jayParsedAry)));
     //         if ($this->taskid[$key] == 3 && $this->konfirmasi_cekin == true) {
     //             $responsefktl = $this->RsbwFktl->cekinMjkn($dataFktl);
     //             $this->getCekinFktl = [$responsefktl->metadata];

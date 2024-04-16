@@ -81,8 +81,8 @@ class KirimTaskId extends Component
             "waktu" => $this->waktu
         ];
         $dataFktl = [
-            "kodebooking"=> $this->kodebooking,
-            "waktu"=> $this->waktu
+            "kodebooking" => $this->kodebooking,
+            "waktu" => $this->waktu
         ];
         try {
             $data = json_decode($this->ReferensiBpjs->cekinBPJS(json_encode($jayParsedAry)));
@@ -91,7 +91,6 @@ class KirimTaskId extends Component
                 $this->getCekinFktl = [$responsefktl->metadata];
             }
             $this->getCekin = [$data->metadata];
-
         } catch (\Throwable $th) {
         }
     }
@@ -131,4 +130,20 @@ class KirimTaskId extends Component
     //     } catch (\Throwable $th) {
     //     }
     // }
+
+    public $nobooking;
+    public $listTaskId;
+    public $getTaskid;
+    public function DetailTaskID($nobooking)
+    {
+        try {
+            $jayParsedAry = [
+                "kodebooking" => $nobooking,
+            ];
+            $data = json_decode($this->ReferensiBpjs->cekTaskID(json_encode($jayParsedAry)));
+            $this->getTaskid = $data->response;
+        } catch (\Throwable $th) {
+            $this->getTaskid = null;
+        }
+    }
 }

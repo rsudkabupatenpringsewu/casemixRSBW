@@ -140,17 +140,19 @@
                     </div>
                     <div class="col-lg-2">
                         <div class="form-group">
-                            <input type="date" class="form-control form-control-sidebar form-control-sm" wire:model.lazy="date">
+                            <input type="date" class="form-control form-control-sidebar form-control-sm"
+                                wire:model.lazy="date">
                         </div>
                     </div>
                     <div class="col-lg-2">
                         <div class="form-group">
-                            <input type="time" class="form-control form-control-sidebar form-control-sm"wire:model.lazy="time">
+                            <input type="time"
+                                class="form-control form-control-sidebar form-control-sm"wire:model.lazy="time">
                         </div>
                     </div>
                     <div class="col-lg-2">
                         <input type="checkbox" wire:model.lazy="konfirmasi_cekin">
-                                    Cekin Khanza ?
+                        Cekin Khanza ?
                     </div>
                 </div>
             </form>
@@ -161,7 +163,7 @@
                     <tr>
                         <th>No</th>
                         <th>Nm Pasien</th>
-                        <th>No Booking</th>
+                        <th>No Booking / Detail</th>
                         <th>No Rawat</th>
                         <th>Nomor RM</th>
                         <th>Status Cekin</th>
@@ -174,9 +176,16 @@
                 <tbody>
                     @foreach ($getPasienMJKN as $key => $item)
                         <tr>
-                            <td>{{ $key + 1 }}</td>
+                            <td>{{ $key + 1 }}
+                            </td>
                             <td>{{ $item->nm_pasien }}</td>
-                            <td>{{ $item->nobooking }}</td>
+                            <td>
+                                {{ $item->nobooking }}
+                                <button data-toggle="modal" style="background: none; border: none;"
+                                    wire:click="DetailTaskID('{{ $item->nobooking }}')"
+                                    data-target="#UploadInacbg{{ $key }}"><i class="fas fa-eye"></i>
+                                </button>
+                            </td>
                             <td>{{ $item->no_rawat }}</td>
                             <td>{{ $item->norm }}</td>
                             <td>{{ $item->status }}</td>
@@ -198,6 +207,77 @@
                                         wire:target="cekinBPJS('{{$key}}', '{{$item->nobooking}}' )"></span>
                                 </button>
                             </td> --}}
+                            {{-- MODAL --}}
+                            <div class="modal fade" id="UploadInacbg{{ $key }}" tabindex="-1"
+                                role="dialog" aria-hidden="true" wire:ignore.self>
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h6 class="modal-title">Detail Task-Id Selesai
+                                                <b>{{ $item->nm_pasien }}</b>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    @if ($getTaskid == null)
+                                                        <div class="timeline">
+                                                            <div class="time-label">
+                                                                <span class="bg-default">Task ID</span>
+                                                            </div>
+                                                            <div>
+                                                                <span class="fas bg-danger">X</span>
+                                                                <div class="timeline-item">
+                                                                    <span class="time"><i
+                                                                            class="fas fa-clock"></i> xx-xx-xxxx
+                                                                        xx:xx:xx</span>
+                                                                    <h3 class="timeline-header"><span
+                                                                            class="text-danger">Belum Ada Task-Id Terkirim</span>
+                                                                    </h3>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @else
+                                                        <div class="timeline">
+                                                            <div class="time-label">
+                                                                <span class="bg-default">Task ID</span>
+                                                            </div>
+                                                            @foreach ($getTaskid as $data)
+                                                                @if (is_object($data) && $data->kodebooking == $item->nobooking)
+                                                                    <div>
+                                                                        @php
+                                                                            if ($data->taskid == 99) {
+                                                                                $bg = 'bg-danger';
+                                                                                $text = 'text-danger';
+                                                                            } else {
+                                                                                $bg = 'bg-success';
+                                                                                $text = 'text-success';
+                                                                            }
+                                                                        @endphp
+                                                                        <span class="fas {{$bg}}">
+                                                                            {{ $data->taskid }}</span>
+                                                                        <div class="timeline-item">
+                                                                            <span class="time"><i
+                                                                                    class="fas fa-clock"></i>
+                                                                                {{ $data->waktu }}</span>
+                                                                            <h4 class="timeline-header"><a class="{{$text}}"
+                                                                                    href="#">{{ $data->kodebooking }}</a>
+                                                                            </h4>
+                                                                            <div class="timeline-body">
+                                                                                Waktu RS : {{ $data->wakturs }} <br>
+                                                                                Keterangan : {{ $data->taskname }}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                @endif
+                                                            @endforeach
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </tr>
                     @endforeach
                 </tbody>

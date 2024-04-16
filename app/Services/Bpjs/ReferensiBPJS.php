@@ -67,8 +67,12 @@ class ReferensiBPJS
     }
     public function cekTaskID($data)
     {
+        try {
             $endpoint = 'antrean/getlisttask';
             return $this->antrol->postRequest($endpoint, $data, "POST");
+        } catch (\Throwable $th) {
+            return [] ;
+        }
     }
 
     // 3 SEP ======================================================
